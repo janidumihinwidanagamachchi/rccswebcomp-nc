@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "export:data": "node --env-file=.env scripts/export-supabase-data.mjs"
   },
   "devDependencies": {
     "@types/react": "^19.3.0",

@@ -1,0 +1,14 @@
+{
+  "exported_at": "2026-09-19T18:45:48.531Z",
+  "mode": "admin",
+  "redacted": true,
+  "tables": {
+    "profiles": 6,
+    "categories": 6,
+    "events": 24,
+    "announcements": 17,
+    "registrations": 25,
+    "highlights": 15,
+    "site_settings": 1
+  }
+}

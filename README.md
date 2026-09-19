@@ -96,6 +96,30 @@ The migrations in `supabase/migrations/` add demo data in order:
 
 Run them in the Supabase SQL Editor in that order.
 
+## Backing up data
+
+To snapshot the current Supabase data into the repo:
+
+```bash
+# Anon-only export (partial because of RLS)
+npm run export:data
+
+# Admin export (complete: includes drafts, registrations, expired announcements)
+EXPORT_ADMIN_EMAIL=admin@rccswebcomp.demo \
+EXPORT_ADMIN_PASSWORD=DemoAdmin123! \
+npm run export:data
+```
+
+On Windows (PowerShell):
+
+```powershell
+$env:EXPORT_ADMIN_EMAIL='admin@rccswebcomp.demo'
+$env:EXPORT_ADMIN_PASSWORD='DemoAdmin123!'
+npm run export:data
+```
+
+This writes one JSON file per table into `supabase/data/`, plus a `snapshot.json` with counts and metadata. Personal data is redacted by default: `registrations.attendee_email`, `notes`, and `qr_code_data` are replaced, and `ticket_number` is hashed. Pass `--no-redact` only for a local copy that you will **not** commit.
+
 ## Recent updates
 
 - **Design-token refactor** — replaced `background`/`foreground`/`card`/`primary`/etc. with a custom naming scheme (`canvas`, `ink`, `panel`, `brand`, `quiet`, `highlight`, `danger`, `line`, `field`, `focus`) across the UI and database seeds.
