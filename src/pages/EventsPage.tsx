@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { CalendarDays } from 'lucide-react'
 import { Shell } from '@/components/layout/Shell'
 import { EventGrid } from '@/components/events/EventGrid'
 import { EventFilters } from '@/components/events/EventFilters'
@@ -50,8 +51,14 @@ export function EventsPage() {
               <Skeleton key={i} className="h-96 rounded-xl" />
             ))}
           </div>
-        ) : (
+        ) : filteredEvents.length > 0 ? (
           <EventGrid events={filteredEvents} />
+        ) : (
+          <div className="flex flex-col items-center justify-center rounded-xl border border-dashed py-16 text-center">
+            <CalendarDays className="mb-4 h-12 w-12 text-quiet-ink" />
+            <h2 className="text-xl font-semibold">No events found</h2>
+            <p className="text-quiet-ink">Try adjusting your search or filters.</p>
+          </div>
         )}
       </div>
     </Shell>

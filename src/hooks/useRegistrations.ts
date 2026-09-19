@@ -15,7 +15,7 @@ export function useMyRegistrations() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('registrations')
-        .select('*, event:events(*)')
+        .select('*, event:events(*, category:categories(*))')
         .order('registered_at', { ascending: false })
       if (error) throw error
       return (data || []) as Registration[]
@@ -75,17 +75,18 @@ export function useRegisterForEvent() {
   })
 }
 
-export function useAllPassports() {
+export function useAllPassports({ enabled = true }: { enabled?: boolean } = {}) {
   return useQuery({
     queryKey: [REGISTRATIONS_KEY, 'all-passports'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('profiles')
-        .select('*, registrations(*, event:events(*))')
+        .select('*, registrations(*, event:events(*, category:categories(*)))')
         .order('full_name', { ascending: true })
       if (error) throw error
       return (data || []) as ProfileWithRegistrations[]
     },
+    enabled,
   })
 }
 

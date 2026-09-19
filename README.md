@@ -47,7 +47,7 @@ You'll need Node 18+, a Supabase project, and a Vercel account if you plan to de
 
 5. Run `supabase/migrations/004_seed_data.sql`. Do this after the admin user exists, since it sets the admin role and adds the sample categories and events.
 
-6. Start the dev server and open http://localhost:5173.
+6. Start the dev server and open http://localhost:3000.
 
    ```bash
    npm run dev
@@ -70,6 +70,31 @@ WHERE id = (
 ```
 
 Or run `supabase/migrations/007_fix_admin_role.sql`, then refresh the app and sign in again.
+
+## Supabase URL configuration
+
+For auth confirmation emails and OAuth redirects to work, set your Supabase project's URL Configuration:
+
+- **Site URL**: `https://janidumihinwidanagamachchi.github.io/rccswebcomp-nc/`
+- **Redirect URLs**:
+  - `http://localhost:3000/**`
+  - `http://localhost:5173/**`
+  - `https://janidumihinwidanagamachchi.github.io/rccswebcomp-nc/**`
+
+You can find this under **Authentication → URL Configuration** in the Supabase Dashboard. For a purely local demo you can also turn off "Confirm email" in **Authentication → Providers → Email**.
+
+## Demo content
+
+The migrations in `supabase/migrations/` add demo data in order:
+
+1. `00_combined_setup.sql` — schema, RLS policies, functions, default site settings.
+2. `004_seed_data.sql` — categories, admin role, sample events and announcements.
+3. `006_content_update.sql` — refreshed copy and extra events/announcements.
+4. `008_passport_test_data.sql` — 4 test students with attended events for the Passport page.
+5. `009_content_expansion.sql` — more events, announcements, highlights, and registrations.
+6. `010_remove_event_images.sql` — clears stored event images (the UI no longer displays them).
+
+Run them in the Supabase SQL Editor in that order.
 
 ## Recent updates
 

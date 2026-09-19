@@ -27,17 +27,9 @@ export function EventCard({ event }: EventCardProps) {
   return (
     <Card className="group overflow-hidden">
       <div className="relative h-40 overflow-hidden bg-quiet">
-        {event.image_url ? (
-          <img
-            src={event.image_url}
-            alt={event.title}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand/20 to-brand/5">
-            <Calendar className="h-10 w-10 text-brand/40" />
-          </div>
-        )}
+        <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand/20 to-brand/5">
+          <Calendar className="h-10 w-10 text-brand/40" />
+        </div>
         {event.featured && (
           <Badge className="absolute left-3 top-3 bg-brand text-brand-ink">Featured</Badge>
         )}

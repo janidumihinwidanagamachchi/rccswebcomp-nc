@@ -271,8 +271,8 @@ export interface ThemePreset {
   settings: Pick<SiteSettings, 'colors' | 'fonts' | 'theme'>
 }
 
-// Royal Navy & Gold
-const ROYAL_LIGHT: ThemePalette = {
+// Navy & Gold
+const NAVY_GOLD_LIGHT: ThemePalette = {
   canvas: '#f8fafc',
   ink: '#0b132b',
   panel: '#ffffff',
@@ -294,7 +294,7 @@ const ROYAL_LIGHT: ThemePalette = {
   focus: '#ffd700',
 }
 
-const ROYAL_DARK: ThemePalette = {
+const NAVY_GOLD_DARK: ThemePalette = {
   canvas: '#070d1e',
   ink: '#f8fafc',
   panel: '#131b33',
@@ -453,11 +453,11 @@ const ROSE_GOLD_DARK: ThemePalette = {
 
 export const THEME_PRESETS: ThemePreset[] = [
   {
-    id: 'royal-college',
-    name: 'Royal Navy & Gold',
+    id: 'navy-gold',
+    name: 'Navy & Gold',
     settings: {
       theme: { mode: 'dark' as ThemeMode, radius: '0.75rem' },
-      colors: { light: ROYAL_LIGHT, dark: ROYAL_DARK },
+      colors: { light: NAVY_GOLD_LIGHT, dark: NAVY_GOLD_DARK },
       fonts: {
         body: 'Nunito Sans',
         heading: 'Shippori Mincho B1',
@@ -508,7 +508,7 @@ export const THEME_PRESETS: ThemePreset[] = [
 
 export const DEFAULT_SETTINGS: SiteSettings = {
   theme: { mode: 'dark', radius: '0.75rem' },
-  colors: { light: ROYAL_LIGHT, dark: ROYAL_DARK },
+  colors: { light: NAVY_GOLD_LIGHT, dark: NAVY_GOLD_DARK },
   fonts: {
     body: 'Nunito Sans',
     heading: 'Shippori Mincho B1',

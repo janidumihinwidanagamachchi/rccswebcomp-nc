@@ -16,22 +16,32 @@ export function LoginPage() {
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [needsConfirmation, setNeedsConfirmation] = useState(false)
+  const [resendStatus, setResendStatus] = useState<'idle' | 'sent' | 'error'>('idle')
 
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
   })
+  const email = watch('email')
 
   const onSubmit = async (data: LoginFormData) => {
     setError(null)
+    setNeedsConfirmation(false)
+    setResendStatus('idle')
     const { error } = await supabase.auth.signInWithPassword({
       email: data.email,
       password: data.password,
     })
     if (error) {
+      const msg = error.message.toLowerCase()
+      if (msg.includes('email not confirmed') || msg.includes('not confirmed')) {
+        setNeedsConfirmation(true)
+      }
       setError(error.message)
       return
     }
@@ -39,6 +49,22 @@ export function LoginPage() {
     await useAuthStore.getState().refreshProfile()
     const { isAdmin } = useAuthStore.getState()
     navigate(isAdmin ? '/admin' : '/')
+  }
+
+  const handleResend = async () => {
+    if (!email) return
+    setResendStatus('idle')
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email,
+      options: { emailRedirectTo: window.location.origin },
+    })
+    if (error) {
+      setResendStatus('error')
+      setError(error.message)
+    } else {
+      setResendStatus('sent')
+    }
   }
 
   return (
@@ -80,6 +106,23 @@ export function LoginPage() {
                 {errors.password && <p className="text-xs text-danger">{errors.password.message}</p>}
               </div>
               {error && <p className="text-sm text-danger">{error}</p>}
+              {needsConfirmation && (
+                <div className="rounded-lg bg-amber-50 p-3 text-sm text-amber-800 dark:bg-amber-950 dark:text-amber-200">
+                  <p className="mb-2">Your email hasn&apos;t been confirmed yet.</p>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={handleResend}
+                    disabled={resendStatus === 'sent'}
+                  >
+                    {resendStatus === 'sent' ? 'Confirmation email sent' : 'Resend confirmation email'}
+                  </Button>
+                  {resendStatus === 'error' && (
+                    <p className="mt-2 text-danger">Failed to resend. Try again.</p>
+                  )}
+                </div>
+              )}
               <Button type="submit" className="w-full" disabled={isSubmitting}>
                 {isSubmitting ? 'Signing in...' : 'Sign In'}
               </Button>

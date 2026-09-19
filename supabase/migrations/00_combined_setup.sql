@@ -291,7 +291,7 @@ CREATE TABLE IF NOT EXISTS site_settings (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Seed default settings (Royal Navy & Gold preset)
+-- Seed default settings (Navy & Gold preset)
 INSERT INTO site_settings (key, value)
 VALUES (
   'site_settings',

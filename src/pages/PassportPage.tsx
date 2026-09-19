@@ -12,7 +12,7 @@ import { cn, formatDate } from '@/lib/utils'
 export function PassportPage() {
   const { user, isAdmin } = useAuthStore()
   const { data: registrations, isLoading } = useMyRegistrations()
-  const { data: allPassports, isLoading: passportsLoading } = useAllPassports()
+  const { data: allPassports, isLoading: passportsLoading } = useAllPassports({ enabled: isAdmin })
 
   const stats = computePassportStats(registrations || [])
 
@@ -84,7 +84,7 @@ export function PassportPage() {
 
         {isAdmin && (
           <>
-            <h2 className="mb-4 text-xl font-bold">Test Subjects</h2>
+            <h2 className="mb-4 text-xl font-bold">Leaderboard</h2>
             {passportsLoading ? (
               <div className="mb-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {[1, 2, 3].map((i) => (

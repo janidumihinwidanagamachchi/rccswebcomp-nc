@@ -130,16 +130,6 @@ export function EventDetailPage() {
               <h1 className="mb-4 text-3xl font-bold md:text-5xl">{event.title}</h1>
               <p className="mb-6 text-lg text-quiet-ink">{event.short_description}</p>
 
-              {event.image_url && (
-                <div className="mb-8 overflow-hidden rounded-2xl">
-                  <img
-                    src={event.image_url}
-                    alt={event.title}
-                    className="h-full w-full object-cover max-h-[400px]"
-                  />
-                </div>
-              )}
-
               <div className="prose dark:prose-invert max-w-none">
                 <p className="whitespace-pre-line">{event.description}</p>
               </div>

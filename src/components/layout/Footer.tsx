@@ -10,9 +10,10 @@ export function Footer() {
             <Ticket className="h-5 w-5 text-brand" />
             RCCSWebComp-NC
           </Link>
-          <p className="text-sm text-quiet-ink text-center md:text-left">
-            Events, tickets, and announcements for one school.
-          </p>
+          <div className="text-center text-sm text-quiet-ink md:text-left">
+            <p>Events, tickets, and announcements for one school.</p>
+            <p>Questions? front.office@rccswebcomp.demo</p>
+          </div>
           <p className="flex items-center gap-1 text-sm text-quiet-ink">
             Made with <Heart className="h-4 w-4 text-rose-500" /> for BTUI&apos;26
           </p>
