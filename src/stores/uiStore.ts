@@ -27,7 +27,7 @@ export const useUIStore = create<UIState>()(
       setMobileMenuOpen: (open) => set({ mobileMenuOpen: open }),
     }),
     {
-      name: 'campuspulse-ui',
+      name: 'rccswebcomp-ui',
       partialize: (state) => ({ theme: state.theme }),
     }
   )

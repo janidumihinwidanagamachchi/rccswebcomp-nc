@@ -1,6 +1,6 @@
-# CampusPulse
+# RCCSWebComp-NC
 
-CampusPulse is a school events hub I built for BTUI'26. Students, teachers, and parents can see what's happening at school, register for events, and get a QR ticket right away. Admins get their own dashboard to run the whole thing.
+RCCSWebComp-NC is a school events hub I built for BTUI'26. Students, teachers, and parents can see what's happening at school, register for events, and get a QR ticket right away. Admins get their own dashboard to run the whole thing.
 
 The idea came from a simple annoyance: events get announced in five different places and half the school still misses them. This puts all of it in one spot.
 
@@ -43,7 +43,7 @@ You'll need Node 18+, a Supabase project, and a Vercel account if you plan to de
 
 3. In the Supabase SQL editor, run `supabase/migrations/00_combined_setup.sql`. One file sets up the tables, RLS policies, functions, and default settings.
 
-4. Create the demo admin under Authentication > Users > Add User, using `admin@campuspulse.demo` and `DemoAdmin123!`. A trigger creates the matching profile for you.
+4. Create the demo admin under Authentication > Users > Add User, using `admin@rccswebcomp.demo` and `DemoAdmin123!`. A trigger creates the matching profile for you.
 
 5. Run `supabase/migrations/004_seed_data.sql`. Do this after the admin user exists, since it sets the admin role and adds the sample categories and events.
 
@@ -53,7 +53,7 @@ You'll need Node 18+, a Supabase project, and a Vercel account if you plan to de
    npm run dev
    ```
 
-The admin login is `admin@campuspulse.demo` / `DemoAdmin123!`. Everyone else can sign up at `/auth/register`.
+The admin login is `admin@rccswebcomp.demo` / `DemoAdmin123!`. Everyone else can sign up at `/auth/register`.
 
 ## Deploying
 
@@ -93,3 +93,17 @@ The honest list: email notifications for upcoming events, waitlists when an even
 ## License
 
 Written for BTUI'26. All code is original.
+
+## Note on AI use
+
+AI was used only to help write the demo content — the sample events, announcements, and some
+interface copy. It was not used to build the application itself.
+
+Examples of AI-assisted content:
+
+- Sample event descriptions, such as the Cricket Match ("The inter-house cricket tournament runs
+  all day across two pitches. Come play or come cheer.") and the Science Fair ("Projects from
+  Grades 6 to 13, from simple circuits to full builds.")
+- Sample announcements, such as "Buses leave at 7:15 on Sports Day" and "Lost and found at the
+  front office"
+- Interface copy, such as the homepage headline "What's on at school, without the guesswork."

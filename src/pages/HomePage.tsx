@@ -89,8 +89,8 @@ export function HomePage() {
                   ))
                 ) : (
                   <>
-                    Your school events,
-                    <span className="block text-primary">reimagined.</span>
+                    What&apos;s on at school,
+                    <span className="block text-primary">without the guesswork.</span>
                   </>
                 )}
               </h1>
@@ -101,7 +101,7 @@ export function HomePage() {
                 transition={{ duration: 0.5, delay: 0.15 }}
               >
                 {hero?.subtitle ||
-                  'Discover, register, and experience every school event in one beautiful command center built for students, teachers, and parents.'}
+                  'See what\u2019s coming up, register in a minute, and keep your QR ticket in your pocket.'}
               </motion.p>
               <motion.div
                 className="flex flex-col justify-center gap-3 sm:flex-row"
@@ -155,7 +155,7 @@ export function HomePage() {
         <div className="mb-8 flex items-end justify-between">
           <div>
             <h2 className="text-2xl font-bold md:text-3xl">Featured Events</h2>
-            <p className="text-muted-foreground">Don&apos;t miss the biggest moments this term.</p>
+            <p className="text-muted-foreground">Worth planning your week around.</p>
           </div>
           <Button asChild variant="ghost">
             <Link to="/events">View all</Link>
@@ -177,7 +177,7 @@ export function HomePage() {
         <div className="mb-8 flex items-end justify-between">
           <div>
             <h2 className="text-2xl font-bold md:text-3xl">Latest Announcements</h2>
-            <p className="text-muted-foreground">Important updates from the school.</p>
+            <p className="text-muted-foreground">Notices and changes from staff.</p>
           </div>
           <Button asChild variant="ghost">
             <Link to="/announcements">View all</Link>
@@ -202,10 +202,10 @@ export function HomePage() {
       <section className="container mx-auto px-4 py-16">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { label: 'Browse Events', desc: 'Find something for you', href: '/events', icon: CalendarDays },
-            { label: 'My Tickets', desc: 'View your registrations', href: '/tickets', icon: Ticket },
-            { label: 'Calendar', desc: 'Plan your schedule', href: '/calendar', icon: CalendarDays },
-            { label: 'Announcements', desc: 'Stay in the loop', href: '/announcements', icon: Sparkles },
+            { label: 'Browse Events', desc: 'See what&apos;s coming up', href: '/events', icon: CalendarDays },
+            { label: 'My Tickets', desc: 'Your sign-ups and QR codes', href: '/tickets', icon: Ticket },
+            { label: 'Calendar', desc: 'The term at a glance', href: '/calendar', icon: CalendarDays },
+            { label: 'Announcements', desc: 'What staff need you to know', href: '/announcements', icon: Sparkles },
           ].map((item) => {
             const Icon = item.icon
             return (

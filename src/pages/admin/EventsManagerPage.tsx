@@ -67,7 +67,7 @@ export function EventsManagerPage() {
                         variant="destructive"
                         size="sm"
                         onClick={() => {
-                          if (confirm('Are you sure you want to delete this event?')) {
+                          if (confirm('Delete this event? This cannot be undone.')) {
                             deleteEvent.mutate(event.id)
                           }
                         }}

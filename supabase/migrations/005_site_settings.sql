@@ -56,9 +56,9 @@ VALUES (
       }
     },
     "fonts": { "body": "Nunito Sans", "heading": "Shippori Mincho B1", "display": "Bebas Neue" },
-    "brand": { "name": "CampusPulse", "motto": "Disce Aut Discede", "logoUrl": "" },
-    "seo": { "title": "CampusPulse | School Events Command Center", "description": "Discover, register, and experience every school event in one beautiful command center built for students, teachers, and parents.", "ogImageUrl": "" },
-    "hero": { "badge": "BTUI'26 Competition Entry", "headline": "Your school events, reimagined.", "subtitle": "Discover, register, and experience every school event in one beautiful command center built for students, teachers, and parents.", "primaryCta": { "label": "Browse Events", "href": "/events" }, "secondaryCta": { "label": "View Calendar", "href": "/calendar" }, "backgroundImageUrl": "", "showCountdown": true }
+    "brand": { "name": "RCCSWebComp-NC", "motto": "Disce Aut Discede", "logoUrl": "" },
+    "seo": { "title": "RCCSWebComp-NC | School Events", "description": "School events, QR tickets, and announcements for one campus.", "ogImageUrl": "" },
+    "hero": { "badge": "BTUI''26 Competition Entry", "headline": "What''s on at school,\nwithout the guesswork.", "subtitle": "See what''s coming up, register in a minute, and keep your QR ticket in your pocket.", "primaryCta": { "label": "Browse Events", "href": "/events" }, "secondaryCta": { "label": "View Calendar", "href": "/calendar" }, "backgroundImageUrl": "", "showCountdown": true }
   }'::jsonb
 )
 ON CONFLICT (key) DO NOTHING;

@@ -46,7 +46,7 @@ export const useAuthStore = create<AuthState>()(
       },
     }),
     {
-      name: 'campuspulse-auth',
+      name: 'rccswebcomp-auth',
       partialize: (state) => ({ user: state.user, profile: state.profile, isAdmin: state.isAdmin }),
     }
   )

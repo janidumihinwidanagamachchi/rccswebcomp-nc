@@ -43,7 +43,7 @@ export function PassportPage() {
       <div className="container mx-auto px-4 py-12">
         <div className="mb-8">
           <h1 className="text-3xl font-bold md:text-4xl">Event Passport</h1>
-          <p className="text-muted-foreground">Collect stamps and unlock badges by attending events.</p>
+          <p className="text-muted-foreground">Every event you attend adds a stamp.</p>
         </div>
 
         <div className="mb-8 grid gap-4 sm:grid-cols-3">
@@ -133,7 +133,7 @@ export function PassportPage() {
             ))}
           </div>
         ) : (
-          <p className="text-muted-foreground">Attend events to collect your first stamps.</p>
+          <p className="text-muted-foreground">No stamps yet. Attend an event to get started.</p>
         )}
       </div>
     </Shell>

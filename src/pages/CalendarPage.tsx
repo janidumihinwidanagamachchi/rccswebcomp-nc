@@ -15,8 +15,8 @@ export function CalendarPage() {
       <div className="container mx-auto px-4 py-12">
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h1 className="text-3xl font-bold md:text-4xl">Event Calendar</h1>
-            <p className="text-muted-foreground">Browse all school events by month.</p>
+            <h1 className="text-3xl font-bold md:text-4xl">Calendar</h1>
+            <p className="text-muted-foreground">Every event, month by month.</p>
           </div>
           {selectedDate && (
             <Button variant="outline" onClick={() => setSelectedDate(null)}>

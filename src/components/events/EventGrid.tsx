@@ -10,8 +10,8 @@ export function EventGrid({ events }: EventGridProps) {
   if (events.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center rounded-xl border border-dashed py-16 text-center">
-        <p className="text-lg font-medium">No events found</p>
-        <p className="text-sm text-muted-foreground">Try adjusting your filters.</p>
+        <p className="text-lg font-medium">Nothing here yet</p>
+        <p className="text-sm text-muted-foreground">Try a different search or category.</p>
       </div>
     )
   }

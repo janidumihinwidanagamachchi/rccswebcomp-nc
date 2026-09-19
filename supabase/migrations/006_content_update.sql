@@ -1,34 +1,65 @@
--- Seed default categories
-INSERT INTO categories (name, slug, color, icon, sort_order) VALUES
-  ('Academic', 'academic', '#3b82f6', 'GraduationCap', 1),
-  ('Sports', 'sports', '#f97316', 'Trophy', 2),
-  ('Arts', 'arts', '#ec4899', 'Palette', 3),
-  ('Culture', 'culture', '#a855f7', 'Globe', 4),
-  ('Tech', 'tech', '#06b6d4', 'Cpu', 5),
-  ('Music', 'music', '#f43f5e', 'Music', 6)
-ON CONFLICT (slug) DO NOTHING;
+-- Content update: SEO, hero copy, and refreshed sample events
+-- Safe to run more than once.
 
--- Seed demo admin user
--- Run this file AFTER creating the admin user in Supabase Auth.
--- Authentication > Users > Add User
--- Email: admin@rccswebcomp.demo
--- Password: DemoAdmin123!
-DO $$
-DECLARE
-  admin_user_id UUID;
-BEGIN
-  SELECT id INTO admin_user_id FROM auth.users WHERE email = 'admin@rccswebcomp.demo' LIMIT 1;
+-- SEO + hero copy
+UPDATE site_settings
+SET value = jsonb_set(
+              jsonb_set(
+                jsonb_set(value, '{brand,name}', to_jsonb('RCCSWebComp-NC'::text)),
+                '{seo,title}', to_jsonb('RCCSWebComp-NC | School Events'::text)
+              ),
+              '{seo,description}', to_jsonb('School events, QR tickets, and announcements for one campus.'::text)
+            ) || $hero$
+{
+  "hero": {
+    "badge": "BTUI'26 Competition Entry",
+    "headline": "What's on at school,\nwithout the guesswork.",
+    "subtitle": "See what's coming up, register in a minute, and keep your QR ticket in your pocket.",
+    "primaryCta": { "label": "Browse Events", "href": "/events" },
+    "secondaryCta": { "label": "View Calendar", "href": "/calendar" },
+    "backgroundImageUrl": "",
+    "showCountdown": true
+  }
+}
+$hero$::jsonb,
+    updated_at = NOW()
+WHERE key = 'site_settings';
 
-  IF admin_user_id IS NOT NULL THEN
-    UPDATE public.profiles
-    SET role = 'admin',
-        full_name = 'Demo Admin',
-        updated_at = NOW()
-    WHERE id = admin_user_id;
-  END IF;
-END $$;
+-- Welcome announcement
+UPDATE announcements
+SET title = 'Welcome to RCCSWebComp-NC',
+    content = $c$Browse what's on this term, register for events, and get your tickets here. Announcements show up on this page as they are posted.$c$
+WHERE title = 'Welcome to CampusPulse';
 
--- Sample events
+-- Refresh the original three sample events
+UPDATE events SET
+  short_description = 'A full day of athletics, team games, and house events.',
+  description = 'Track and field, team games, and house events all day. Students from every grade compete; parents and teachers are welcome to watch.',
+  start_date = '2026-10-23 08:00:00+05:30',
+  end_date = '2026-10-23 14:00:00+05:30',
+  registration_opens_at = '2026-09-15 08:00:00+05:30',
+  registration_closes_at = '2026-10-20 17:00:00+05:30'
+WHERE slug = 'annual-sports-day';
+
+UPDATE events SET
+  short_description = 'Student work from every grade, on display.',
+  description = 'Paintings, sculpture, digital art, and photography from students in every grade. Refreshments in the hall.',
+  start_date = '2026-11-06 10:00:00+05:30',
+  end_date = '2026-11-06 16:00:00+05:30',
+  registration_opens_at = '2026-09-15 08:00:00+05:30',
+  registration_closes_at = '2026-11-03 17:00:00+05:30'
+WHERE slug = 'spring-arts-exhibition';
+
+UPDATE events SET
+  short_description = 'Build and program a robot in three hours.',
+  description = 'Build and program a simple robot. No experience needed, and all parts are provided.',
+  start_date = '2026-10-09 10:00:00+05:30',
+  end_date = '2026-10-09 13:00:00+05:30',
+  registration_opens_at = '2026-09-15 08:00:00+05:30',
+  registration_closes_at = '2026-10-07 17:00:00+05:30'
+WHERE slug = 'robotics-workshop';
+
+-- New sample events
 INSERT INTO events (
   title, slug, short_description, description, category_id, status,
   start_date, end_date, location, capacity, registration_opens_at, registration_closes_at,
@@ -38,24 +69,6 @@ SELECT v.title, v.slug, v.short_description, v.description, c.id, 'published',
        v.start_date, v.end_date, v.location, v.capacity, v.reg_opens, v.reg_closes,
        v.featured, NULL
 FROM (VALUES
-  ('Annual Sports Day', 'annual-sports-day',
-   'A full day of athletics, team games, and house events.',
-   'Track and field, team games, and house events all day. Students from every grade compete; parents and teachers are welcome to watch.',
-   'sports', '2026-10-23 08:00:00+05:30'::timestamptz, '2026-10-23 14:00:00+05:30'::timestamptz,
-   'School Sports Ground', 200, '2026-09-15 08:00:00+05:30'::timestamptz, '2026-10-20 17:00:00+05:30'::timestamptz, true),
-
-  ('Spring Arts Exhibition', 'spring-arts-exhibition',
-   'Student work from every grade, on display.',
-   'Paintings, sculpture, digital art, and photography from students in every grade. Refreshments in the hall.',
-   'arts', '2026-11-06 10:00:00+05:30'::timestamptz, '2026-11-06 16:00:00+05:30'::timestamptz,
-   'School Auditorium', 150, '2026-09-15 08:00:00+05:30'::timestamptz, '2026-11-03 17:00:00+05:30'::timestamptz, true),
-
-  ('Robotics Workshop', 'robotics-workshop',
-   'Build and program a robot in three hours.',
-   'Build and program a simple robot. No experience needed, and all parts are provided.',
-   'tech', '2026-10-09 10:00:00+05:30'::timestamptz, '2026-10-09 13:00:00+05:30'::timestamptz,
-   'STEM Lab', 30, '2026-09-15 08:00:00+05:30'::timestamptz, '2026-10-07 17:00:00+05:30'::timestamptz, false),
-
   ('Inter-House Cricket Match', 'inter-house-cricket',
    'Eight houses, one trophy.',
    'The inter-house cricket tournament runs all day across two pitches. Come play or come cheer. Teams are drawn by house.',
@@ -119,17 +132,6 @@ FROM (VALUES
        location, capacity, reg_opens, reg_closes, featured)
 JOIN categories c ON c.slug = v.category_slug
 ON CONFLICT (slug) DO NOTHING;
-
--- Welcome announcement
-INSERT INTO announcements (title, content, priority, published_at, expires_at)
-VALUES (
-  'Welcome to RCCSWebComp-NC',
-  $c$Browse what's on this term, register for events, and get your tickets here. Announcements show up on this page as they are posted.$c$,
-  'high',
-  NOW(),
-  NOW() + INTERVAL '30 days'
-)
-ON CONFLICT DO NOTHING;
 
 -- Sample announcements
 INSERT INTO announcements (title, content, priority, category_id, event_id, published_at, expires_at)

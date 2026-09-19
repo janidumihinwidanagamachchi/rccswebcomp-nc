@@ -27,7 +27,7 @@ export function EventsPage() {
       <div className="container mx-auto px-4 py-12">
         <div className="mb-8">
           <h1 className="text-3xl font-bold md:text-4xl">Events</h1>
-          <p className="text-muted-foreground">Discover what&apos;s happening around campus.</p>
+          <p className="text-muted-foreground">Everything on the calendar this term.</p>
         </div>
 
         {categoriesLoading ? (

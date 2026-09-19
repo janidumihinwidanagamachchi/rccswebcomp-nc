@@ -32,7 +32,7 @@ export function HighlightCard({ highlight, showEvent }: HighlightCardProps) {
         {highlight.media_url && (
           <img
             src={highlight.media_url}
-            alt="Highlight"
+            alt="Photo from a live update"
             className="mt-3 max-h-64 w-full rounded-lg object-cover"
           />
         )}

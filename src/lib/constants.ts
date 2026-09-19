@@ -1,5 +1,3 @@
-export const APP_NAME = 'CampusPulse'
-
 export const ROLES = {
   STUDENT: 'student',
   PARENT: 'parent',

@@ -52,7 +52,7 @@ export function TicketDetailPage() {
           <div className="bg-primary p-6 text-primary-foreground">
             <div className="flex items-center gap-2">
               <Ticket className="h-6 w-6" />
-              <span className="font-bold tracking-tight">CampusPulse Ticket</span>
+              <span className="font-bold tracking-tight">RCCSWebComp-NC Ticket</span>
             </div>
           </div>
           <CardHeader>
@@ -79,8 +79,8 @@ export function TicketDetailPage() {
             </div>
 
             <div className="text-center text-xs text-muted-foreground">
-              <p>Present this QR code at the venue entrance.</p>
-              <p>Ticket holder: {registration.attendee_name}</p>
+              <p>Show this at the door.</p>
+              <p>Ticket for {registration.attendee_name}</p>
             </div>
 
             <Button variant="outline" className="w-full" onClick={() => window.print()}>

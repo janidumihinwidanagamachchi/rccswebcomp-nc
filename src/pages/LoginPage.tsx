@@ -46,12 +46,12 @@ export function LoginPage() {
       <div className="container mx-auto flex max-w-md flex-col items-center justify-center px-4 py-16">
         <Link to="/" className="mb-6 flex items-center gap-2 text-2xl font-bold">
           <Ticket className="h-8 w-8 text-primary" />
-          CampusPulse
+          RCCSWebComp-NC
         </Link>
         <Card className="w-full">
           <CardHeader className="text-center">
             <CardTitle>Welcome back</CardTitle>
-            <CardDescription>Sign in to your account to continue</CardDescription>
+            <CardDescription>Sign in to continue.</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

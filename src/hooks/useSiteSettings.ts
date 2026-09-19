@@ -51,7 +51,7 @@ export function useUpdateSiteSettings() {
 }
 
 function applySeo(settings: SiteSettings, pageTitle?: string) {
-  const brand = settings.brand.name || 'CampusPulse'
+  const brand = settings.brand.name || 'RCCSWebComp-NC'
   const siteTitle = settings.seo.title || brand
   const fullTitle = pageTitle ? `${pageTitle} | ${brand}` : siteTitle
 

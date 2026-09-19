@@ -27,7 +27,7 @@ export function CalendarList({ events, selectedDate }: CalendarListProps) {
               : 'No upcoming events'}
           </p>
           <p className="text-sm text-muted-foreground">
-            {selectedDate ? 'Pick another date or clear the filter.' : 'Check back soon!'}
+            {selectedDate ? 'Pick another date or clear the filter.' : 'Nothing on the calendar yet.'}
           </p>
         </CardContent>
       </Card>

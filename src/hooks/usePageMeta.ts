@@ -6,7 +6,7 @@ export function usePageMeta(title?: string) {
 
   useEffect(() => {
     if (!settings) return
-    const brand = settings.brand.name || 'CampusPulse'
+    const brand = settings.brand.name || 'RCCSWebComp-NC'
     const siteTitle = settings.seo.title || brand
     document.title = title ? `${title} | ${brand}` : siteTitle
   }, [settings, title])

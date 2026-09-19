@@ -43,7 +43,7 @@ export function Navbar({ className }: NavbarProps) {
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
             <Ticket className="h-5 w-5" />
           </div>
-          <span>CampusPulse</span>
+          <span>RCCSWebComp-NC</span>
         </Link>
 
         <nav className="hidden lg:flex items-center gap-6 text-sm font-medium">
@@ -109,7 +109,7 @@ export function Navbar({ className }: NavbarProps) {
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <Ticket className="h-6 w-6 text-primary" />
-                  CampusPulse
+                  RCCSWebComp-NC
                 </Link>
                 <nav className="flex flex-col gap-3">
                   {navLinks.map((link) => (

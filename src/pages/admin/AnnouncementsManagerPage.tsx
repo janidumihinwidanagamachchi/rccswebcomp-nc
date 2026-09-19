@@ -211,7 +211,7 @@ export function AnnouncementsManagerPage() {
                         variant="destructive"
                         size="sm"
                         onClick={() => {
-                          if (confirm('Delete this announcement?')) {
+                          if (confirm('Delete this announcement? This cannot be undone.')) {
                             deleteAnnouncement.mutate(announcement.id)
                           }
                         }}

@@ -12,7 +12,7 @@ export function ThemeApplier({ pageTitle }: { pageTitle?: string }) {
 
   React.useEffect(() => {
     if (!settings) return
-    const stored = localStorage.getItem('campuspulse-ui')
+    const stored = localStorage.getItem('rccswebcomp-ui')
     const hasUserOverride = stored ? JSON.parse(stored).state?.theme : false
     if (!hasUserOverride) {
       setTheme(settings.theme.mode)

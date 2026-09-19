@@ -515,21 +515,21 @@ export const DEFAULT_SETTINGS: SiteSettings = {
     display: 'Bebas Neue',
   },
   brand: {
-    name: 'CampusPulse',
+    name: 'RCCSWebComp-NC',
     motto: 'Disce Aut Discede',
     logoUrl: '',
   },
   seo: {
-    title: 'CampusPulse | School Events Command Center',
+    title: 'RCCSWebComp-NC | School Events',
     description:
-      'Discover, register, and experience every school event in one beautiful command center built for students, teachers, and parents.',
+      'School events, QR tickets, and announcements for one campus.',
     ogImageUrl: '',
   },
   hero: {
     badge: "BTUI'26 Competition Entry",
-    headline: 'Your school events, reimagined.',
+    headline: "What's on at school,\nwithout the guesswork.",
     subtitle:
-      'Discover, register, and experience every school event in one beautiful command center built for students, teachers, and parents.',
+      'See what\u2019s coming up, register in a minute, and keep your QR ticket in your pocket.',
     primaryCta: { label: 'Browse Events', href: '/events' },
     secondaryCta: { label: 'View Calendar', href: '/calendar' },
     backgroundImageUrl: '',

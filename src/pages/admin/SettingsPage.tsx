@@ -191,7 +191,7 @@ export function SettingsPage() {
           <div>
             <h1 className="text-3xl font-bold">Site Settings</h1>
             <p className="text-muted-foreground">
-              Customize every color, font, brand detail, and SEO tag.
+              Colors, fonts, branding, and SEO.
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -236,7 +236,7 @@ export function SettingsPage() {
                   <Palette className="h-5 w-5" />
                   Presets
                 </CardTitle>
-                <CardDescription>Jump-start the look with a curated preset.</CardDescription>
+                <CardDescription>Start from a preset.</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-3">
@@ -305,7 +305,7 @@ export function SettingsPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Live Preview</CardTitle>
-                  <CardDescription>See your current settings in action.</CardDescription>
+                  <CardDescription>How the site looks right now.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div className="flex flex-wrap gap-2">
@@ -386,7 +386,7 @@ export function SettingsPage() {
                   <Type className="h-5 w-5" />
                   Fonts
                 </CardTitle>
-                <CardDescription>Choose fonts loaded from Google Fonts.</CardDescription>
+                <CardDescription>Loaded from Google Fonts.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 {[

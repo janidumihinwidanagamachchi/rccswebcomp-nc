@@ -14,7 +14,7 @@ export function TicketsPage() {
       <div className="container mx-auto px-4 py-12">
         <div className="mb-8">
           <h1 className="text-3xl font-bold md:text-4xl">My Tickets</h1>
-          <p className="text-muted-foreground">All your event registrations in one place.</p>
+          <p className="text-muted-foreground">Your sign-ups and QR tickets.</p>
         </div>
 
         {isLoading ? (
@@ -34,7 +34,7 @@ export function TicketsPage() {
             <Ticket className="mb-4 h-12 w-12 text-muted-foreground" />
             <h2 className="text-xl font-semibold">No tickets yet</h2>
             <p className="mb-6 text-muted-foreground">
-              Register for an event to see your ticket here.
+              Sign up for an event and it shows up here.
             </p>
             <Button asChild>
               <Link to="/events">Browse Events</Link>

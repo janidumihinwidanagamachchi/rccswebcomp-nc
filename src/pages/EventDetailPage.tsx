@@ -148,7 +148,7 @@ export function EventDetailPage() {
 
               {/* Live Highlights Feed */}
               <div>
-                <h2 className="mb-4 text-2xl font-bold">Live Updates</h2>
+                <h2 className="mb-4 text-2xl font-bold">Live updates</h2>
                 {user && isHappeningNow && <HighlightComposer eventId={event.id} />}
                 <div className="mt-4 space-y-4">
                   {highlights && highlights.length > 0 ? (
@@ -156,7 +156,7 @@ export function EventDetailPage() {
                       <HighlightCard key={highlight.id} highlight={highlight} />
                     ))
                   ) : (
-                    <p className="text-sm text-muted-foreground">No updates yet.</p>
+                    <p className="text-sm text-muted-foreground">No updates posted yet.</p>
                   )}
                 </div>
               </div>
@@ -214,7 +214,7 @@ export function EventDetailPage() {
                 {!user ? (
                   <div className="text-center">
                     <p className="mb-4 text-sm text-muted-foreground">
-                      Sign in to register and receive your ticket.
+                      Sign in to register and get your ticket.
                     </p>
                     <Button asChild className="w-full">
                       <Link to="/auth/login">Sign In</Link>
@@ -225,7 +225,7 @@ export function EventDetailPage() {
                     <CheckCircle2 className="mx-auto mb-3 h-10 w-10 text-emerald-500" />
                     <p className="font-semibold">You&apos;re registered!</p>
                     <p className="mb-4 text-sm text-muted-foreground">
-                      View your ticket in My Tickets.
+                      Your ticket is waiting in My Tickets.
                     </p>
                     <Button asChild className="w-full">
                       <Link to="/tickets">View My Tickets</Link>
@@ -235,7 +235,7 @@ export function EventDetailPage() {
                   <div className="flex items-start gap-3 rounded-lg bg-muted p-3 text-sm">
                     <AlertCircle className="mt-0.5 h-4 w-4 text-muted-foreground" />
                     <p className="text-muted-foreground">
-                      Registration is currently closed or the event is full.
+                      Registration is closed, or the event is full.
                     </p>
                   </div>
                 ) : (
