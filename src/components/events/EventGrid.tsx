@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { EventCard } from './EventCard'
 import type { Event } from '@/types'
 
@@ -11,7 +10,7 @@ export function EventGrid({ events }: EventGridProps) {
     return (
       <div className="flex flex-col items-center justify-center rounded-xl border border-dashed py-16 text-center">
         <p className="text-lg font-medium">Nothing here yet</p>
-        <p className="text-sm text-muted-foreground">Try a different search or category.</p>
+        <p className="text-sm text-quiet-ink">Try a different search or category.</p>
       </div>
     )
   }
@@ -19,14 +18,9 @@ export function EventGrid({ events }: EventGridProps) {
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {events.map((event, index) => (
-        <motion.div
-          key={event.id}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: index * 0.05 }}
-        >
+        <div key={event.id} className="animate-fade-up" style={{ animationDelay: `${index * 50}ms` }}>
           <EventCard event={event} />
-        </motion.div>
+        </div>
       ))}
     </div>
   )

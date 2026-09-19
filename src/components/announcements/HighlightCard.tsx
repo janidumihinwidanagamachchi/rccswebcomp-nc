@@ -22,13 +22,13 @@ export function HighlightCard({ highlight, showEvent }: HighlightCardProps) {
           </Avatar>
           <div className="flex-1">
             <p className="text-sm font-medium">{highlight.author?.full_name || 'Anonymous'}</p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-quiet-ink">
               {formatDistanceToNow(toDate(highlight.created_at), { addSuffix: true })}
             </p>
           </div>
           <Badge variant="secondary">{highlight.type}</Badge>
         </div>
-        <p className="text-sm text-foreground">{highlight.content}</p>
+        <p className="text-sm text-ink">{highlight.content}</p>
         {highlight.media_url && (
           <img
             src={highlight.media_url}
@@ -37,7 +37,7 @@ export function HighlightCard({ highlight, showEvent }: HighlightCardProps) {
           />
         )}
         {showEvent && highlight.event && (
-          <p className="mt-2 text-xs text-muted-foreground">#{highlight.event.title}</p>
+          <p className="mt-2 text-xs text-quiet-ink">#{highlight.event.title}</p>
         )}
       </CardContent>
     </Card>

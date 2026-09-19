@@ -19,7 +19,7 @@ export function EventsManagerPage() {
         <div className="mb-8 flex items-end justify-between">
           <div>
             <h1 className="text-3xl font-bold">Manage Events</h1>
-            <p className="text-muted-foreground">Create, edit, and publish school events.</p>
+            <p className="text-quiet-ink">Create, edit, and publish school events.</p>
           </div>
           <Button asChild>
             <Link to="/admin/events/new">
@@ -51,7 +51,7 @@ export function EventsManagerPage() {
                           {event.status}
                         </Badge>
                       </div>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-quiet-ink">
                         {formatDate(event.start_date)} • {event.location} •{' '}
                         {event.registration_count || 0} registered
                       </p>

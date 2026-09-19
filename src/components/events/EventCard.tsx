@@ -26,7 +26,7 @@ export function EventCard({ event }: EventCardProps) {
 
   return (
     <Card className="group overflow-hidden">
-      <div className="relative h-40 overflow-hidden bg-muted">
+      <div className="relative h-40 overflow-hidden bg-quiet">
         {event.image_url ? (
           <img
             src={event.image_url}
@@ -34,14 +34,14 @@ export function EventCard({ event }: EventCardProps) {
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5">
-            <Calendar className="h-10 w-10 text-primary/40" />
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand/20 to-brand/5">
+            <Calendar className="h-10 w-10 text-brand/40" />
           </div>
         )}
         {event.featured && (
-          <Badge className="absolute left-3 top-3 bg-primary text-primary-foreground">Featured</Badge>
+          <Badge className="absolute left-3 top-3 bg-brand text-brand-ink">Featured</Badge>
         )}
-        <div className="absolute right-3 top-3 flex items-center gap-1.5 rounded-full bg-background/90 px-2 py-1 text-xs font-medium backdrop-blur">
+        <div className="absolute right-3 top-3 flex items-center gap-1.5 rounded-full bg-canvas/90 px-2 py-1 text-xs font-medium backdrop-blur">
           <span className={cn('relative flex h-2 w-2')}>
             <span className={cn('absolute inline-flex h-full w-full animate-pulse-ring rounded-full opacity-75', pulseColor)} />
             <span className={cn('relative inline-flex h-2 w-2 rounded-full', pulseColor)} />
@@ -54,11 +54,11 @@ export function EventCard({ event }: EventCardProps) {
       <CardContent className="p-5">
         <div className="mb-3 flex items-center gap-2">
           <Badge variant="secondary">{event.category?.name || 'Event'}</Badge>
-          <span className="text-xs text-muted-foreground">{formatDate(event.start_date)}</span>
+          <span className="text-xs text-quiet-ink">{formatDate(event.start_date)}</span>
         </div>
         <h3 className="mb-2 text-lg font-semibold leading-tight">{event.title}</h3>
-        <p className="mb-4 line-clamp-2 text-sm text-muted-foreground">{event.short_description}</p>
-        <div className="mb-4 flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
+        <p className="mb-4 line-clamp-2 text-sm text-quiet-ink">{event.short_description}</p>
+        <div className="mb-4 flex flex-wrap items-center gap-4 text-xs text-quiet-ink">
           <span className="flex items-center gap-1">
             <MapPin className="h-3.5 w-3.5" />
             {event.location}

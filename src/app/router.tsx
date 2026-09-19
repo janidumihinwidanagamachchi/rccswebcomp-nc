@@ -16,6 +16,7 @@ import { EventsManagerPage } from '@/pages/admin/EventsManagerPage'
 import { EventFormPage } from '@/pages/admin/EventFormPage'
 import { AnnouncementsManagerPage } from '@/pages/admin/AnnouncementsManagerPage'
 import { RegistrationsManagerPage } from '@/pages/admin/RegistrationsManagerPage'
+import { TicketValidatePage } from '@/pages/admin/TicketValidatePage'
 import { SettingsPage } from '@/pages/admin/SettingsPage'
 
 function ProtectedRoute({ requireAdmin = false }: { requireAdmin?: boolean }) {
@@ -25,7 +26,7 @@ function ProtectedRoute({ requireAdmin = false }: { requireAdmin?: boolean }) {
     return (
       <Shell>
         <div className="container mx-auto px-4 py-20 text-center">
-          <p className="text-muted-foreground">Loading...</p>
+          <p className="text-quiet-ink">Loading...</p>
         </div>
       </Shell>
     )
@@ -70,6 +71,7 @@ export function AppRouter() {
         <Route path="/admin/events/:id/edit" element={<EventFormPage />} />
         <Route path="/admin/announcements" element={<AnnouncementsManagerPage />} />
         <Route path="/admin/registrations" element={<RegistrationsManagerPage />} />
+        <Route path="/admin/validate" element={<TicketValidatePage />} />
         <Route path="/admin/settings" element={<SettingsPage />} />
       </Route>
 

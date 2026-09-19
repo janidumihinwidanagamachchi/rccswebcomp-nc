@@ -1,67 +1,40 @@
 import * as React from 'react'
 import { cn } from '@/lib/utils'
 
-const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, onMouseMove, ...props }, ref) => {
-    const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-      const rect = event.currentTarget.getBoundingClientRect()
-      event.currentTarget.style.setProperty('--mx', `${event.clientX - rect.left}px`)
-      event.currentTarget.style.setProperty('--my', `${event.clientY - rect.top}px`)
-      onMouseMove?.(event)
-    }
-
-    return (
-      <div
-        ref={ref}
-        onMouseMove={handleMouseMove}
-        className={cn(
-          'card-spotlight card-texture relative overflow-hidden rounded-xl border bg-card/60 text-card-foreground shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl',
-          className
-        )}
-        {...props}
-      />
-    )
+function Card({ className, onMouseMove, ...props }: React.ComponentProps<'div'>) {
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+    event.currentTarget.style.setProperty('--mx', `${event.clientX - rect.left}px`)
+    event.currentTarget.style.setProperty('--my', `${event.clientY - rect.top}px`)
+    onMouseMove?.(event)
   }
-)
-Card.displayName = 'Card'
 
-const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('flex flex-col space-y-1.5 p-6', className)} {...props} />
-  )
-)
-CardHeader.displayName = 'CardHeader'
-
-const CardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
-  ({ className, ...props }, ref) => (
-    <h3
-      ref={ref}
-      className={cn('text-lg font-semibold leading-none tracking-tight', className)}
+  return (
+    <div
+      onMouseMove={handleMouseMove}
+      className={cn(
+        'card-spotlight card-texture relative overflow-hidden rounded-xl border bg-panel/60 text-panel-ink shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl',
+        className
+      )}
       {...props}
     />
   )
-)
-CardTitle.displayName = 'CardTitle'
+}
 
-const CardDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
-  ({ className, ...props }, ref) => (
-    <p ref={ref} className={cn('text-sm text-muted-foreground', className)} {...props} />
-  )
-)
-CardDescription.displayName = 'CardDescription'
+function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {
+  return <div className={cn('flex flex-col space-y-1.5 p-6', className)} {...props} />
+}
 
-const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('p-6 pt-0', className)} {...props} />
-  )
-)
-CardContent.displayName = 'CardContent'
+function CardTitle({ className, ...props }: React.ComponentProps<'h3'>) {
+  return <h3 className={cn('text-lg font-semibold leading-none tracking-tight', className)} {...props} />
+}
 
-const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('flex items-center p-6 pt-0', className)} {...props} />
-  )
-)
-CardFooter.displayName = 'CardFooter'
+function CardDescription({ className, ...props }: React.ComponentProps<'p'>) {
+  return <p className={cn('text-sm text-quiet-ink', className)} {...props} />
+}
 
-export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
+function CardContent({ className, ...props }: React.ComponentProps<'div'>) {
+  return <div className={cn('p-6 pt-0', className)} {...props} />
+}
+
+export { Card, CardHeader, CardTitle, CardDescription, CardContent }

@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { LayoutDashboard, CalendarDays, Megaphone, ClipboardList, Settings, ArrowLeft } from 'lucide-react'
+import { LayoutDashboard, CalendarDays, Megaphone, ClipboardList, ScanLine, Settings, ArrowLeft } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const adminLinks = [
@@ -7,6 +7,7 @@ const adminLinks = [
   { label: 'Events', href: '/admin/events', icon: CalendarDays },
   { label: 'Announcements', href: '/admin/announcements', icon: Megaphone },
   { label: 'Registrations', href: '/admin/registrations', icon: ClipboardList },
+  { label: 'Validate', href: '/admin/validate', icon: ScanLine },
   { label: 'Settings', href: '/admin/settings', icon: Settings },
 ]
 
@@ -19,11 +20,11 @@ export function AdminShell({ children }: AdminShellProps) {
 
   return (
     <div className="flex min-h-[calc(100vh-64px)] flex-col md:flex-row">
-      <aside className="w-full border-b bg-muted/30 md:w-64 md:border-b-0 md:border-r">
+      <aside className="w-full border-b bg-quiet/30 md:w-64 md:border-b-0 md:border-r">
         <div className="flex flex-col gap-1 p-4">
           <Link
             to="/"
-            className="mb-4 flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground"
+            className="mb-4 flex items-center gap-2 text-sm font-medium text-quiet-ink hover:text-ink"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to site
@@ -38,8 +39,8 @@ export function AdminShell({ children }: AdminShellProps) {
                 className={cn(
                   'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
                   active
-                    ? 'bg-primary text-primary-foreground'
-                    : 'text-muted-foreground hover:bg-accent hover:text-[#c0c0c0]'
+                    ? 'bg-brand text-brand-ink'
+                    : 'text-quiet-ink hover:bg-highlight hover:text-[#c0c0c0]'
                 )}
               >
                 <Icon className="h-4 w-4" />

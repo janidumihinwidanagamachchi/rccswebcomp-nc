@@ -124,20 +124,20 @@ export function EventFormPage() {
                 <div className="space-y-1 md:col-span-2">
                   <Label htmlFor="title">Event Title</Label>
                   <Input id="title" {...register('title')} />
-                  {errors.title && <p className="text-xs text-destructive">{errors.title.message}</p>}
+                  {errors.title && <p className="text-xs text-danger">{errors.title.message}</p>}
                 </div>
                 <div className="space-y-1 md:col-span-2">
                   <Label htmlFor="shortDescription">Short Description</Label>
                   <Input id="shortDescription" {...register('shortDescription')} />
                   {errors.shortDescription && (
-                    <p className="text-xs text-destructive">{errors.shortDescription.message}</p>
+                    <p className="text-xs text-danger">{errors.shortDescription.message}</p>
                   )}
                 </div>
                 <div className="space-y-1 md:col-span-2">
                   <Label htmlFor="description">Full Description</Label>
                   <Textarea id="description" rows={6} {...register('description')} />
                   {errors.description && (
-                    <p className="text-xs text-destructive">{errors.description.message}</p>
+                    <p className="text-xs text-danger">{errors.description.message}</p>
                   )}
                 </div>
                 <div className="space-y-1">
@@ -162,36 +162,36 @@ export function EventFormPage() {
                     </SelectContent>
                   </Select>
                   {errors.categoryId && (
-                    <p className="text-xs text-destructive">{errors.categoryId.message}</p>
+                    <p className="text-xs text-danger">{errors.categoryId.message}</p>
                   )}
                 </div>
                 <div className="space-y-1">
                   <Label htmlFor="location">Location</Label>
                   <Input id="location" {...register('location')} />
-                  {errors.location && <p className="text-xs text-destructive">{errors.location.message}</p>}
+                  {errors.location && <p className="text-xs text-danger">{errors.location.message}</p>}
                 </div>
                 <div className="space-y-1">
                   <Label htmlFor="startDate">Start Date</Label>
                   <Input id="startDate" type="datetime-local" {...register('startDate')} />
-                  {errors.startDate && <p className="text-xs text-destructive">{errors.startDate.message}</p>}
+                  {errors.startDate && <p className="text-xs text-danger">{errors.startDate.message}</p>}
                 </div>
                 <div className="space-y-1">
                   <Label htmlFor="endDate">End Date</Label>
                   <Input id="endDate" type="datetime-local" {...register('endDate')} />
-                  {errors.endDate && <p className="text-xs text-destructive">{errors.endDate.message}</p>}
+                  {errors.endDate && <p className="text-xs text-danger">{errors.endDate.message}</p>}
                 </div>
                 <div className="space-y-1">
                   <Label htmlFor="registrationOpensAt">Registration Opens</Label>
                   <Input id="registrationOpensAt" type="datetime-local" {...register('registrationOpensAt')} />
                   {errors.registrationOpensAt && (
-                    <p className="text-xs text-destructive">{errors.registrationOpensAt.message}</p>
+                    <p className="text-xs text-danger">{errors.registrationOpensAt.message}</p>
                   )}
                 </div>
                 <div className="space-y-1">
                   <Label htmlFor="registrationClosesAt">Registration Closes</Label>
                   <Input id="registrationClosesAt" type="datetime-local" {...register('registrationClosesAt')} />
                   {errors.registrationClosesAt && (
-                    <p className="text-xs text-destructive">{errors.registrationClosesAt.message}</p>
+                    <p className="text-xs text-danger">{errors.registrationClosesAt.message}</p>
                   )}
                 </div>
                 <div className="space-y-1">

@@ -49,11 +49,6 @@ export function formatDateTimeLocal(date: string | Date) {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`
 }
 
-export function isEventLive(start: string | Date, end: string | Date) {
-  const now = new Date()
-  return toDate(start) <= now && toDate(end) >= now
-}
-
 export function isRegistrationOpen(
   opensAt: string | Date,
   closesAt: string | Date,

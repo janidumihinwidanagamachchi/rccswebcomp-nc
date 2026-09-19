@@ -32,7 +32,7 @@ export function HighlightComposer({ eventId }: HighlightComposerProps) {
   }
 
   return (
-    <div className="card-texture rounded-xl border bg-card/60 p-4 backdrop-blur-md">
+    <div className="card-texture rounded-xl border bg-panel/60 p-4 backdrop-blur-md">
       <h4 className="mb-3 text-sm font-semibold">Share a live update</h4>
       <Tabs value={type} onValueChange={(v) => setType(v as HighlightType)}>
         <TabsList className="mb-3">

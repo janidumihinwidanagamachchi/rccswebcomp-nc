@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
 import { ArrowRight, CalendarDays, Ticket, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -27,22 +26,11 @@ export function HomePage() {
 
   return (
     <Shell>
-      {/* Hero Section */}
       <section className="relative flex min-h-[calc(100vh-64px)] flex-col items-center justify-center overflow-hidden border-b py-12 md:py-16">
-        {/* Animated gradient mesh */}
-        <div className="absolute inset-0 -z-20 bg-gradient-to-br from-primary/10 via-background to-accent/5" />
-        <motion.div
-          className="absolute -left-20 -top-20 h-72 w-72 rounded-full bg-primary/20 blur-[100px]"
-          animate={{ x: [0, 40, 0], y: [0, 30, 0], opacity: [0.5, 0.8, 0.5] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-accent/15 blur-[120px]"
-          animate={{ x: [0, -30, 0], y: [0, -40, 0], opacity: [0.4, 0.7, 0.4] }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-        />
+        <div className="absolute inset-0 -z-20 bg-gradient-to-br from-brand/10 via-canvas to-highlight/5" />
+        <div className="animate-drift-a absolute -left-20 -top-20 h-72 w-72 rounded-full bg-brand/20 blur-[100px]" />
+        <div className="animate-drift-b absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-highlight/15 blur-[120px]" />
 
-        {/* Optional background image overlay */}
         {hero?.backgroundImageUrl && (
           <div
             className="absolute inset-0 -z-10 bg-cover bg-center opacity-20"
@@ -50,7 +38,6 @@ export function HomePage() {
           />
         )}
 
-        {/* Floating particles */}
         {Array.from({ length: 16 }).map((_, i) => {
           const size = 4 + Math.random() * 8
           const left = Math.random() * 100
@@ -58,23 +45,24 @@ export function HomePage() {
           const duration = 4 + Math.random() * 6
           const delay = Math.random() * 4
           return (
-            <motion.div
+            <div
               key={i}
-              className="pointer-events-none absolute rounded-full bg-primary/30"
-              style={{ left: `${left}%`, top: `${top}%`, width: size, height: size }}
-              animate={{ y: [-20, 20, -20], opacity: [0.2, 0.6, 0.2] }}
-              transition={{ duration, delay, repeat: Infinity, ease: 'easeInOut' }}
+              className="animate-float pointer-events-none absolute rounded-full bg-brand/30"
+              style={{
+                left: `${left}%`,
+                top: `${top}%`,
+                width: size,
+                height: size,
+                animationDuration: `${duration}s`,
+                animationDelay: `${delay}s`,
+              }}
             />
           )
         })}
 
         <div className="container relative z-10 mx-auto px-4">
           <div className="mx-auto max-w-4xl text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: 'easeOut' }}
-            >
+            <div className="animate-fade-up">
               <Badge variant="secondary" className="mb-5 rounded-full px-4 py-1.5 text-sm shadow-sm">
                 <Sparkles className="mr-1.5 h-3.5 w-3.5" />
                 {hero?.badge || "BTUI'26 Competition Entry"}
@@ -90,26 +78,22 @@ export function HomePage() {
                 ) : (
                   <>
                     What&apos;s on at school,
-                    <span className="block text-primary">without the guesswork.</span>
+                    <span className="block text-brand">without the guesswork.</span>
                   </>
                 )}
               </h1>
-              <motion.p
-                className="mx-auto mb-10 max-w-2xl text-lg text-muted-foreground md:text-xl"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.15 }}
+              <p
+                className="animate-fade-up mx-auto mb-10 max-w-2xl text-lg text-quiet-ink md:text-xl"
+                style={{ animationDelay: '150ms' }}
               >
                 {hero?.subtitle ||
                   'See what\u2019s coming up, register in a minute, and keep your QR ticket in your pocket.'}
-              </motion.p>
-              <motion.div
-                className="flex flex-col justify-center gap-3 sm:flex-row"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
+              </p>
+              <div
+                className="animate-fade-up flex flex-col justify-center gap-3 sm:flex-row"
+                style={{ animationDelay: '300ms' }}
               >
-                <Button asChild size="lg" className="shadow-lg shadow-primary/20">
+                <Button asChild size="lg" className="shadow-lg shadow-brand/20">
                   <Link to={hero?.primaryCta.href || '/events'}>
                     {hero?.primaryCta.label || 'Browse Events'}
                     <ArrowRight className="ml-2 h-5 w-5" />
@@ -121,21 +105,20 @@ export function HomePage() {
                     {hero?.secondaryCta.label || 'View Calendar'}
                   </Link>
                 </Button>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Next Big Event Countdown */}
       {hero?.showCountdown !== false && nextEvent && (
         <section className="container mx-auto px-4 pt-8">
-          <Card className="mx-auto max-w-2xl border-primary/20 bg-primary/5">
+          <Card className="mx-auto max-w-2xl border-brand/20 bg-brand/5">
             <CardContent className="flex flex-col items-center justify-between gap-4 p-6 sm:flex-row">
               <div>
-                <p className="text-sm font-medium text-primary">Up next</p>
+                <p className="text-sm font-medium text-brand">Up next</p>
                 <h2 className="text-xl font-semibold">{nextEvent.title}</h2>
-                <p className="text-sm text-muted-foreground">{nextEvent.short_description}</p>
+                <p className="text-sm text-quiet-ink">{nextEvent.short_description}</p>
               </div>
               <Countdown
                 targetDate={nextEvent.start_date}
@@ -150,12 +133,11 @@ export function HomePage() {
         </section>
       )}
 
-      {/* Featured Events */}
       <section className="container mx-auto px-4 py-16">
         <div className="mb-8 flex items-end justify-between">
           <div>
             <h2 className="text-2xl font-bold md:text-3xl">Featured Events</h2>
-            <p className="text-muted-foreground">Worth planning your week around.</p>
+            <p className="text-quiet-ink">Worth planning your week around.</p>
           </div>
           <Button asChild variant="ghost">
             <Link to="/events">View all</Link>
@@ -172,12 +154,11 @@ export function HomePage() {
         )}
       </section>
 
-      {/* Announcements */}
       <section className="container mx-auto px-4 py-16">
         <div className="mb-8 flex items-end justify-between">
           <div>
             <h2 className="text-2xl font-bold md:text-3xl">Latest Announcements</h2>
-            <p className="text-muted-foreground">Notices and changes from staff.</p>
+            <p className="text-quiet-ink">Notices and changes from staff.</p>
           </div>
           <Button asChild variant="ghost">
             <Link to="/announcements">View all</Link>
@@ -198,11 +179,10 @@ export function HomePage() {
         )}
       </section>
 
-      {/* Quick Links */}
       <section className="container mx-auto px-4 py-16">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { label: 'Browse Events', desc: 'See what&apos;s coming up', href: '/events', icon: CalendarDays },
+            { label: 'Browse Events', desc: "See what's coming up", href: '/events', icon: CalendarDays },
             { label: 'My Tickets', desc: 'Your sign-ups and QR codes', href: '/tickets', icon: Ticket },
             { label: 'Calendar', desc: 'The term at a glance', href: '/calendar', icon: CalendarDays },
             { label: 'Announcements', desc: 'What staff need you to know', href: '/announcements', icon: Sparkles },
@@ -211,9 +191,9 @@ export function HomePage() {
             return (
               <Card key={item.label} className="transition-shadow hover:shadow-md">
                 <CardContent className="p-5">
-                  <Icon className="mb-3 h-8 w-8 text-primary" />
+                  <Icon className="mb-3 h-8 w-8 text-brand" />
                   <h3 className="font-semibold">{item.label}</h3>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                  <p className="text-sm text-quiet-ink">{item.desc}</p>
                 </CardContent>
               </Card>
             )

@@ -17,7 +17,7 @@ export function QRCodeDisplay({ value, size = 200 }: QRCodeDisplayProps) {
           includeMargin
           bgColor="transparent"
           fgColor="currentColor"
-          className="text-foreground"
+          className="text-ink"
         />
       </CardContent>
     </Card>

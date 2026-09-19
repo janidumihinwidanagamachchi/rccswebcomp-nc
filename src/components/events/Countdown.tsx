@@ -50,7 +50,7 @@ export function Countdown({
 
   if (label === 'Event ended') {
     return (
-      <div className={cn('flex items-center gap-2 text-sm text-muted-foreground', className)}>
+      <div className={cn('flex items-center gap-2 text-sm text-quiet-ink', className)}>
         <span className="h-2 w-2 rounded-full bg-slate-400" />
         Event has ended
       </div>
@@ -78,14 +78,14 @@ export function Countdown({
 
   return (
     <div className={cn('space-y-1', className)}>
-      <p className="text-xs font-medium text-muted-foreground">{label}</p>
+      <p className="text-xs font-medium text-quiet-ink">{label}</p>
       <div className="flex items-center gap-2">
         {blocks.map((block, i) => (
           <div key={i} className="flex flex-col items-center">
-            <div className="flex h-9 w-9 items-center justify-center rounded-md bg-muted text-sm font-bold">
+            <div className="flex h-9 w-9 items-center justify-center rounded-md bg-quiet text-sm font-bold">
               {String(block.value).padStart(2, '0')}
             </div>
-            <span className="text-[10px] text-muted-foreground">{block.label}</span>
+            <span className="text-[10px] text-quiet-ink">{block.label}</span>
           </div>
         ))}
       </div>

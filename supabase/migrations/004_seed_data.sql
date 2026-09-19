@@ -13,6 +13,7 @@ ON CONFLICT (slug) DO NOTHING;
 -- Authentication > Users > Add User
 -- Email: admin@rccswebcomp.demo
 -- Password: DemoAdmin123!
+-- Optional user metadata: {"role": "admin"} (the seed below fixes it either way)
 DO $$
 DECLARE
   admin_user_id UUID;
@@ -20,11 +21,12 @@ BEGIN
   SELECT id INTO admin_user_id FROM auth.users WHERE email = 'admin@rccswebcomp.demo' LIMIT 1;
 
   IF admin_user_id IS NOT NULL THEN
-    UPDATE public.profiles
+    INSERT INTO public.profiles (id, full_name, role, created_at, updated_at)
+    VALUES (admin_user_id, 'Demo Admin', 'admin', NOW(), NOW())
+    ON CONFLICT (id) DO UPDATE
     SET role = 'admin',
-        full_name = 'Demo Admin',
-        updated_at = NOW()
-    WHERE id = admin_user_id;
+        full_name = COALESCE(public.profiles.full_name, EXCLUDED.full_name, 'Demo Admin'),
+        updated_at = NOW();
   END IF;
 END $$;
 

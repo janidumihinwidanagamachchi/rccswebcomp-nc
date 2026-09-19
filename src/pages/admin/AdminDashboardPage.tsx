@@ -27,7 +27,7 @@ export function AdminDashboardPage() {
       <AdminShell>
         <div className="mb-8">
           <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-          <p className="text-muted-foreground">Events, sign-ups, and announcements at a glance.</p>
+          <p className="text-quiet-ink">Events, sign-ups, and announcements at a glance.</p>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -37,13 +37,13 @@ export function AdminDashboardPage() {
               <Card key={stat.label} className="relative overflow-hidden">
                 <span
                   aria-hidden="true"
-                  className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"
+                  className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand/40 to-transparent"
                 />
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                  <CardTitle className="text-xs font-medium uppercase tracking-wider text-quiet-ink">
                     {stat.label}
                   </CardTitle>
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand">
                     <Icon className="h-4 w-4" />
                   </span>
                 </CardHeader>

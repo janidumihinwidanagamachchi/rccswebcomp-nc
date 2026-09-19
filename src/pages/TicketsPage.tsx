@@ -14,7 +14,7 @@ export function TicketsPage() {
       <div className="container mx-auto px-4 py-12">
         <div className="mb-8">
           <h1 className="text-3xl font-bold md:text-4xl">My Tickets</h1>
-          <p className="text-muted-foreground">Your sign-ups and QR tickets.</p>
+          <p className="text-quiet-ink">Your sign-ups and QR tickets.</p>
         </div>
 
         {isLoading ? (
@@ -31,9 +31,9 @@ export function TicketsPage() {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center rounded-xl border border-dashed py-20 text-center">
-            <Ticket className="mb-4 h-12 w-12 text-muted-foreground" />
+            <Ticket className="mb-4 h-12 w-12 text-quiet-ink" />
             <h2 className="text-xl font-semibold">No tickets yet</h2>
-            <p className="mb-6 text-muted-foreground">
+            <p className="mb-6 text-quiet-ink">
               Sign up for an event and it shows up here.
             </p>
             <Button asChild>

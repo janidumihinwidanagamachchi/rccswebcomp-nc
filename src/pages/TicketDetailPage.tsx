@@ -49,7 +49,7 @@ export function TicketDetailPage() {
         </Button>
 
         <Card className="mx-auto max-w-md overflow-hidden">
-          <div className="bg-primary p-6 text-primary-foreground">
+          <div className="bg-brand p-6 text-brand-ink">
             <div className="flex items-center gap-2">
               <Ticket className="h-6 w-6" />
               <span className="font-bold tracking-tight">RCCSWebComp-NC Ticket</span>
@@ -63,22 +63,22 @@ export function TicketDetailPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2 text-sm">
-              <div className="flex items-center gap-2 text-muted-foreground">
+              <div className="flex items-center gap-2 text-quiet-ink">
                 <CalendarDays className="h-4 w-4" />
                 {formatDateTime(event.start_date)}
               </div>
-              <div className="flex items-center gap-2 text-muted-foreground">
+              <div className="flex items-center gap-2 text-quiet-ink">
                 <MapPin className="h-4 w-4" />
                 {event.location}
               </div>
             </div>
 
-            <div className="flex flex-col items-center justify-center rounded-xl bg-muted p-6">
+            <div className="flex flex-col items-center justify-center rounded-xl bg-quiet p-6">
               <QRCodeDisplay value={registration.qr_code_data} size={200} />
               <p className="mt-4 font-mono text-sm font-medium">{registration.ticket_number}</p>
             </div>
 
-            <div className="text-center text-xs text-muted-foreground">
+            <div className="text-center text-xs text-quiet-ink">
               <p>Show this at the door.</p>
               <p>Ticket for {registration.attendee_name}</p>
             </div>

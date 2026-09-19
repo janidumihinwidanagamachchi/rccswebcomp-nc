@@ -105,7 +105,7 @@ export function AnnouncementsManagerPage() {
         <div className="mb-8 flex items-end justify-between">
           <div>
             <h1 className="text-3xl font-bold">Announcements</h1>
-            <p className="text-muted-foreground">Publish and manage school announcements.</p>
+            <p className="text-quiet-ink">Publish and manage school announcements.</p>
           </div>
           <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <DialogTrigger asChild>
@@ -122,12 +122,12 @@ export function AnnouncementsManagerPage() {
                 <div className="space-y-1">
                   <Label htmlFor="title">Title</Label>
                   <Input id="title" {...register('title')} />
-                  {errors.title && <p className="text-xs text-destructive">{errors.title.message}</p>}
+                  {errors.title && <p className="text-xs text-danger">{errors.title.message}</p>}
                 </div>
                 <div className="space-y-1">
                   <Label htmlFor="content">Content</Label>
                   <Textarea id="content" rows={4} {...register('content')} />
-                  {errors.content && <p className="text-xs text-destructive">{errors.content.message}</p>}
+                  {errors.content && <p className="text-xs text-danger">{errors.content.message}</p>}
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="space-y-1">
@@ -200,7 +200,7 @@ export function AnnouncementsManagerPage() {
                         <h3 className="font-semibold">{announcement.title}</h3>
                         <Badge variant="secondary">{announcement.priority}</Badge>
                       </div>
-                      <p className="line-clamp-1 text-sm text-muted-foreground">{announcement.content}</p>
+                      <p className="line-clamp-1 text-sm text-quiet-ink">{announcement.content}</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <Button variant="outline" size="sm" onClick={() => openEdit(announcement)}>

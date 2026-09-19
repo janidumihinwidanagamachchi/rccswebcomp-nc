@@ -3,17 +3,17 @@ import { Ticket, Heart } from 'lucide-react'
 
 export function Footer() {
   return (
-    <footer className="border-t bg-background py-10">
+    <footer className="border-t bg-canvas/80 backdrop-blur-md py-10">
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <Link to="/" className="flex items-center gap-2 font-bold text-lg">
-            <Ticket className="h-5 w-5 text-primary" />
+            <Ticket className="h-5 w-5 text-brand" />
             RCCSWebComp-NC
           </Link>
-          <p className="text-sm text-muted-foreground text-center md:text-left">
+          <p className="text-sm text-quiet-ink text-center md:text-left">
             Events, tickets, and announcements for one school.
           </p>
-          <p className="flex items-center gap-1 text-sm text-muted-foreground">
+          <p className="flex items-center gap-1 text-sm text-quiet-ink">
             Made with <Heart className="h-4 w-4 text-rose-500" /> for BTUI&apos;26
           </p>
         </div>

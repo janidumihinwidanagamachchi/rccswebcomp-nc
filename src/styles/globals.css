@@ -9,25 +9,25 @@
   --font-accent: var(--font-accent);
   --font-mono: var(--font-mono);
 
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
+  --color-canvas: var(--canvas);
+  --color-ink: var(--ink);
+  --color-panel: var(--panel);
+  --color-panel-ink: var(--panel-ink);
+  --color-floating: var(--floating);
+  --color-floating-ink: var(--floating-ink);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-alt: var(--alt);
+  --color-alt-ink: var(--alt-ink);
+  --color-quiet: var(--quiet);
+  --color-quiet-ink: var(--quiet-ink);
+  --color-highlight: var(--highlight);
+  --color-highlight-ink: var(--highlight-ink);
+  --color-danger: var(--danger);
+  --color-danger-ink: var(--danger-ink);
+  --color-line: var(--line);
+  --color-field: var(--field);
+  --color-focus: var(--focus);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -41,50 +41,50 @@
   --font-accent: "Domine", ui-serif, Georgia, "Times New Roman", serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
-  --background: #ffffff;
-  --foreground: #0f172a;
-  --card: #ffffff;
-  --card-foreground: #0f172a;
-  --popover: #ffffff;
-  --popover-foreground: #0f172a;
-  --primary: #0b4ea2;
-  --primary-foreground: #ffffff;
-  --secondary: #f1f5f9;
-  --secondary-foreground: #0f172a;
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
-  --accent: #E2C813;
-  --accent-foreground: #0f172a;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #0b4ea2;
+  --canvas: #ffffff;
+  --ink: #0f172a;
+  --panel: #ffffff;
+  --panel-ink: #0f172a;
+  --floating: #ffffff;
+  --floating-ink: #0f172a;
+  --brand: #0b4ea2;
+  --brand-ink: #ffffff;
+  --alt: #f1f5f9;
+  --alt-ink: #0f172a;
+  --quiet: #f1f5f9;
+  --quiet-ink: #64748b;
+  --highlight: #E2C813;
+  --highlight-ink: #0f172a;
+  --danger: #ef4444;
+  --danger-ink: #ffffff;
+  --line: #e2e8f0;
+  --field: #e2e8f0;
+  --focus: #0b4ea2;
   --radius: 0.75rem;
 
   color-scheme: light;
 }
 
 .dark {
-  --background: #020617;
-  --foreground: #f8fafc;
-  --card: #0f172a;
-  --card-foreground: #f8fafc;
-  --popover: #0f172a;
-  --popover-foreground: #f8fafc;
-  --primary: #3b82f6;
-  --primary-foreground: #ffffff;
-  --secondary: #1e293b;
-  --secondary-foreground: #f8fafc;
-  --muted: #1e293b;
-  --muted-foreground: #94a3b8;
-  --accent: #E2C813;
-  --accent-foreground: #0f172a;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: #1e293b;
-  --input: #1e293b;
-  --ring: #3b82f6;
+  --canvas: #020617;
+  --ink: #f8fafc;
+  --panel: #0f172a;
+  --panel-ink: #f8fafc;
+  --floating: #0f172a;
+  --floating-ink: #f8fafc;
+  --brand: #3b82f6;
+  --brand-ink: #ffffff;
+  --alt: #1e293b;
+  --alt-ink: #f8fafc;
+  --quiet: #1e293b;
+  --quiet-ink: #94a3b8;
+  --highlight: #E2C813;
+  --highlight-ink: #0f172a;
+  --danger: #ef4444;
+  --danger-ink: #ffffff;
+  --line: #1e293b;
+  --field: #1e293b;
+  --focus: #3b82f6;
 
   color-scheme: dark;
 }
@@ -103,7 +103,7 @@ h6 {
 }
 
 * {
-  border-color: var(--border);
+  border-color: var(--line);
 }
 
 html,
@@ -116,8 +116,8 @@ html {
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
+  background-color: var(--canvas);
+  color: var(--ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -127,7 +127,7 @@ body {
 .card-texture {
   background-image: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--foreground) 5%, transparent),
+    color-mix(in srgb, var(--ink) 5%, transparent),
     transparent 42%
   );
 }
@@ -141,7 +141,7 @@ body {
   border-radius: inherit;
   background: radial-gradient(
     420px circle at var(--mx, 50%) var(--my, 50%),
-    color-mix(in srgb, var(--primary) 14%, transparent),
+    color-mix(in srgb, var(--brand) 14%, transparent),
     transparent 65%
   );
   opacity: 0;
@@ -154,8 +154,8 @@ body {
 }
 
 ::selection {
-  background-color: var(--primary);
-  color: var(--primary-foreground);
+  background-color: var(--brand);
+  color: var(--brand-ink);
 }
 
 /* Custom scrollbar */
@@ -169,12 +169,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
+  background: var(--line);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--muted-foreground);
+  background: var(--quiet-ink);
 }
 
 /* Utility animation helpers */
@@ -191,6 +191,79 @@ body {
 
 .animate-pulse-ring {
   animation: pulse-ring 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.5s ease-out both;
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(-16px);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(16px);
+    opacity: 0.6;
+  }
+}
+
+.animate-float {
+  animation: float-soft 6s ease-in-out infinite;
+}
+
+@keyframes drift-a {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(40px, 30px);
+    opacity: 0.8;
+  }
+}
+
+@keyframes drift-b {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translate(-30px, -40px);
+    opacity: 0.7;
+  }
+}
+
+.animate-drift-a {
+  animation: drift-a 8s ease-in-out infinite;
+}
+
+.animate-drift-b {
+  animation: drift-b 10s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-float,
+  .animate-drift-a,
+  .animate-drift-b,
+  .animate-pulse-ring {
+    animation: none;
+  }
 }
 
 @keyframes fade-in {

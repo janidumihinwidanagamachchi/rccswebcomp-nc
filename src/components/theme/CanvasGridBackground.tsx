@@ -50,7 +50,7 @@ export function CanvasGridBackground() {
     let lineColor = FALLBACK_LINE_COLOR
 
     function updateLineColor() {
-      const accent = getCssVar('--accent')
+      const accent = getCssVar('--highlight')
       if (accent && accent !== lastAccentHex) {
         lastAccentHex = accent
         lineColor = hexToRgb(accent) ?? FALLBACK_LINE_COLOR

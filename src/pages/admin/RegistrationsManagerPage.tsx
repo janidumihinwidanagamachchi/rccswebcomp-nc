@@ -41,7 +41,7 @@ export function RegistrationsManagerPage() {
       <AdminShell>
         <div className="mb-8">
           <h1 className="text-3xl font-bold">Registrations</h1>
-          <p className="text-muted-foreground">View attendees and check in tickets.</p>
+          <p className="text-quiet-ink">View attendees and check in tickets.</p>
         </div>
 
         <div className="mb-6 flex flex-col gap-4 sm:flex-row">
@@ -58,7 +58,7 @@ export function RegistrationsManagerPage() {
             </SelectContent>
           </Select>
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-quiet-ink" />
             <Input
               placeholder="Search by name, email, or ticket number..."
               value={search}
@@ -90,7 +90,7 @@ export function RegistrationsManagerPage() {
                           {registration.status}
                         </Badge>
                       </div>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-quiet-ink">
                         {registration.attendee_email} • {registration.ticket_number} •{' '}
                         {formatDate(registration.registered_at)}
                       </p>
@@ -109,7 +109,7 @@ export function RegistrationsManagerPage() {
                           <div className="flex flex-col items-center py-4">
                             <QRCodeDisplay value={registration.qr_code_data} size={220} />
                             <p className="mt-4 font-semibold">{registration.attendee_name}</p>
-                            <p className="text-sm text-muted-foreground">{registration.event?.title}</p>
+                            <p className="text-sm text-quiet-ink">{registration.event?.title}</p>
                           </div>
                         </DialogContent>
                       </Dialog>
@@ -138,7 +138,7 @@ export function RegistrationsManagerPage() {
                 ))}
               </div>
             ) : (
-              <div className="p-8 text-center text-muted-foreground">
+              <div className="p-8 text-center text-quiet-ink">
                 {selectedEventId
                   ? 'No registrations found for this event.'
                   : 'Select an event to view registrations.'}

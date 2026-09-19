@@ -43,25 +43,25 @@ export function PassportPage() {
       <div className="container mx-auto px-4 py-12">
         <div className="mb-8">
           <h1 className="text-3xl font-bold md:text-4xl">Event Passport</h1>
-          <p className="text-muted-foreground">Every event you attend adds a stamp.</p>
+          <p className="text-quiet-ink">Every event you attend adds a stamp.</p>
         </div>
 
         <div className="mb-8 grid gap-4 sm:grid-cols-3">
           <Card>
             <CardContent className="p-5">
-              <p className="text-sm text-muted-foreground">Events attended</p>
+              <p className="text-sm text-quiet-ink">Events attended</p>
               <p className="text-3xl font-bold">{attended.length}</p>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-5">
-              <p className="text-sm text-muted-foreground">Categories explored</p>
+              <p className="text-sm text-quiet-ink">Categories explored</p>
               <p className="text-3xl font-bold">{uniqueCategories}</p>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-5">
-              <p className="text-sm text-muted-foreground">Badges earned</p>
+              <p className="text-sm text-quiet-ink">Badges earned</p>
               <p className="text-3xl font-bold">{earnedBadges.length}</p>
             </CardContent>
           </Card>
@@ -74,20 +74,20 @@ export function PassportPage() {
             return (
               <Card
                 key={badge.id}
-                className={earned ? 'border-primary/50 bg-primary/5' : 'opacity-60'}
+                className={earned ? 'border-brand/50 bg-brand/5' : 'opacity-60'}
               >
                 <CardContent className="flex items-start gap-4 p-5">
                   <div
                     className={cn(
                       'flex h-12 w-12 items-center justify-center rounded-full',
-                      earned ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
+                      earned ? 'bg-brand text-brand-ink' : 'bg-quiet text-quiet-ink'
                     )}
                   >
                     <Trophy className="h-6 w-6" />
                   </div>
                   <div>
                     <h3 className="font-semibold">{badge.name}</h3>
-                    <p className="text-sm text-muted-foreground">{badge.description}</p>
+                    <p className="text-sm text-quiet-ink">{badge.description}</p>
                     {earned && <Badge className="mt-2">Earned</Badge>}
                   </div>
                 </CardContent>
@@ -109,13 +109,13 @@ export function PassportPage() {
               <Card key={registration.id} className="overflow-hidden">
                 <div
                   className="h-2 w-full"
-                  style={{ backgroundColor: registration.event?.category?.color || 'var(--primary)' }}
+                  style={{ backgroundColor: registration.event?.category?.color || 'var(--brand)' }}
                 />
                 <CardHeader className="pb-2">
                   <CardTitle className="text-base">{registration.event?.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-1 text-xs text-muted-foreground">
+                  <div className="space-y-1 text-xs text-quiet-ink">
                     <span className="flex items-center gap-1">
                       <Calendar className="h-3 w-3" />
                       {formatDate(registration.event?.start_date || new Date())}
@@ -133,7 +133,7 @@ export function PassportPage() {
             ))}
           </div>
         ) : (
-          <p className="text-muted-foreground">No stamps yet. Attend an event to get started.</p>
+          <p className="text-quiet-ink">No stamps yet. Attend an event to get started.</p>
         )}
       </div>
     </Shell>

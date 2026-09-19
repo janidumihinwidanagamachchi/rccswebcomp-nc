@@ -105,3 +105,34 @@ export function useTicket(ticketNumber: string) {
     enabled: !!ticketNumber,
   })
 }
+
+export function useVerifyTicket() {
+  return useMutation({
+    mutationFn: async (ticketNumber: string) => {
+      const { data, error } = await supabase.rpc('verify_ticket', { ticket_text: ticketNumber.trim() })
+      if (error) throw error
+
+      const row = (
+        data as Array<{
+          ticket_number: string
+          status: string
+          event_title: string
+          attendee_name: string
+        }> | null
+      )?.[0]
+      if (!row) return null
+
+      const { data: registration } = await supabase
+        .from('registrations')
+        .select('id, status')
+        .eq('ticket_number', row.ticket_number)
+        .single()
+
+      return {
+        ...row,
+        status: registration?.status ?? row.status,
+        registrationId: registration?.id as string | undefined,
+      }
+    },
+  })
+}

@@ -57,7 +57,7 @@ export function RegisterPage() {
     <Shell>
       <div className="container mx-auto flex max-w-md flex-col items-center justify-center px-4 py-16">
         <Link to="/" className="mb-6 flex items-center gap-2 text-2xl font-bold">
-          <Ticket className="h-8 w-8 text-primary" />
+          <Ticket className="h-8 w-8 text-brand" />
           RCCSWebComp-NC
         </Link>
         <Card className="w-full">
@@ -70,12 +70,12 @@ export function RegisterPage() {
               <div className="space-y-1">
                 <Label htmlFor="fullName">Full name</Label>
                 <Input id="fullName" {...register('fullName')} />
-                {errors.fullName && <p className="text-xs text-destructive">{errors.fullName.message}</p>}
+                {errors.fullName && <p className="text-xs text-danger">{errors.fullName.message}</p>}
               </div>
               <div className="space-y-1">
                 <Label htmlFor="email">Email</Label>
                 <Input id="email" type="email" placeholder="you@school.edu" {...register('email')} />
-                {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
+                {errors.email && <p className="text-xs text-danger">{errors.email.message}</p>}
               </div>
               <div className="space-y-1">
                 <Label htmlFor="password">Password</Label>
@@ -89,12 +89,12 @@ export function RegisterPage() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-quiet-ink"
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
-                {errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}
+                {errors.password && <p className="text-xs text-danger">{errors.password.message}</p>}
               </div>
               <div className="space-y-1">
                 <Label htmlFor="role">I am a</Label>
@@ -108,7 +108,7 @@ export function RegisterPage() {
                     <SelectItem value="teacher">Teacher</SelectItem>
                   </SelectContent>
                 </Select>
-                {errors.role && <p className="text-xs text-destructive">{errors.role.message}</p>}
+                {errors.role && <p className="text-xs text-danger">{errors.role.message}</p>}
               </div>
               {role === 'student' && (
                 <div className="space-y-1">
@@ -116,14 +116,14 @@ export function RegisterPage() {
                   <Input id="grade" type="number" min={1} max={13} {...register('grade')} />
                 </div>
               )}
-              {error && <p className="text-sm text-destructive">{error}</p>}
+              {error && <p className="text-sm text-danger">{error}</p>}
               <Button type="submit" className="w-full" disabled={isSubmitting}>
                 {isSubmitting ? 'Creating account...' : 'Create Account'}
               </Button>
             </form>
-            <p className="mt-4 text-center text-sm text-muted-foreground">
+            <p className="mt-4 text-center text-sm text-quiet-ink">
               Already have an account?{' '}
-              <Link to="/auth/login" className="font-medium text-primary hover:underline">
+              <Link to="/auth/login" className="font-medium text-brand hover:underline">
                 Sign in
               </Link>
             </p>

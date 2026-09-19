@@ -34,13 +34,13 @@ export function Navbar({ className }: NavbarProps) {
   return (
     <header
       className={cn(
-        'sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur-md',
+        'sticky top-0 z-40 w-full border-b bg-canvas/80 backdrop-blur-md',
         className
       )}
     >
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link to="/" className="flex items-center gap-2 font-bold text-xl tracking-tight">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand text-brand-ink">
             <Ticket className="h-5 w-5" />
           </div>
           <span>RCCSWebComp-NC</span>
@@ -51,7 +51,7 @@ export function Navbar({ className }: NavbarProps) {
             <Link
               key={link.href}
               to={link.href}
-              className="text-muted-foreground transition-colors hover:text-foreground"
+              className="text-quiet-ink transition-colors hover:text-ink"
             >
               {link.label}
             </Link>
@@ -82,7 +82,7 @@ export function Navbar({ className }: NavbarProps) {
 
           {user ? (
             <div className="hidden lg:flex items-center gap-2">
-              <span className="text-sm text-muted-foreground max-w-[120px] truncate">
+              <span className="text-sm text-quiet-ink max-w-[120px] truncate">
                 {profile?.full_name || user.email}
               </span>
               <Button variant="ghost" size="icon" onClick={handleSignOut} aria-label="Sign out">
@@ -108,7 +108,7 @@ export function Navbar({ className }: NavbarProps) {
                   className="flex items-center gap-2 font-bold text-xl"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <Ticket className="h-6 w-6 text-primary" />
+                  <Ticket className="h-6 w-6 text-brand" />
                   RCCSWebComp-NC
                 </Link>
                 <nav className="flex flex-col gap-3">
@@ -116,7 +116,7 @@ export function Navbar({ className }: NavbarProps) {
                     <Link
                       key={link.href}
                       to={link.href}
-                      className="text-lg font-medium text-muted-foreground hover:text-foreground"
+                      className="text-lg font-medium text-quiet-ink hover:text-ink"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       {link.label}

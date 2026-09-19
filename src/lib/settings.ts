@@ -244,25 +244,25 @@ export interface PaletteField {
 }
 
 export const PALETTE_FIELDS: PaletteField[] = [
-  { key: 'background', label: 'Background' },
-  { key: 'foreground', label: 'Text / Foreground' },
-  { key: 'card', label: 'Card Background' },
-  { key: 'cardForeground', label: 'Card Text' },
-  { key: 'popover', label: 'Popover Background' },
-  { key: 'popoverForeground', label: 'Popover Text' },
-  { key: 'primary', label: 'Primary' },
-  { key: 'primaryForeground', label: 'Primary Text' },
-  { key: 'secondary', label: 'Secondary' },
-  { key: 'secondaryForeground', label: 'Secondary Text' },
-  { key: 'muted', label: 'Muted' },
-  { key: 'mutedForeground', label: 'Muted Text' },
-  { key: 'accent', label: 'Accent' },
-  { key: 'accentForeground', label: 'Accent Text' },
-  { key: 'destructive', label: 'Destructive' },
-  { key: 'destructiveForeground', label: 'Destructive Text' },
-  { key: 'border', label: 'Border' },
-  { key: 'input', label: 'Input' },
-  { key: 'ring', label: 'Ring / Focus' },
+  { key: 'canvas', label: 'Background' },
+  { key: 'ink', label: 'Text / Foreground' },
+  { key: 'panel', label: 'Card Background' },
+  { key: 'panelInk', label: 'Card Text' },
+  { key: 'floating', label: 'Popover Background' },
+  { key: 'floatingInk', label: 'Popover Text' },
+  { key: 'brand', label: 'Primary' },
+  { key: 'brandInk', label: 'Primary Text' },
+  { key: 'alt', label: 'Secondary' },
+  { key: 'altInk', label: 'Secondary Text' },
+  { key: 'quiet', label: 'Muted' },
+  { key: 'quietInk', label: 'Muted Text' },
+  { key: 'highlight', label: 'Accent' },
+  { key: 'highlightInk', label: 'Accent Text' },
+  { key: 'danger', label: 'Destructive' },
+  { key: 'dangerInk', label: 'Destructive Text' },
+  { key: 'line', label: 'Border' },
+  { key: 'field', label: 'Input' },
+  { key: 'focus', label: 'Ring / Focus' },
 ]
 
 export interface ThemePreset {
@@ -273,182 +273,182 @@ export interface ThemePreset {
 
 // Royal Navy & Gold
 const ROYAL_LIGHT: ThemePalette = {
-  background: '#f8fafc',
-  foreground: '#0b132b',
-  card: '#ffffff',
-  cardForeground: '#0b132b',
-  popover: '#ffffff',
-  popoverForeground: '#0b132b',
-  primary: '#ffd700',
-  primaryForeground: '#0b132b',
-  secondary: '#edf2f7',
-  secondaryForeground: '#0b132b',
-  muted: '#f1f5f9',
-  mutedForeground: '#64748b',
-  accent: '#48cae4',
-  accentForeground: '#0b132b',
-  destructive: '#ef4444',
-  destructiveForeground: '#ffffff',
-  border: '#e2e8f0',
-  input: '#e2e8f0',
-  ring: '#ffd700',
+  canvas: '#f8fafc',
+  ink: '#0b132b',
+  panel: '#ffffff',
+  panelInk: '#0b132b',
+  floating: '#ffffff',
+  floatingInk: '#0b132b',
+  brand: '#ffd700',
+  brandInk: '#0b132b',
+  alt: '#edf2f7',
+  altInk: '#0b132b',
+  quiet: '#f1f5f9',
+  quietInk: '#64748b',
+  highlight: '#48cae4',
+  highlightInk: '#0b132b',
+  danger: '#ef4444',
+  dangerInk: '#ffffff',
+  line: '#e2e8f0',
+  field: '#e2e8f0',
+  focus: '#ffd700',
 }
 
 const ROYAL_DARK: ThemePalette = {
-  background: '#070d1e',
-  foreground: '#f8fafc',
-  card: '#131b33',
-  cardForeground: '#ffffff',
-  popover: '#1a2440',
-  popoverForeground: '#e2e8f0',
-  primary: '#ffd700',
-  primaryForeground: '#070d1e',
-  secondary: '#2b3d54',
-  secondaryForeground: '#ffffff',
-  muted: '#0f1c33',
-  mutedForeground: '#94a3b8',
-  accent: '#48cae4',
-  accentForeground: '#070d1e',
-  destructive: '#ef4444',
-  destructiveForeground: '#ffffff',
-  border: '#22324a',
-  input: '#0e1a2e',
-  ring: '#ffd700',
+  canvas: '#070d1e',
+  ink: '#f8fafc',
+  panel: '#131b33',
+  panelInk: '#ffffff',
+  floating: '#1a2440',
+  floatingInk: '#e2e8f0',
+  brand: '#ffd700',
+  brandInk: '#070d1e',
+  alt: '#2b3d54',
+  altInk: '#ffffff',
+  quiet: '#0f1c33',
+  quietInk: '#94a3b8',
+  highlight: '#48cae4',
+  highlightInk: '#070d1e',
+  danger: '#ef4444',
+  dangerInk: '#ffffff',
+  line: '#22324a',
+  field: '#0e1a2e',
+  focus: '#ffd700',
 }
 
 // Default 2
 const DEFAULT_2_LIGHT: ThemePalette = {
-  background: '#ffffff',
-  foreground: '#171717',
-  card: '#f5f5f5',
-  cardForeground: '#171717',
-  popover: '#ffffff',
-  popoverForeground: '#171717',
-  primary: '#262626',
-  primaryForeground: '#ffffff',
-  secondary: '#e5e5e5',
-  secondaryForeground: '#171717',
-  muted: '#f0f0f0',
-  mutedForeground: '#737373',
-  accent: '#525252',
-  accentForeground: '#ffffff',
-  destructive: '#ef4444',
-  destructiveForeground: '#ffffff',
-  border: '#d4d4d4',
-  input: '#e5e5e5',
-  ring: '#171717',
+  canvas: '#ffffff',
+  ink: '#171717',
+  panel: '#f5f5f5',
+  panelInk: '#171717',
+  floating: '#ffffff',
+  floatingInk: '#171717',
+  brand: '#262626',
+  brandInk: '#ffffff',
+  alt: '#e5e5e5',
+  altInk: '#171717',
+  quiet: '#f0f0f0',
+  quietInk: '#737373',
+  highlight: '#525252',
+  highlightInk: '#ffffff',
+  danger: '#ef4444',
+  dangerInk: '#ffffff',
+  line: '#d4d4d4',
+  field: '#e5e5e5',
+  focus: '#171717',
 }
 
 const DEFAULT_2_DARK: ThemePalette = {
-  background: '#0a0a0a',
-  foreground: '#f5f5f5',
-  card: '#171717',
-  cardForeground: '#f5f5f5',
-  popover: '#262626',
-  popoverForeground: '#f5f5f5',
-  primary: '#e5e5e5',
-  primaryForeground: '#0a0a0a',
-  secondary: '#262626',
-  secondaryForeground: '#f5f5f5',
-  muted: '#141414',
-  mutedForeground: '#a3a3a3',
-  accent: '#a3a3a3',
-  accentForeground: '#0a0a0a',
-  destructive: '#ef4444',
-  destructiveForeground: '#ffffff',
-  border: '#262626',
-  input: '#171717',
-  ring: '#e5e5e5',
+  canvas: '#0a0a0a',
+  ink: '#f5f5f5',
+  panel: '#171717',
+  panelInk: '#f5f5f5',
+  floating: '#262626',
+  floatingInk: '#f5f5f5',
+  brand: '#e5e5e5',
+  brandInk: '#0a0a0a',
+  alt: '#262626',
+  altInk: '#f5f5f5',
+  quiet: '#141414',
+  quietInk: '#a3a3a3',
+  highlight: '#a3a3a3',
+  highlightInk: '#0a0a0a',
+  danger: '#ef4444',
+  dangerInk: '#ffffff',
+  line: '#262626',
+  field: '#171717',
+  focus: '#e5e5e5',
 }
 
 // Apple Black
 const APPLE_LIGHT: ThemePalette = {
-  background: '#ffffff',
-  foreground: '#000000',
-  card: '#f2f2f7',
-  cardForeground: '#000000',
-  popover: '#ffffff',
-  popoverForeground: '#000000',
-  primary: '#007aff',
-  primaryForeground: '#ffffff',
-  secondary: '#e5e5ea',
-  secondaryForeground: '#000000',
-  muted: '#f2f2f7',
-  mutedForeground: '#8e8e93',
-  accent: '#5856d6',
-  accentForeground: '#ffffff',
-  destructive: '#ff3b30',
-  destructiveForeground: '#ffffff',
-  border: '#e5e5ea',
-  input: '#e5e5ea',
-  ring: '#007aff',
+  canvas: '#ffffff',
+  ink: '#000000',
+  panel: '#f2f2f7',
+  panelInk: '#000000',
+  floating: '#ffffff',
+  floatingInk: '#000000',
+  brand: '#007aff',
+  brandInk: '#ffffff',
+  alt: '#e5e5ea',
+  altInk: '#000000',
+  quiet: '#f2f2f7',
+  quietInk: '#8e8e93',
+  highlight: '#5856d6',
+  highlightInk: '#ffffff',
+  danger: '#ff3b30',
+  dangerInk: '#ffffff',
+  line: '#e5e5ea',
+  field: '#e5e5ea',
+  focus: '#007aff',
 }
 
 const APPLE_DARK: ThemePalette = {
-  background: '#000000',
-  foreground: '#f5f5f7',
-  card: '#1c1c1e',
-  cardForeground: '#ffffff',
-  popover: '#2c2c2e',
-  popoverForeground: '#ffffff',
-  primary: '#0a84ff',
-  primaryForeground: '#ffffff',
-  secondary: '#3a3a3c',
-  secondaryForeground: '#ffffff',
-  muted: '#1c1c1e',
-  mutedForeground: '#8e8e93',
-  accent: '#5e5ce6',
-  accentForeground: '#ffffff',
-  destructive: '#ff453a',
-  destructiveForeground: '#ffffff',
-  border: '#38383a',
-  input: '#1c1c1e',
-  ring: '#0a84ff',
+  canvas: '#000000',
+  ink: '#f5f5f7',
+  panel: '#1c1c1e',
+  panelInk: '#ffffff',
+  floating: '#2c2c2e',
+  floatingInk: '#ffffff',
+  brand: '#0a84ff',
+  brandInk: '#ffffff',
+  alt: '#3a3a3c',
+  altInk: '#ffffff',
+  quiet: '#1c1c1e',
+  quietInk: '#8e8e93',
+  highlight: '#5e5ce6',
+  highlightInk: '#ffffff',
+  danger: '#ff453a',
+  dangerInk: '#ffffff',
+  line: '#38383a',
+  field: '#1c1c1e',
+  focus: '#0a84ff',
 }
 
 // Obsidian & Rose Gold
 const ROSE_GOLD_LIGHT: ThemePalette = {
-  background: '#fdf8f7',
-  foreground: '#0a0a0a',
-  card: '#ffffff',
-  cardForeground: '#0a0a0a',
-  popover: '#ffffff',
-  popoverForeground: '#0a0a0a',
-  primary: '#b07566',
-  primaryForeground: '#ffffff',
-  secondary: '#f2e8e5',
-  secondaryForeground: '#0a0a0a',
-  muted: '#f8f0ee',
-  mutedForeground: '#78716c',
-  accent: '#e8b0a0',
-  accentForeground: '#0a0a0a',
-  destructive: '#ef4444',
-  destructiveForeground: '#ffffff',
-  border: '#ead5ce',
-  input: '#ead5ce',
-  ring: '#b07566',
+  canvas: '#fdf8f7',
+  ink: '#0a0a0a',
+  panel: '#ffffff',
+  panelInk: '#0a0a0a',
+  floating: '#ffffff',
+  floatingInk: '#0a0a0a',
+  brand: '#b07566',
+  brandInk: '#ffffff',
+  alt: '#f2e8e5',
+  altInk: '#0a0a0a',
+  quiet: '#f8f0ee',
+  quietInk: '#78716c',
+  highlight: '#e8b0a0',
+  highlightInk: '#0a0a0a',
+  danger: '#ef4444',
+  dangerInk: '#ffffff',
+  line: '#ead5ce',
+  field: '#ead5ce',
+  focus: '#b07566',
 }
 
 const ROSE_GOLD_DARK: ThemePalette = {
-  background: '#0a0a0a',
-  foreground: '#fafafa',
-  card: '#171717',
-  cardForeground: '#ffffff',
-  popover: '#262626',
-  popoverForeground: '#fafafa',
-  primary: '#e0a996',
-  primaryForeground: '#0a0a0a',
-  secondary: '#383838',
-  secondaryForeground: '#fafafa',
-  muted: '#121212',
-  mutedForeground: '#737373',
-  accent: '#f5d0c5',
-  accentForeground: '#0a0a0a',
-  destructive: '#ef4444',
-  destructiveForeground: '#ffffff',
-  border: '#262626',
-  input: '#171717',
-  ring: '#e0a996',
+  canvas: '#0a0a0a',
+  ink: '#fafafa',
+  panel: '#171717',
+  panelInk: '#ffffff',
+  floating: '#262626',
+  floatingInk: '#fafafa',
+  brand: '#e0a996',
+  brandInk: '#0a0a0a',
+  alt: '#383838',
+  altInk: '#fafafa',
+  quiet: '#121212',
+  quietInk: '#737373',
+  highlight: '#f5d0c5',
+  highlightInk: '#0a0a0a',
+  danger: '#ef4444',
+  dangerInk: '#ffffff',
+  line: '#262626',
+  field: '#171717',
+  focus: '#e0a996',
 }
 
 export const THEME_PRESETS: ThemePreset[] = [
@@ -556,6 +556,38 @@ function deepMerge(target: Record<string, unknown>, source: unknown): Record<str
   return result
 }
 
+const LEGACY_COLOR_KEYS: Record<string, keyof ThemePalette> = {
+  background: 'canvas',
+  foreground: 'ink',
+  card: 'panel',
+  cardForeground: 'panelInk',
+  popover: 'floating',
+  popoverForeground: 'floatingInk',
+  primary: 'brand',
+  primaryForeground: 'brandInk',
+  secondary: 'alt',
+  secondaryForeground: 'altInk',
+  muted: 'quiet',
+  mutedForeground: 'quietInk',
+  accent: 'highlight',
+  accentForeground: 'highlightInk',
+  destructive: 'danger',
+  destructiveForeground: 'dangerInk',
+  border: 'line',
+  input: 'field',
+  ring: 'focus',
+}
+
+function migratePalette(raw: unknown): Partial<ThemePalette> {
+  if (!raw || typeof raw !== 'object') return {}
+  const out: Record<string, string> = {}
+  for (const [key, value] of Object.entries(raw as Record<string, unknown>)) {
+    const mapped = LEGACY_COLOR_KEYS[key] ?? key
+    if (typeof value === 'string') out[mapped] = value
+  }
+  return out as Partial<ThemePalette>
+}
+
 export function normalizeSettings(raw: unknown): SiteSettings {
   const base = structuredClone(DEFAULT_SETTINGS)
   if (!raw || typeof raw !== 'object') return base
@@ -564,13 +596,18 @@ export function normalizeSettings(raw: unknown): SiteSettings {
 
   if (typed.colors && 'primary' in typed.colors && typeof typed.colors.primary === 'string') {
     const primary = typed.colors.primary
-    const accent = typed.colors.accent ?? base.colors.light.accent
-    base.colors.light = { ...base.colors.light, primary }
-    base.colors.light.accent = accent
-    base.colors.dark = { ...base.colors.dark, primary }
-    base.colors.dark.accent = accent
+    const accent = typed.colors.accent ?? base.colors.light.highlight
+    base.colors.light = { ...base.colors.light, brand: primary }
+    base.colors.light.highlight = accent
+    base.colors.dark = { ...base.colors.dark, brand: primary }
+    base.colors.dark.highlight = accent
     delete (typed.colors as { primary?: string }).primary
     delete (typed.colors as { accent?: string }).accent
+  }
+
+  if (typed.colors) {
+    if (typed.colors.light) typed.colors.light = migratePalette(typed.colors.light) as ThemePalette
+    if (typed.colors.dark) typed.colors.dark = migratePalette(typed.colors.dark) as ThemePalette
   }
 
   return deepMerge(base as unknown as Record<string, unknown>, typed as Record<string, unknown>) as unknown as SiteSettings
@@ -582,15 +619,6 @@ export function findFontOption(value: string): FontOption | undefined {
 
 export function getFontFamily(value: string): string {
   return findFontOption(value)?.family ?? findFontOption('Inter')!.family
-}
-
-export function contrastForeground(hex: string): string {
-  const normalized = hex.replace('#', '')
-  const r = parseInt(normalized.substring(0, 2), 16)
-  const g = parseInt(normalized.substring(2, 4), 16)
-  const b = parseInt(normalized.substring(4, 6), 16)
-  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
-  return luminance > 0.5 ? '#0f172a' : '#ffffff'
 }
 
 export function loadGoogleFonts(fontValues: string[]) {

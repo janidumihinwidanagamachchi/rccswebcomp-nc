@@ -25,7 +25,7 @@ export function TicketCard({ registration }: TicketCardProps) {
             </Badge>
           </div>
           <h3 className="mb-1 text-lg font-semibold">{event.title}</h3>
-          <div className="mb-3 flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+          <div className="mb-3 flex flex-wrap items-center gap-4 text-sm text-quiet-ink">
             <span className="flex items-center gap-1">
               <CalendarDays className="h-4 w-4" />
               {formatDate(event.start_date)}
@@ -35,9 +35,9 @@ export function TicketCard({ registration }: TicketCardProps) {
               {event.location}
             </span>
           </div>
-          <p className="text-sm font-mono text-muted-foreground">{registration.ticket_number}</p>
+          <p className="text-sm font-mono text-quiet-ink">{registration.ticket_number}</p>
         </div>
-        <div className="flex items-center justify-center border-t bg-muted/30 p-5 sm:border-l sm:border-t-0">
+        <div className="flex items-center justify-center border-t bg-quiet/30 p-5 sm:border-l sm:border-t-0">
           <Button asChild>
             <Link to={`/ticket/${registration.ticket_number}`}>
               <QrCode className="mr-2 h-4 w-4" />

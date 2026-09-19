@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
 import {
   CalendarDays,
   MapPin,
@@ -23,6 +22,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Countdown } from '@/components/events/Countdown'
 import { HighlightComposer } from '@/components/announcements/HighlightComposer'
 import { HighlightCard } from '@/components/announcements/HighlightCard'
+import { AddToCalendar } from '@/components/calendar/AddToCalendar'
 import { useEvent } from '@/hooks/useEvents'
 import { useRegisterForEvent } from '@/hooks/useRegistrations'
 import { useHighlights } from '@/hooks/useHighlights'
@@ -119,7 +119,7 @@ export function EventDetailPage() {
         <div className="grid gap-8 lg:grid-cols-3">
           {/* Main content */}
           <div className="lg:col-span-2">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <div className="animate-fade-up">
               <div className="mb-4 flex flex-wrap items-center gap-2">
                 <Badge variant="secondary">{event.category?.name}</Badge>
                 {event.featured && <Badge>Featured</Badge>}
@@ -128,7 +128,7 @@ export function EventDetailPage() {
                 )}
               </div>
               <h1 className="mb-4 text-3xl font-bold md:text-5xl">{event.title}</h1>
-              <p className="mb-6 text-lg text-muted-foreground">{event.short_description}</p>
+              <p className="mb-6 text-lg text-quiet-ink">{event.short_description}</p>
 
               {event.image_url && (
                 <div className="mb-8 overflow-hidden rounded-2xl">
@@ -156,11 +156,11 @@ export function EventDetailPage() {
                       <HighlightCard key={highlight.id} highlight={highlight} />
                     ))
                   ) : (
-                    <p className="text-sm text-muted-foreground">No updates posted yet.</p>
+                    <p className="text-sm text-quiet-ink">No updates posted yet.</p>
                   )}
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
 
           {/* Sidebar */}
@@ -177,30 +177,35 @@ export function EventDetailPage() {
                 />
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-3">
-                    <CalendarDays className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                    <CalendarDays className="mt-0.5 h-4 w-4 text-quiet-ink" />
                     <div>
                       <p className="font-medium">Date & Time</p>
-                      <p className="text-muted-foreground">{formatDateTime(event.start_date)}</p>
-                      <p className="text-muted-foreground">to {formatDateTime(event.end_date)}</p>
+                      <p className="text-quiet-ink">{formatDateTime(event.start_date)}</p>
+                      <p className="text-quiet-ink">to {formatDateTime(event.end_date)}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <MapPin className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                    <MapPin className="mt-0.5 h-4 w-4 text-quiet-ink" />
                     <div>
                       <p className="font-medium">Location</p>
-                      <p className="text-muted-foreground">{event.location}</p>
+                      <p className="text-quiet-ink">{event.location}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <Users className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                    <Users className="mt-0.5 h-4 w-4 text-quiet-ink" />
                     <div>
                       <p className="font-medium">Capacity</p>
-                      <p className="text-muted-foreground">
+                      <p className="text-quiet-ink">
                         {event.registration_count || 0} registered
                         {event.capacity ? ` / ${event.capacity} spots` : ''}
                       </p>
                     </div>
                   </div>
+                </div>
+
+                <div className="mt-5 pt-5 border-t">
+                  <p className="mb-2 text-sm font-medium">Add to calendar</p>
+                  <AddToCalendar event={event} />
                 </div>
               </CardContent>
             </Card>
@@ -213,7 +218,7 @@ export function EventDetailPage() {
               <CardContent>
                 {!user ? (
                   <div className="text-center">
-                    <p className="mb-4 text-sm text-muted-foreground">
+                    <p className="mb-4 text-sm text-quiet-ink">
                       Sign in to register and get your ticket.
                     </p>
                     <Button asChild className="w-full">
@@ -224,7 +229,7 @@ export function EventDetailPage() {
                   <div className="text-center">
                     <CheckCircle2 className="mx-auto mb-3 h-10 w-10 text-emerald-500" />
                     <p className="font-semibold">You&apos;re registered!</p>
-                    <p className="mb-4 text-sm text-muted-foreground">
+                    <p className="mb-4 text-sm text-quiet-ink">
                       Your ticket is waiting in My Tickets.
                     </p>
                     <Button asChild className="w-full">
@@ -232,9 +237,9 @@ export function EventDetailPage() {
                     </Button>
                   </div>
                 ) : !registrationOpen ? (
-                  <div className="flex items-start gap-3 rounded-lg bg-muted p-3 text-sm">
-                    <AlertCircle className="mt-0.5 h-4 w-4 text-muted-foreground" />
-                    <p className="text-muted-foreground">
+                  <div className="flex items-start gap-3 rounded-lg bg-quiet p-3 text-sm">
+                    <AlertCircle className="mt-0.5 h-4 w-4 text-quiet-ink" />
+                    <p className="text-quiet-ink">
                       Registration is closed, or the event is full.
                     </p>
                   </div>
@@ -244,14 +249,14 @@ export function EventDetailPage() {
                       <Label htmlFor="attendeeName">Full name</Label>
                       <Input id="attendeeName" {...formRegister('attendeeName')} />
                       {errors.attendeeName && (
-                        <p className="text-xs text-destructive">{errors.attendeeName.message}</p>
+                        <p className="text-xs text-danger">{errors.attendeeName.message}</p>
                       )}
                     </div>
                     <div className="space-y-1">
                       <Label htmlFor="attendeeEmail">Email</Label>
                       <Input id="attendeeEmail" type="email" {...formRegister('attendeeEmail')} />
                       {errors.attendeeEmail && (
-                        <p className="text-xs text-destructive">{errors.attendeeEmail.message}</p>
+                        <p className="text-xs text-danger">{errors.attendeeEmail.message}</p>
                       )}
                     </div>
                     <div className="space-y-1">
@@ -263,7 +268,7 @@ export function EventDetailPage() {
                       <Textarea id="notes" {...formRegister('notes')} />
                     </div>
                     {register.isError && (
-                      <p className="text-sm text-destructive">
+                      <p className="text-sm text-danger">
                         {(register.error as Error)?.message || 'Registration failed. You may already be registered.'}
                       </p>
                     )}

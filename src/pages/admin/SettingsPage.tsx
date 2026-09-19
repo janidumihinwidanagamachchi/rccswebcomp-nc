@@ -52,7 +52,7 @@ function ColorField({
           type="color"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="h-8 w-12 cursor-pointer rounded-md border border-input bg-transparent p-0.5"
+          className="h-8 w-12 cursor-pointer rounded-md border border-field bg-transparent p-0.5"
         />
         <Input
           value={value}
@@ -190,7 +190,7 @@ export function SettingsPage() {
         <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-3xl font-bold">Site Settings</h1>
-            <p className="text-muted-foreground">
+            <p className="text-quiet-ink">
               Colors, fonts, branding, and SEO.
             </p>
           </div>
@@ -250,7 +250,7 @@ export function SettingsPage() {
                       <span
                         className="mr-2 inline-block h-4 w-4 rounded-full border"
                         style={{
-                          background: `linear-gradient(135deg, ${preset.settings.colors.dark.primary} 50%, ${preset.settings.colors.dark.accent} 50%)`,
+                          background: `linear-gradient(135deg, ${preset.settings.colors.dark.brand} 50%, ${preset.settings.colors.dark.highlight} 50%)`,
                         }}
                       />
                       {preset.name}
@@ -320,13 +320,13 @@ export function SettingsPage() {
                       Destructive
                     </Button>
                   </div>
-                  <div className="card-texture rounded-lg border bg-card/60 p-3 text-card-foreground backdrop-blur-md">
+                  <div className="card-texture rounded-lg border bg-panel/60 p-3 text-panel-ink backdrop-blur-md">
                     <p className="font-medium">Card widget</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-quiet-ink">
                       This text uses the muted foreground color.
                     </p>
                   </div>
-                  <div className="rounded-md bg-accent px-3 py-2 text-sm font-medium text-accent-foreground inline-block">
+                  <div className="rounded-md bg-highlight px-3 py-2 text-sm font-medium text-highlight-ink inline-block">
                     Accent badge
                   </div>
                 </CardContent>
@@ -591,7 +591,7 @@ export function SettingsPage() {
                     type="checkbox"
                     checked={draft.hero.showCountdown}
                     onChange={(e) => updateHero('showCountdown', e.target.checked)}
-                    className="h-4 w-4 rounded border-input"
+                    className="h-4 w-4 rounded border-field"
                   />
                   <Label htmlFor="hero-countdown">Show upcoming event countdown card</Label>
                 </div>
@@ -603,7 +603,7 @@ export function SettingsPage() {
         <Separator className="my-8" />
 
         <div className="flex items-center justify-between">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-quiet-ink">
             {update.isSuccess && (
               <span className="inline-flex items-center gap-1 text-emerald-500">
                 <Check className="h-4 w-4" />
@@ -611,7 +611,7 @@ export function SettingsPage() {
               </span>
             )}
             {update.isError && (
-              <span className="text-destructive">Failed to save: {update.error.message}</span>
+              <span className="text-danger">Failed to save: {update.error.message}</span>
             )}
           </p>
           <Button onClick={handleSave} disabled={update.isPending || isEqual} size="lg">

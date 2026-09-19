@@ -31,12 +31,12 @@ export function AnnouncementCard({ announcement, compact }: AnnouncementCardProp
           {announcement.category && (
             <Badge variant="secondary">{announcement.category.name}</Badge>
           )}
-          <span className="ml-auto text-xs text-muted-foreground">
+          <span className="ml-auto text-xs text-quiet-ink">
             {formatDate(announcement.published_at)}
           </span>
         </div>
         <h3 className={cn('font-semibold', compact ? 'text-base' : 'text-lg')}>{announcement.title}</h3>
-        <p className={cn('mt-1 text-muted-foreground', compact && 'line-clamp-2 text-sm')}>
+        <p className={cn('mt-1 text-quiet-ink', compact && 'line-clamp-2 text-sm')}>
           {announcement.content}
         </p>
       </CardContent>
