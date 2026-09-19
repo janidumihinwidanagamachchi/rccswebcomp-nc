@@ -1,9 +1,13 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
 import { generateTicketNumber } from '@/lib/utils'
-import type { Registration, Event } from '@/types'
+import type { Registration, Event, Profile } from '@/types'
 
 const REGISTRATIONS_KEY = 'registrations'
+
+export interface ProfileWithRegistrations extends Profile {
+  registrations: Registration[]
+}
 
 export function useMyRegistrations() {
   return useQuery({
@@ -67,6 +71,20 @@ export function useRegisterForEvent() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [REGISTRATIONS_KEY] })
       queryClient.invalidateQueries({ queryKey: ['events'] })
+    },
+  })
+}
+
+export function useAllPassports() {
+  return useQuery({
+    queryKey: [REGISTRATIONS_KEY, 'all-passports'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*, registrations(*, event:events(*))')
+        .order('full_name', { ascending: true })
+      if (error) throw error
+      return (data || []) as ProfileWithRegistrations[]
     },
   })
 }

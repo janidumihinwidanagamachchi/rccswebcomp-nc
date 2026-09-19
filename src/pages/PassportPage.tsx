@@ -1,42 +1,28 @@
-import { useMemo } from 'react'
+import { Trophy, Calendar, MapPin, Crown } from 'lucide-react'
 import { Shell } from '@/components/layout/Shell'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useMyRegistrations } from '@/hooks/useRegistrations'
+import { useMyRegistrations, useAllPassports } from '@/hooks/useRegistrations'
+import { useAuthStore } from '@/stores/authStore'
 import { BADGES } from '@/lib/constants'
-import { Trophy, Calendar, MapPin } from 'lucide-react'
+import { computePassportStats } from '@/lib/passport'
 import { cn, formatDate } from '@/lib/utils'
 
 export function PassportPage() {
+  const { user, isAdmin } = useAuthStore()
   const { data: registrations, isLoading } = useMyRegistrations()
+  const { data: allPassports, isLoading: passportsLoading } = useAllPassports()
 
-  const attended = useMemo(
-    () => (registrations || []).filter((r) => r.status === 'attended'),
-    [registrations]
-  )
+  const stats = computePassportStats(registrations || [])
 
-  const categoryCounts = useMemo(() => {
-    const counts: Record<string, number> = {}
-    attended.forEach((r) => {
-      const slug = r.event?.category?.slug
-      if (slug) counts[slug] = (counts[slug] || 0) + 1
-    })
-    return counts
-  }, [attended])
-
-  const uniqueCategories = Object.keys(categoryCounts).length
-
-  const earnedBadges = useMemo(() => {
-    return BADGES.filter((badge) => {
-      if (badge.category) {
-        return (categoryCounts[badge.category] || 0) >= badge.threshold
-      }
-      if (badge.id === 'all-rounder') return uniqueCategories >= badge.threshold
-      if (badge.id === 'early-bird') return attended.length >= badge.threshold
-      return false
-    })
-  }, [categoryCounts, uniqueCategories, attended.length])
+  const rankedSubjects =
+    allPassports
+      ?.map((p) => ({
+        ...p,
+        stats: computePassportStats(p.registrations || []),
+      }))
+      .sort((a, b) => b.stats.attended.length - a.stats.attended.length) || []
 
   return (
     <Shell>
@@ -50,19 +36,19 @@ export function PassportPage() {
           <Card>
             <CardContent className="p-5">
               <p className="text-sm text-quiet-ink">Events attended</p>
-              <p className="text-3xl font-bold">{attended.length}</p>
+              <p className="text-3xl font-bold">{stats.attended.length}</p>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-5">
               <p className="text-sm text-quiet-ink">Categories explored</p>
-              <p className="text-3xl font-bold">{uniqueCategories}</p>
+              <p className="text-3xl font-bold">{stats.uniqueCategories}</p>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-5">
               <p className="text-sm text-quiet-ink">Badges earned</p>
-              <p className="text-3xl font-bold">{earnedBadges.length}</p>
+              <p className="text-3xl font-bold">{stats.earnedBadges.length}</p>
             </CardContent>
           </Card>
         </div>
@@ -70,7 +56,7 @@ export function PassportPage() {
         <h2 className="mb-4 text-xl font-bold">Badges</h2>
         <div className="mb-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {BADGES.map((badge) => {
-            const earned = earnedBadges.some((b) => b.id === badge.id)
+            const earned = stats.earnedBadges.some((b) => b.id === badge.id)
             return (
               <Card
                 key={badge.id}
@@ -96,6 +82,62 @@ export function PassportPage() {
           })}
         </div>
 
+        {isAdmin && (
+          <>
+            <h2 className="mb-4 text-xl font-bold">Test Subjects</h2>
+            {passportsLoading ? (
+              <div className="mb-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {[1, 2, 3].map((i) => (
+                  <Skeleton key={i} className="h-40 rounded-xl" />
+                ))}
+              </div>
+            ) : (
+              <div className="mb-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {rankedSubjects.map((subject, index) => (
+                  <Card
+                    key={subject.id}
+                    className={cn(
+                      'overflow-hidden',
+                      subject.id === user?.id && 'border-brand/50 bg-brand/5'
+                    )}
+                  >
+                    <div className="flex items-center justify-between border-b bg-panel/40 px-5 py-3">
+                      <div className="flex items-center gap-2">
+                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand text-xs font-bold text-brand-ink">
+                          {index + 1}
+                        </span>
+                        <p className="font-semibold">{subject.full_name}</p>
+                      </div>
+                      {subject.role === 'admin' && (
+                        <Badge variant="secondary" className="gap-1">
+                          <Crown className="h-3 w-3" />
+                          Admin
+                        </Badge>
+                      )}
+                    </div>
+                    <CardContent className="p-5">
+                      <div className="mt-1 flex flex-wrap gap-2">
+                        <Badge variant="secondary">{subject.stats.attended.length} attended</Badge>
+                        <Badge variant="secondary">{subject.stats.uniqueCategories} categories</Badge>
+                        <Badge variant="secondary">{subject.stats.earnedBadges.length} badges</Badge>
+                      </div>
+                      {subject.stats.earnedBadges.length > 0 && (
+                        <div className="mt-3 flex flex-wrap gap-1">
+                          {subject.stats.earnedBadges.map((badge) => (
+                            <Badge key={badge.id} className="text-[10px]">
+                              {badge.name}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+
         <h2 className="mb-4 text-xl font-bold">Collected Stamps</h2>
         {isLoading ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -103,9 +145,9 @@ export function PassportPage() {
               <Skeleton key={i} className="h-40 rounded-xl" />
             ))}
           </div>
-        ) : attended.length > 0 ? (
+        ) : stats.attended.length > 0 ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {attended.map((registration) => (
+            {stats.attended.map((registration) => (
               <Card key={registration.id} className="overflow-hidden">
                 <div
                   className="h-2 w-full"
