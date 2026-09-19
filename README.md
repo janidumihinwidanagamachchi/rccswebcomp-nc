@@ -14,7 +14,7 @@ The idea came from a simple annoyance: events get announced in five different pl
 - **Admin dashboard** — create and edit events, post announcements, and see who's registered. Check-in happens through a dedicated ticket-validation page with a camera QR scanner or manual ticket entry.
 - **Event Passport** — a small gamified touch. Attending events collects stamps on your profile.
 
-A couple of extras that made the cut: full theme customization from the admin settings (colors, fonts, radius, and the homepage hero text), dark/light mode, and an interactive grid background that follows your cursor.
+A couple of extras that made the cut: full theme customization from the admin settings (colors, fonts, radius, and the homepage hero text), dark/light mode, and a homepage gradient that fades from the top.
 
 ## Built with
 

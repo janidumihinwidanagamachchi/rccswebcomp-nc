@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { useUIStore } from '@/stores/uiStore'
 import { ThemeApplier } from '@/components/theme/ThemeApplier'
-import { CanvasGridBackground } from '@/components/theme/CanvasGridBackground'
 import { resolveTheme } from '@/hooks/useSiteSettings'
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -17,7 +16,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <>
       <ThemeApplier />
-      <CanvasGridBackground />
       {children}
     </>
   )
