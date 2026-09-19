@@ -1,0 +1,282 @@
+import { useState } from 'react'
+import { useParams, Link, useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import {
+  CalendarDays,
+  MapPin,
+  Users,
+  ArrowLeft,
+  CheckCircle2,
+  AlertCircle,
+} from 'lucide-react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Shell } from '@/components/layout/Shell'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Separator } from '@/components/ui/separator'
+import { Skeleton } from '@/components/ui/skeleton'
+import { Countdown } from '@/components/events/Countdown'
+import { HighlightComposer } from '@/components/announcements/HighlightComposer'
+import { HighlightCard } from '@/components/announcements/HighlightCard'
+import { useEvent } from '@/hooks/useEvents'
+import { useRegisterForEvent } from '@/hooks/useRegistrations'
+import { useHighlights } from '@/hooks/useHighlights'
+import { useAuthStore } from '@/stores/authStore'
+import { supabase } from '@/lib/supabase'
+import { registrationSchema, type RegistrationFormData } from '@/lib/validators'
+import { formatDateTime, isRegistrationOpen, toDate } from '@/lib/utils'
+import { useQuery } from '@tanstack/react-query'
+
+export function EventDetailPage() {
+  const { slug } = useParams<{ slug: string }>()
+  const navigate = useNavigate()
+  const { user, profile } = useAuthStore()
+  const { data: event, isLoading } = useEvent(slug || '')
+  const { data: existingRegistration } = useQuery({
+    queryKey: ['event-registration', event?.id, user?.id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('registrations')
+        .select('*')
+        .eq('event_id', event!.id)
+        .eq('user_id', user!.id)
+        .single()
+      if (error) return null
+      return data
+    },
+    enabled: !!event && !!user,
+  })
+  const { data: highlights } = useHighlights(event?.id)
+  const register = useRegisterForEvent()
+  const [submitted, setSubmitted] = useState(false)
+
+  const {
+    register: formRegister,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegistrationFormData>({
+    resolver: zodResolver(registrationSchema),
+    defaultValues: {
+      attendeeName: profile?.full_name || '',
+      attendeeEmail: user?.email || '',
+      attendeeGrade: profile?.grade || undefined,
+    },
+  })
+
+  if (isLoading) {
+    return (
+      <Shell>
+        <div className="container mx-auto px-4 py-12">
+          <Skeleton className="mb-4 h-8 w-32" />
+          <Skeleton className="mb-4 h-12 w-2/3" />
+          <Skeleton className="h-96 rounded-xl" />
+        </div>
+      </Shell>
+    )
+  }
+
+  if (!event) {
+    return (
+      <Shell>
+        <div className="container mx-auto px-4 py-20 text-center">
+          <h1 className="text-2xl font-bold">Event not found</h1>
+          <Button asChild className="mt-4">
+            <Link to="/events">Back to events</Link>
+          </Button>
+        </div>
+      </Shell>
+    )
+  }
+
+  const registrationOpen = isRegistrationOpen(
+    event.registration_opens_at,
+    event.registration_closes_at,
+    event.capacity,
+    event.registration_count || 0
+  )
+
+  const onSubmit = async (data: RegistrationFormData) => {
+    if (!user || !registrationOpen) return
+    await register.mutateAsync({ event, userId: user.id, formData: data })
+    setSubmitted(true)
+  }
+
+  const isHappeningNow = toDate(event.start_date) <= new Date() && toDate(event.end_date) >= new Date()
+
+  return (
+    <Shell>
+      <div className="container mx-auto px-4 py-12">
+        <Button variant="ghost" className="mb-6" onClick={() => navigate(-1)}>
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back
+        </Button>
+
+        <div className="grid gap-8 lg:grid-cols-3">
+          {/* Main content */}
+          <div className="lg:col-span-2">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+              <div className="mb-4 flex flex-wrap items-center gap-2">
+                <Badge variant="secondary">{event.category?.name}</Badge>
+                {event.featured && <Badge>Featured</Badge>}
+                {isHappeningNow && (
+                  <Badge className="bg-emerald-500 text-white">Happening Now</Badge>
+                )}
+              </div>
+              <h1 className="mb-4 text-3xl font-bold md:text-5xl">{event.title}</h1>
+              <p className="mb-6 text-lg text-muted-foreground">{event.short_description}</p>
+
+              {event.image_url && (
+                <div className="mb-8 overflow-hidden rounded-2xl">
+                  <img
+                    src={event.image_url}
+                    alt={event.title}
+                    className="h-full w-full object-cover max-h-[400px]"
+                  />
+                </div>
+              )}
+
+              <div className="prose dark:prose-invert max-w-none">
+                <p className="whitespace-pre-line">{event.description}</p>
+              </div>
+
+              <Separator className="my-8" />
+
+              {/* Live Highlights Feed */}
+              <div>
+                <h2 className="mb-4 text-2xl font-bold">Live Updates</h2>
+                {user && isHappeningNow && <HighlightComposer eventId={event.id} />}
+                <div className="mt-4 space-y-4">
+                  {highlights && highlights.length > 0 ? (
+                    highlights.map((highlight) => (
+                      <HighlightCard key={highlight.id} highlight={highlight} />
+                    ))
+                  ) : (
+                    <p className="text-sm text-muted-foreground">No updates yet.</p>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            <Card>
+              <CardContent className="p-5">
+                <Countdown
+                  targetDate={event.start_date}
+                  registrationOpensAt={event.registration_opens_at}
+                  registrationClosesAt={event.registration_closes_at}
+                  capacity={event.capacity}
+                  registeredCount={event.registration_count || 0}
+                  className="mb-6"
+                />
+                <div className="space-y-3 text-sm">
+                  <div className="flex items-start gap-3">
+                    <CalendarDays className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                    <div>
+                      <p className="font-medium">Date & Time</p>
+                      <p className="text-muted-foreground">{formatDateTime(event.start_date)}</p>
+                      <p className="text-muted-foreground">to {formatDateTime(event.end_date)}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <MapPin className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                    <div>
+                      <p className="font-medium">Location</p>
+                      <p className="text-muted-foreground">{event.location}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Users className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                    <div>
+                      <p className="font-medium">Capacity</p>
+                      <p className="text-muted-foreground">
+                        {event.registration_count || 0} registered
+                        {event.capacity ? ` / ${event.capacity} spots` : ''}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Registration Form */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Register for this event</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {!user ? (
+                  <div className="text-center">
+                    <p className="mb-4 text-sm text-muted-foreground">
+                      Sign in to register and receive your ticket.
+                    </p>
+                    <Button asChild className="w-full">
+                      <Link to="/auth/login">Sign In</Link>
+                    </Button>
+                  </div>
+                ) : submitted || existingRegistration ? (
+                  <div className="text-center">
+                    <CheckCircle2 className="mx-auto mb-3 h-10 w-10 text-emerald-500" />
+                    <p className="font-semibold">You&apos;re registered!</p>
+                    <p className="mb-4 text-sm text-muted-foreground">
+                      View your ticket in My Tickets.
+                    </p>
+                    <Button asChild className="w-full">
+                      <Link to="/tickets">View My Tickets</Link>
+                    </Button>
+                  </div>
+                ) : !registrationOpen ? (
+                  <div className="flex items-start gap-3 rounded-lg bg-muted p-3 text-sm">
+                    <AlertCircle className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                    <p className="text-muted-foreground">
+                      Registration is currently closed or the event is full.
+                    </p>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                    <div className="space-y-1">
+                      <Label htmlFor="attendeeName">Full name</Label>
+                      <Input id="attendeeName" {...formRegister('attendeeName')} />
+                      {errors.attendeeName && (
+                        <p className="text-xs text-destructive">{errors.attendeeName.message}</p>
+                      )}
+                    </div>
+                    <div className="space-y-1">
+                      <Label htmlFor="attendeeEmail">Email</Label>
+                      <Input id="attendeeEmail" type="email" {...formRegister('attendeeEmail')} />
+                      {errors.attendeeEmail && (
+                        <p className="text-xs text-destructive">{errors.attendeeEmail.message}</p>
+                      )}
+                    </div>
+                    <div className="space-y-1">
+                      <Label htmlFor="attendeeGrade">Grade (optional)</Label>
+                      <Input id="attendeeGrade" type="number" {...formRegister('attendeeGrade')} />
+                    </div>
+                    <div className="space-y-1">
+                      <Label htmlFor="notes">Notes (optional)</Label>
+                      <Textarea id="notes" {...formRegister('notes')} />
+                    </div>
+                    {register.isError && (
+                      <p className="text-sm text-destructive">
+                        {(register.error as Error)?.message || 'Registration failed. You may already be registered.'}
+                      </p>
+                    )}
+                    <Button type="submit" className="w-full" disabled={register.isPending}>
+                      {register.isPending ? 'Registering...' : 'Get My Ticket'}
+                    </Button>
+                  </form>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </Shell>
+  )
+}

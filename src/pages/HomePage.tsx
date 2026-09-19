@@ -1,0 +1,225 @@
+import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { ArrowRight, CalendarDays, Ticket, Sparkles } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Skeleton } from '@/components/ui/skeleton'
+import { Shell } from '@/components/layout/Shell'
+import { EventGrid } from '@/components/events/EventGrid'
+import { Countdown } from '@/components/events/Countdown'
+import { AnnouncementCard } from '@/components/announcements/AnnouncementCard'
+import { useEvents } from '@/hooks/useEvents'
+import { useAnnouncements } from '@/hooks/useAnnouncements'
+import { useSiteSettings } from '@/hooks/useSiteSettings'
+
+export function HomePage() {
+  const { data: events, isLoading: eventsLoading } = useEvents({ status: 'published' })
+  const { data: announcements, isLoading: announcementsLoading } = useAnnouncements()
+  const { data: settings } = useSiteSettings()
+  const hero = settings?.hero
+
+  const featuredEvents = events?.filter((e) => e.featured).slice(0, 3) || []
+  const upcomingEvents = events?.slice(0, 6) || []
+  const latestAnnouncements = announcements?.slice(0, 3) || []
+
+  const nextEvent = events?.[0]
+
+  return (
+    <Shell>
+      {/* Hero Section */}
+      <section className="relative flex min-h-[calc(100vh-64px)] flex-col items-center justify-center overflow-hidden border-b py-12 md:py-16">
+        {/* Animated gradient mesh */}
+        <div className="absolute inset-0 -z-20 bg-gradient-to-br from-primary/10 via-background to-accent/5" />
+        <motion.div
+          className="absolute -left-20 -top-20 h-72 w-72 rounded-full bg-primary/20 blur-[100px]"
+          animate={{ x: [0, 40, 0], y: [0, 30, 0], opacity: [0.5, 0.8, 0.5] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-accent/15 blur-[120px]"
+          animate={{ x: [0, -30, 0], y: [0, -40, 0], opacity: [0.4, 0.7, 0.4] }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+        />
+
+        {/* Optional background image overlay */}
+        {hero?.backgroundImageUrl && (
+          <div
+            className="absolute inset-0 -z-10 bg-cover bg-center opacity-20"
+            style={{ backgroundImage: `url(${hero.backgroundImageUrl})` }}
+          />
+        )}
+
+        {/* Floating particles */}
+        {Array.from({ length: 16 }).map((_, i) => {
+          const size = 4 + Math.random() * 8
+          const left = Math.random() * 100
+          const top = Math.random() * 100
+          const duration = 4 + Math.random() * 6
+          const delay = Math.random() * 4
+          return (
+            <motion.div
+              key={i}
+              className="pointer-events-none absolute rounded-full bg-primary/30"
+              style={{ left: `${left}%`, top: `${top}%`, width: size, height: size }}
+              animate={{ y: [-20, 20, -20], opacity: [0.2, 0.6, 0.2] }}
+              transition={{ duration, delay, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          )
+        })}
+
+        <div className="container relative z-10 mx-auto px-4">
+          <div className="mx-auto max-w-4xl text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+            >
+              <Badge variant="secondary" className="mb-5 rounded-full px-4 py-1.5 text-sm shadow-sm">
+                <Sparkles className="mr-1.5 h-3.5 w-3.5" />
+                {hero?.badge || "BTUI'26 Competition Entry"}
+              </Badge>
+              <h1 className="mb-6 text-balance text-5xl font-extrabold leading-[1.1] tracking-tight md:text-7xl">
+                {hero?.headline ? (
+                  hero.headline.split('\n').map((line, idx, arr) => (
+                    <span key={idx}>
+                      {line}
+                      {idx < arr.length - 1 && <br />}
+                    </span>
+                  ))
+                ) : (
+                  <>
+                    Your school events,
+                    <span className="block text-primary">reimagined.</span>
+                  </>
+                )}
+              </h1>
+              <motion.p
+                className="mx-auto mb-10 max-w-2xl text-lg text-muted-foreground md:text-xl"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.15 }}
+              >
+                {hero?.subtitle ||
+                  'Discover, register, and experience every school event in one beautiful command center built for students, teachers, and parents.'}
+              </motion.p>
+              <motion.div
+                className="flex flex-col justify-center gap-3 sm:flex-row"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
+                <Button asChild size="lg" className="shadow-lg shadow-primary/20">
+                  <Link to={hero?.primaryCta.href || '/events'}>
+                    {hero?.primaryCta.label || 'Browse Events'}
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="lg">
+                  <Link to={hero?.secondaryCta.href || '/calendar'}>
+                    <CalendarDays className="mr-2 h-5 w-5" />
+                    {hero?.secondaryCta.label || 'View Calendar'}
+                  </Link>
+                </Button>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Next Big Event Countdown */}
+      {hero?.showCountdown !== false && nextEvent && (
+        <section className="container mx-auto px-4 pt-8">
+          <Card className="mx-auto max-w-2xl border-primary/20 bg-primary/5">
+            <CardContent className="flex flex-col items-center justify-between gap-4 p-6 sm:flex-row">
+              <div>
+                <p className="text-sm font-medium text-primary">Up next</p>
+                <h2 className="text-xl font-semibold">{nextEvent.title}</h2>
+                <p className="text-sm text-muted-foreground">{nextEvent.short_description}</p>
+              </div>
+              <Countdown
+                targetDate={nextEvent.start_date}
+                registrationOpensAt={nextEvent.registration_opens_at}
+                registrationClosesAt={nextEvent.registration_closes_at}
+                capacity={nextEvent.capacity}
+                registeredCount={nextEvent.registration_count || 0}
+                className="text-right"
+              />
+            </CardContent>
+          </Card>
+        </section>
+      )}
+
+      {/* Featured Events */}
+      <section className="container mx-auto px-4 py-16">
+        <div className="mb-8 flex items-end justify-between">
+          <div>
+            <h2 className="text-2xl font-bold md:text-3xl">Featured Events</h2>
+            <p className="text-muted-foreground">Don&apos;t miss the biggest moments this term.</p>
+          </div>
+          <Button asChild variant="ghost">
+            <Link to="/events">View all</Link>
+          </Button>
+        </div>
+        {eventsLoading ? (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {[1, 2, 3].map((i) => (
+              <Skeleton key={i} className="h-80 rounded-xl" />
+            ))}
+          </div>
+        ) : (
+          <EventGrid events={featuredEvents.length ? featuredEvents : upcomingEvents.slice(0, 3)} />
+        )}
+      </section>
+
+      {/* Announcements */}
+      <section className="container mx-auto px-4 py-16">
+        <div className="mb-8 flex items-end justify-between">
+          <div>
+            <h2 className="text-2xl font-bold md:text-3xl">Latest Announcements</h2>
+            <p className="text-muted-foreground">Important updates from the school.</p>
+          </div>
+          <Button asChild variant="ghost">
+            <Link to="/announcements">View all</Link>
+          </Button>
+        </div>
+        {announcementsLoading ? (
+          <div className="space-y-4">
+            {[1, 2, 3].map((i) => (
+              <Skeleton key={i} className="h-28 rounded-xl" />
+            ))}
+          </div>
+        ) : (
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {latestAnnouncements.map((announcement) => (
+              <AnnouncementCard key={announcement.id} announcement={announcement} compact />
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* Quick Links */}
+      <section className="container mx-auto px-4 py-16">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { label: 'Browse Events', desc: 'Find something for you', href: '/events', icon: CalendarDays },
+            { label: 'My Tickets', desc: 'View your registrations', href: '/tickets', icon: Ticket },
+            { label: 'Calendar', desc: 'Plan your schedule', href: '/calendar', icon: CalendarDays },
+            { label: 'Announcements', desc: 'Stay in the loop', href: '/announcements', icon: Sparkles },
+          ].map((item) => {
+            const Icon = item.icon
+            return (
+              <Card key={item.label} className="transition-shadow hover:shadow-md">
+                <CardContent className="p-5">
+                  <Icon className="mb-3 h-8 w-8 text-primary" />
+                  <h3 className="font-semibold">{item.label}</h3>
+                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                </CardContent>
+              </Card>
+            )
+          })}
+        </div>
+      </section>
+    </Shell>
+  )
+}
