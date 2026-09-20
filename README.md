@@ -23,8 +23,8 @@ React and TypeScript, Tailwind CSS for styling, Supabase for the database, auth,
 ## File structure
 
 - `src/` — React frontend (pages, components, hooks, stores, styles)
-- `supabase/` — SQL migrations and demo data
-- `scripts/` — build/theme and data-export helpers
+- `scripts/` — build/theme helper
+- `supabase/` — site theme settings used at build time
 - `public/` — static assets
 - `.github/` — GitHub Pages deploy workflow
 

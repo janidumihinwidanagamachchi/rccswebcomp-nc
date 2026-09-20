@@ -9,7 +9,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 // https://vite.dev/config/
 export default defineConfig({
   base: process.env.GITHUB_PAGES === 'true' ? '/rccswebcomp-nc/' : '/',
-  server: { port: 3000 },
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
@@ -18,5 +17,10 @@ export default defineConfig({
   },
   build: {
     chunkSizeWarningLimit: 1200,
+  },
+  css: {
+    postcss: {
+      plugins: [],
+    },
   },
 })
