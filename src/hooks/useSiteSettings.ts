@@ -22,7 +22,6 @@ export function useSiteSettings() {
         .single<SettingsRow>()
 
       if (error) {
-        console.warn('Failed to load site settings, using defaults:', error.message)
         return DEFAULT_SETTINGS
       }
 

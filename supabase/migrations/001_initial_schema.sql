@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS events (
   end_date TIMESTAMPTZ NOT NULL,
   location TEXT NOT NULL,
   capacity INTEGER CHECK (capacity > 0),
+  registration_count INTEGER NOT NULL DEFAULT 0,
   registration_opens_at TIMESTAMPTZ NOT NULL,
   registration_closes_at TIMESTAMPTZ NOT NULL,
   image_url TEXT,
@@ -96,25 +97,41 @@ CREATE INDEX IF NOT EXISTS idx_registrations_ticket ON registrations(ticket_numb
 CREATE INDEX IF NOT EXISTS idx_highlights_event ON highlights(event_id);
 CREATE INDEX IF NOT EXISTS idx_announcements_published ON announcements(published_at);
 
--- Function to auto-create profile on signup
+-- Function to auto-create profile on signup.
+-- Admin role can never be granted through client metadata.
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
+DECLARE
+  requested_role TEXT;
+  safe_role TEXT;
+  requested_grade TEXT;
 BEGIN
+  requested_role := NEW.raw_user_meta_data->>'role';
+  safe_role := CASE
+    WHEN requested_role IN ('student', 'parent', 'teacher') THEN requested_role
+    ELSE 'student'
+  END;
+
+  requested_grade := NEW.raw_user_meta_data->>'grade';
+
   INSERT INTO public.profiles (id, full_name, role, grade)
   VALUES (
     NEW.id,
     COALESCE(NEW.raw_user_meta_data->>'full_name', NEW.email),
-    COALESCE(NEW.raw_user_meta_data->>'role', 'student'),
-    (NEW.raw_user_meta_data->>'grade')::INTEGER
+    safe_role,
+    CASE WHEN requested_grade ~ '^\d+$' THEN requested_grade::INTEGER ELSE NULL END
   )
   ON CONFLICT (id) DO UPDATE SET
     full_name = EXCLUDED.full_name,
-    role = EXCLUDED.role,
+    role = CASE
+      WHEN EXCLUDED.role = 'admin' THEN public.profiles.role
+      ELSE EXCLUDED.role
+    END,
     grade = EXCLUDED.grade,
     updated_at = NOW();
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
 
 -- Trigger on auth.users
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;

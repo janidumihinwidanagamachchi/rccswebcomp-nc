@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import {
   CalendarDays,
@@ -58,15 +58,25 @@ export function EventDetailPage() {
   const {
     register: formRegister,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<RegistrationFormData>({
-    resolver: zodResolver(registrationSchema),
+    resolver: zodResolver(registrationSchema) as any,
     defaultValues: {
       attendeeName: profile?.full_name || '',
       attendeeEmail: user?.email || '',
       attendeeGrade: profile?.grade || undefined,
     },
   })
+
+  useEffect(() => {
+    reset((values) => ({
+      ...values,
+      attendeeName: profile?.full_name || '',
+      attendeeEmail: user?.email || '',
+      attendeeGrade: profile?.grade || undefined,
+    }))
+  }, [profile, user, reset])
 
   if (isLoading) {
     return (
@@ -159,6 +169,7 @@ export function EventDetailPage() {
               <CardContent className="p-5">
                 <Countdown
                   targetDate={event.start_date}
+                  eventEndDate={event.end_date}
                   registrationOpensAt={event.registration_opens_at}
                   registrationClosesAt={event.registration_closes_at}
                   capacity={event.capacity}
@@ -215,7 +226,7 @@ export function EventDetailPage() {
                       <Link to="/auth/login">Sign In</Link>
                     </Button>
                   </div>
-                ) : submitted || existingRegistration ? (
+                ) : submitted || (existingRegistration && existingRegistration.status !== 'cancelled') ? (
                   <div className="text-center">
                     <CheckCircle2 className="mx-auto mb-3 h-10 w-10 text-emerald-500" />
                     <p className="font-semibold">You&apos;re registered!</p>
@@ -252,6 +263,9 @@ export function EventDetailPage() {
                     <div className="space-y-1">
                       <Label htmlFor="attendeeGrade">Grade (optional)</Label>
                       <Input id="attendeeGrade" type="number" {...formRegister('attendeeGrade')} />
+                      {errors.attendeeGrade && (
+                        <p className="text-xs text-danger">{errors.attendeeGrade.message}</p>
+                      )}
                     </div>
                     <div className="space-y-1">
                       <Label htmlFor="notes">Notes (optional)</Label>

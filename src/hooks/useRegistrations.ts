@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
-import { generateTicketNumber } from '@/lib/utils'
 import type { Registration, Event, Profile } from '@/types'
 
 const REGISTRATIONS_KEY = 'registrations'
@@ -13,9 +12,13 @@ export function useMyRegistrations() {
   return useQuery({
     queryKey: [REGISTRATIONS_KEY, 'mine'],
     queryFn: async () => {
+      const { data: { user }, error: authError } = await supabase.auth.getUser()
+      if (authError || !user) return []
+
       const { data, error } = await supabase
         .from('registrations')
         .select('*, event:events(*, category:categories(*))')
+        .eq('user_id', user.id)
         .order('registered_at', { ascending: false })
       if (error) throw error
       return (data || []) as Registration[]
@@ -42,10 +45,17 @@ export function useEventRegistrations(eventId?: string) {
 export function useRegisterForEvent() {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: async ({ event, userId, formData }: { event: Event; userId: string; formData: any }) => {
-      const ticketNumber = generateTicketNumber(event.id)
+    mutationFn: async ({
+      event,
+      userId,
+      formData,
+    }: {
+      event: Event
+      userId: string
+      formData: { attendeeName: string; attendeeEmail: string; attendeeGrade?: number | null; notes?: string }
+    }) => {
       const qrCodeData = JSON.stringify({
-        ticket: ticketNumber,
+        ticket: '',
         event: event.id,
         user: userId,
       })
@@ -55,12 +65,12 @@ export function useRegisterForEvent() {
         .insert({
           event_id: event.id,
           user_id: userId,
-          ticket_number: ticketNumber,
+          ticket_number: '',
           qr_code_data: qrCodeData,
           attendee_name: formData.attendeeName,
           attendee_email: formData.attendeeEmail,
-          attendee_grade: formData.attendeeGrade || null,
-          notes: formData.notes || null,
+          attendee_grade: formData.attendeeGrade ?? null,
+          notes: formData.notes ?? null,
         })
         .select()
         .single()
@@ -68,9 +78,10 @@ export function useRegisterForEvent() {
       if (error) throw error
       return data as Registration
     },
-    onSuccess: () => {
+    onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: [REGISTRATIONS_KEY] })
       queryClient.invalidateQueries({ queryKey: ['events'] })
+      queryClient.invalidateQueries({ queryKey: ['event-registration', variables.event.id, variables.userId] })
     },
   })
 }
@@ -141,11 +152,13 @@ export function useVerifyTicket() {
       )?.[0]
       if (!row) return null
 
-      const { data: registration } = await supabase
+      const { data: registration, error: lookupError } = await supabase
         .from('registrations')
         .select('id, status')
         .eq('ticket_number', row.ticket_number)
         .single()
+
+      if (lookupError) throw lookupError
 
       return {
         ...row,

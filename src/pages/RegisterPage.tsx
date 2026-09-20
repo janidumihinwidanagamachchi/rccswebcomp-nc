@@ -16,6 +16,7 @@ export function RegisterPage() {
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [confirmationSent, setConfirmationSent] = useState(false)
 
   const {
     register,
@@ -24,22 +25,23 @@ export function RegisterPage() {
     watch,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(registerSchema) as any,
   })
 
   const role = watch('role')
 
   const onSubmit = async (data: RegisterFormData) => {
     setError(null)
+    setConfirmationSent(false)
     const { data: authData, error: signUpError } = await supabase.auth.signUp({
       email: data.email,
       password: data.password,
       options: {
-        emailRedirectTo: window.location.origin,
+        emailRedirectTo: `${window.location.origin}${import.meta.env.BASE_URL}`,
         data: {
           full_name: data.fullName,
           role: data.role,
-          grade: data.grade || null,
+          grade: data.grade ?? null,
         },
       },
     })
@@ -49,8 +51,10 @@ export function RegisterPage() {
       return
     }
 
-    if (authData.user) {
+    if (authData.session) {
       navigate('/')
+    } else if (authData.user) {
+      setConfirmationSent(true)
     }
   }
 
@@ -91,6 +95,7 @@ export function RegisterPage() {
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-quiet-ink"
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -115,10 +120,16 @@ export function RegisterPage() {
                 <div className="space-y-1">
                   <Label htmlFor="grade">Grade</Label>
                   <Input id="grade" type="number" min={1} max={13} {...register('grade')} />
+                  {errors.grade && <p className="text-xs text-danger">{errors.grade.message}</p>}
                 </div>
               )}
               {error && <p className="text-sm text-danger">{error}</p>}
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
+              {confirmationSent && (
+                <div className="rounded-lg bg-emerald-50 p-3 text-sm text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200">
+                  Account created. Check your email for a confirmation link before signing in.
+                </div>
+              )}
+              <Button type="submit" className="w-full" disabled={isSubmitting || confirmationSent}>
                 {isSubmitting ? 'Creating account...' : 'Create Account'}
               </Button>
             </form>

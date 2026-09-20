@@ -1,31 +1,19 @@
--- Passport test data: adds 4 test students + attended registrations so the Event Passport page shows real stats.
--- Run this in the Supabase SQL Editor after the admin user exists.
+-- Passport test data: creates attended registrations for test students and the demo admin.
+-- Run this in the Supabase SQL Editor after the admin user and test students exist.
+-- Create the 4 test students in Authentication > Users with these emails and
+-- user metadata: {"full_name": "...", "role": "student"}.
 
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
-
--- 1. Create test auth users (password: DemoPass123!)
---    If inserting into auth.users fails in your project, create these 4 users manually
---    in Authentication > Users with the same emails, then re-run this file.
-INSERT INTO auth.users (id, aud, role, email, encrypted_password, email_confirmed_at, raw_user_meta_data, created_at, updated_at)
-VALUES
-  (gen_random_uuid(), 'authenticated', 'authenticated', 'passport1@rccswebcomp.demo', crypt('DemoPass123!', gen_salt('bf')), NOW(), '{"full_name": "Aisha Perera", "role": "student"}'::jsonb, NOW(), NOW()),
-  (gen_random_uuid(), 'authenticated', 'authenticated', 'passport2@rccswebcomp.demo', crypt('DemoPass123!', gen_salt('bf')), NOW(), '{"full_name": "Binuka Silva", "role": "student"}'::jsonb, NOW(), NOW()),
-  (gen_random_uuid(), 'authenticated', 'authenticated', 'passport3@rccswebcomp.demo', crypt('DemoPass123!', gen_salt('bf')), NOW(), '{"full_name": "Chamari Fernando", "role": "student"}'::jsonb, NOW(), NOW()),
-  (gen_random_uuid(), 'authenticated', 'authenticated', 'passport4@rccswebcomp.demo', crypt('DemoPass123!', gen_salt('bf')), NOW(), '{"full_name": "Dinuka Ranasinghe", "role": "student"}'::jsonb, NOW(), NOW())
-ON CONFLICT (email) DO NOTHING;
-
--- 2. Seed attended registrations for test users + the demo admin.
---    registered_at is set 5 days ago so most events count as early-bird registrations.
+-- 1. Find the test users by their auth email (profiles has no email column).
 WITH test_users AS (
-  SELECT id, email, full_name
-  FROM profiles
-  WHERE email IN (
+  SELECT p.id, u.email, p.full_name
+  FROM public.profiles p
+  JOIN auth.users u ON u.id = p.id
+  WHERE u.email IN (
     'passport1@rccswebcomp.demo',
     'passport2@rccswebcomp.demo',
     'passport3@rccswebcomp.demo',
     'passport4@rccswebcomp.demo',
-    'admin@rccswebcomp.demo',
-    'admin@campuspulse.demo'
+    'admin@rccswebcomp.demo'
   )
 ),
 registrations_to_seed AS (
@@ -66,9 +54,7 @@ registrations_to_seed AS (
 
     -- Demo admin: a few stamps
     ('admin@rccswebcomp.demo', 'annual-sports-day'),
-    ('admin@rccswebcomp.demo', 'culture-day'),
-    ('admin@campuspulse.demo', 'annual-sports-day'),
-    ('admin@campuspulse.demo', 'culture-day')
+    ('admin@rccswebcomp.demo', 'culture-day')
   ) AS v(email, event_slug) ON tu.email = v.email
   JOIN events e ON e.slug = v.event_slug
 )

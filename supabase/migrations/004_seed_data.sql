@@ -124,14 +124,13 @@ ON CONFLICT (slug) DO NOTHING;
 
 -- Welcome announcement
 INSERT INTO announcements (title, content, priority, published_at, expires_at)
-VALUES (
+SELECT
   'Welcome to RCCSWebComp-NC',
   $c$Browse what's on this term, register for events, and get your tickets here. Announcements show up on this page as they are posted.$c$,
   'high',
   NOW(),
   NOW() + INTERVAL '30 days'
-)
-ON CONFLICT DO NOTHING;
+WHERE NOT EXISTS (SELECT 1 FROM announcements WHERE title = 'Welcome to RCCSWebComp-NC');
 
 -- Sample announcements
 INSERT INTO announcements (title, content, priority, category_id, event_id, published_at, expires_at)

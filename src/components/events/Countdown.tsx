@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { intervalToDuration, isPast, isFuture } from 'date-fns'
+import { intervalToDuration, isFuture, isPast } from 'date-fns'
 import { cn, toDate } from '@/lib/utils'
 
 interface CountdownProps {
   targetDate: string | Date
+  eventEndDate?: string | Date
   registrationOpensAt?: string | Date
   registrationClosesAt?: string | Date
   capacity?: number | null
@@ -13,6 +14,7 @@ interface CountdownProps {
 
 export function Countdown({
   targetDate,
+  eventEndDate,
   registrationOpensAt,
   registrationClosesAt,
   capacity,
@@ -27,7 +29,7 @@ export function Countdown({
   }, [])
 
   const start = toDate(targetDate)
-  const end = registrationClosesAt ? toDate(registrationClosesAt) : start
+  const end = eventEndDate ? toDate(eventEndDate) : start
 
   let label = 'Event starts in'
   let target = start
@@ -35,9 +37,14 @@ export function Countdown({
   if (registrationOpensAt && isFuture(toDate(registrationOpensAt))) {
     label = 'Registration opens in'
     target = toDate(registrationOpensAt)
-  } else if (registrationClosesAt && isFuture(toDate(registrationClosesAt)) && isPast(start)) {
-    label = 'Registration closes in'
-    target = toDate(registrationClosesAt)
+  } else if (isFuture(start)) {
+    if (registrationClosesAt && isFuture(toDate(registrationClosesAt))) {
+      label = 'Registration closes in'
+      target = toDate(registrationClosesAt)
+    } else {
+      label = 'Event starts in'
+      target = start
+    }
   } else if (isPast(start) && isFuture(end)) {
     label = 'Happening now'
     target = end

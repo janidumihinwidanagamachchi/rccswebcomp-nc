@@ -25,10 +25,11 @@ import { useAuthStore } from '@/stores/authStore'
 import { announcementSchema, type AnnouncementFormData } from '@/lib/validators'
 import { PRIORITY } from '@/lib/constants'
 import { formatDateTimeLocal } from '@/lib/utils'
+import type { Announcement } from '@/types'
 
 export function AnnouncementsManagerPage() {
   const { profile } = useAuthStore()
-  const { data: announcements, isLoading } = useAnnouncements()
+  const { data: announcements, isLoading } = useAnnouncements({ admin: true })
   const { data: categories } = useCategories()
   const createAnnouncement = useCreateAnnouncement()
   const updateAnnouncement = useUpdateAnnouncement()
@@ -65,7 +66,7 @@ export function AnnouncementsManagerPage() {
     setDialogOpen(true)
   }
 
-  const openEdit = (announcement: any) => {
+  const openEdit = (announcement: Announcement) => {
     setEditingId(announcement.id)
     reset({
       title: announcement.title,
@@ -91,12 +92,16 @@ export function AnnouncementsManagerPage() {
       author_id: profile?.id,
     }
 
-    if (editingId) {
-      await updateAnnouncement.mutateAsync({ id: editingId, ...payload })
-    } else {
-      await createAnnouncement.mutateAsync(payload)
+    try {
+      if (editingId) {
+        await updateAnnouncement.mutateAsync({ id: editingId, ...payload })
+      } else {
+        await createAnnouncement.mutateAsync(payload)
+      }
+      setDialogOpen(false)
+    } catch {
+      // Errors are surfaced by the mutation error state below.
     }
-    setDialogOpen(false)
   }
 
   return (
@@ -147,7 +152,7 @@ export function AnnouncementsManagerPage() {
                   </div>
                   <div className="space-y-1">
                     <Label htmlFor="categoryId">Category</Label>
-                    <Select value={watch('categoryId')} onValueChange={(v) => setValue('categoryId', v)}>
+                    <Select value={watch('categoryId') || ''} onValueChange={(v) => setValue('categoryId', v === '' ? undefined : v)}>
                       <SelectTrigger>
                         <SelectValue placeholder="None" />
                       </SelectTrigger>
@@ -172,6 +177,11 @@ export function AnnouncementsManagerPage() {
                     <Input id="expiresAt" type="datetime-local" {...register('expiresAt')} />
                   </div>
                 </div>
+                {(createAnnouncement.error || updateAnnouncement.error) && (
+                  <p className="text-sm text-danger">
+                    {(createAnnouncement.error ?? updateAnnouncement.error)?.message || 'Save failed'}
+                  </p>
+                )}
                 <Button type="submit" className="w-full" disabled={isSubmitting}>
                   {editingId ? 'Update' : 'Publish'}
                 </Button>

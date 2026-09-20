@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { format, parseISO, addMonths, subMonths, addWeeks, subWeeks, startOfToday } from 'date-fns'
+import { format, parseISO, addMonths, subMonths, addWeeks, subWeeks, startOfToday, isValid } from 'date-fns'
 import { Shell } from '@/components/layout/Shell'
 import { CalendarToolbar } from '@/components/calendar/CalendarToolbar'
 import { CalendarMonth } from '@/components/calendar/CalendarMonth'
@@ -22,11 +22,17 @@ export function CalendarPage() {
   const dateParam = searchParams.get('date')
   const selectedParam = searchParams.get('selected')
 
+  const parseDate = (value: string | null) => {
+    if (!value) return null
+    const parsed = parseISO(value)
+    return isValid(parsed) ? parsed : null
+  }
+
   const [currentDate, setCurrentDate] = useState(() =>
-    dateParam ? parseISO(dateParam) : startOfToday()
+    parseDate(dateParam) || startOfToday()
   )
   const [selectedDate, setSelectedDate] = useState<Date | null>(() =>
-    selectedParam ? parseISO(selectedParam) : null
+    parseDate(selectedParam)
   )
 
   useEffect(() => {
@@ -40,18 +46,23 @@ export function CalendarPage() {
         { replace: true }
       )
     }
-  }, [])
+  }, [searchParams, setSearchParams])
 
   useEffect(() => {
-    const next = new URLSearchParams(searchParams)
-    next.set('date', format(currentDate, 'yyyy-MM-dd'))
-    if (selectedDate) {
-      next.set('selected', format(selectedDate, 'yyyy-MM-dd'))
-    } else {
-      next.delete('selected')
-    }
-    setSearchParams(next, { replace: true })
-  }, [currentDate, selectedDate])
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev)
+        next.set('date', format(currentDate, 'yyyy-MM-dd'))
+        if (selectedDate) {
+          next.set('selected', format(selectedDate, 'yyyy-MM-dd'))
+        } else {
+          next.delete('selected')
+        }
+        return next
+      },
+      { replace: true }
+    )
+  }, [currentDate, selectedDate, setSearchParams])
 
   const category = searchParams.get('category') || 'all'
   const filteredEvents = useMemo(

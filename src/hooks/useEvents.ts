@@ -6,20 +6,22 @@ import type { Event, Category } from '@/types'
 const EVENTS_KEY = 'events'
 const CATEGORIES_KEY = 'categories'
 
-export function useEvents(filters?: { category?: string; status?: string; featured?: boolean }) {
+export function useEvents(filters?: { category?: string; status?: 'all' | string; featured?: boolean }) {
   return useQuery({
     queryKey: [EVENTS_KEY, filters],
     queryFn: async () => {
       let query = supabase
         .from('events')
-        .select('*, category:categories(*), registration_count:registrations(count)')
+        .select('*, category:categories(*), registration_count')
         .order('start_date', { ascending: true })
 
       if (filters?.category) {
         query = query.eq('category_id', filters.category)
       }
       if (filters?.status) {
-        query = query.eq('status', filters.status)
+        if (filters.status !== 'all') {
+          query = query.eq('status', filters.status)
+        }
       } else {
         query = query.in('status', ['published', 'completed'])
       }
@@ -30,10 +32,7 @@ export function useEvents(filters?: { category?: string; status?: string; featur
       const { data, error } = await query
       if (error) throw error
 
-      return (data || []).map((event: any) => ({
-        ...event,
-        registration_count: event.registration_count?.[0]?.count ?? 0,
-      })) as Event[]
+      return (data || []) as Event[]
     },
   })
 }
@@ -44,15 +43,12 @@ export function useEvent(slug: string) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('events')
-        .select('*, category:categories(*), registration_count:registrations(count)')
+        .select('*, category:categories(*), registration_count')
         .eq('slug', slug)
         .single()
 
       if (error) throw error
-      return {
-        ...data,
-        registration_count: data.registration_count?.[0]?.count ?? 0,
-      } as Event
+      return data as Event
     },
     enabled: !!slug,
   })
@@ -98,8 +94,9 @@ export function useUpdateEvent() {
       if (error) throw error
       return data
     },
-    onSuccess: () => {
+    onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: [EVENTS_KEY] })
+      queryClient.invalidateQueries({ queryKey: [EVENTS_KEY, variables.id] })
     },
   })
 }

@@ -94,17 +94,6 @@ export interface Highlight {
   author?: Profile
 }
 
-export interface TicketWithEvent extends Registration {
-  event: Event
-}
-
-export interface DashboardStats {
-  totalEvents: number
-  totalRegistrations: number
-  upcomingEvents: number
-  totalAnnouncements: number
-}
-
 export type ThemeMode = 'light' | 'dark' | 'system'
 
 export interface ThemePalette {

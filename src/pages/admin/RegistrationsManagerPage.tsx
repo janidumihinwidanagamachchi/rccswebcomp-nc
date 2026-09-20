@@ -21,7 +21,7 @@ import { useEventRegistrations, useCheckInRegistration } from '@/hooks/useRegist
 import { formatDate } from '@/lib/utils'
 
 export function RegistrationsManagerPage() {
-  const { data: events, isLoading: eventsLoading } = useEvents({})
+  const { data: events, isLoading: eventsLoading } = useEvents({ status: 'all' })
   const [selectedEventId, setSelectedEventId] = useState<string>('')
   const [search, setSearch] = useState('')
   const { data: registrations, isLoading } = useEventRegistrations(selectedEventId || undefined)

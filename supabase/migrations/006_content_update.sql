@@ -31,6 +31,11 @@ SET title = 'Welcome to RCCSWebComp-NC',
     content = $c$Browse what's on this term, register for events, and get your tickets here. Announcements show up on this page as they are posted.$c$
 WHERE title = 'Welcome to CampusPulse';
 
+-- If the old title no longer exists, make sure the welcome announcement content is current anyway.
+UPDATE announcements
+SET content = $c$Browse what's on this term, register for events, and get your tickets here. Announcements show up on this page as they are posted.$c$
+WHERE title = 'Welcome to RCCSWebComp-NC';
+
 -- Refresh the original three sample events
 UPDATE events SET
   short_description = 'A full day of athletics, team games, and house events.',

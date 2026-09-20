@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { supabase } from '@/lib/supabase'
+import { queryClient } from '@/lib/queryClient'
 import type { Profile } from '@/types'
 
 interface AuthState {
@@ -28,25 +29,38 @@ export const useAuthStore = create<AuthState>()(
           isLoading: false,
         }),
       refreshProfile: async () => {
-        const { data: { user } } = await supabase.auth.getUser()
-        if (!user) {
-          set({ user: null, profile: null, isAdmin: false, isLoading: false })
-          return
+        try {
+          const { data: { user }, error: userError } = await supabase.auth.getUser()
+          if (userError) throw userError
+          if (!user) {
+            set({ user: null, profile: null, isAdmin: false, isLoading: false })
+            return
+          }
+
+          const { data: profile, error: profileError } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', user.id)
+            .single()
+          if (profileError) throw profileError
+
+          get().setAuth({ id: user.id, email: user.email ?? '' }, profile)
+        } catch {
+          set({ isLoading: false })
         }
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', user.id)
-          .single()
-        get().setAuth({ id: user.id, email: user.email! }, profile)
       },
       signOut: async () => {
-        await supabase.auth.signOut()
-        set({ user: null, profile: null, isAdmin: false, isLoading: false })
+        try {
+          await supabase.auth.signOut()
+        } finally {
+          queryClient.clear()
+          set({ user: null, profile: null, isAdmin: false, isLoading: false })
+        }
       },
     }),
     {
       name: 'rccswebcomp-auth',
+      version: 1,
       partialize: (state) => ({ user: state.user, profile: state.profile, isAdmin: state.isAdmin }),
     }
   )

@@ -14,6 +14,7 @@ export function TicketValidatePage() {
   const [cameraError, setCameraError] = useState<string | null>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const controlsRef = useRef<{ stop: () => void } | null>(null)
+  const mountedRef = useRef(true)
   const verify = useVerifyTicket()
   const checkIn = useCheckInRegistration()
 
@@ -32,8 +33,8 @@ export function TicketValidatePage() {
     try {
       const { BrowserMultiFormatReader } = await import('@zxing/browser')
       const reader = new BrowserMultiFormatReader()
-      controlsRef.current = await reader.decodeFromVideoDevice(undefined, videoRef.current, (scan) => {
-        if (!scan) return
+      const controls = await reader.decodeFromVideoDevice(undefined, videoRef.current, (scan) => {
+        if (!scan || !mountedRef.current) return
         const text = scan.getText()
         let ticket = text
         try {
@@ -46,14 +47,29 @@ export function TicketValidatePage() {
         verify.mutate(ticket)
         stopScan()
       })
+      if (!mountedRef.current) {
+        controls.stop()
+      } else {
+        controlsRef.current = controls
+      }
     } catch {
-      setCameraError('Could not start the camera. Check browser permissions and try again.')
-      setScanning(false)
+      if (mountedRef.current) {
+        setCameraError('Could not start the camera. Check browser permissions and try again.')
+        setScanning(false)
+      }
+      const stream = videoRef.current?.srcObject as MediaStream | null
+      stream?.getTracks().forEach((track) => track.stop())
     }
   }
 
   useEffect(() => {
-    return () => controlsRef.current?.stop()
+    const video = videoRef.current
+    return () => {
+      mountedRef.current = false
+      controlsRef.current?.stop()
+      const stream = video?.srcObject as MediaStream | null
+      stream?.getTracks().forEach((track) => track.stop())
+    }
   }, [])
 
   const handleVerify = () => {

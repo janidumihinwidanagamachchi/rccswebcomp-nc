@@ -60,7 +60,14 @@ export function EventCard({ event }: EventCardProps) {
             {event.capacity ? `${event.capacity} spots` : 'Unlimited'}
           </span>
         </div>
-        <Countdown targetDate={event.start_date} />
+        <Countdown
+          targetDate={event.start_date}
+          eventEndDate={event.end_date}
+          registrationOpensAt={event.registration_opens_at}
+          registrationClosesAt={event.registration_closes_at}
+          capacity={event.capacity}
+          registeredCount={event.registration_count || 0}
+        />
         <Button asChild className="mt-4 w-full">
           <Link to={`/events/${event.slug}`}>View Event</Link>
         </Button>

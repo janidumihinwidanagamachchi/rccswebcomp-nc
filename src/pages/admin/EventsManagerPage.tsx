@@ -10,7 +10,7 @@ import { useEvents, useDeleteEvent } from '@/hooks/useEvents'
 import { formatDate } from '@/lib/utils'
 
 export function EventsManagerPage() {
-  const { data: events, isLoading } = useEvents({})
+  const { data: events, isLoading } = useEvents({ status: 'all' })
   const deleteEvent = useDeleteEvent()
 
   return (

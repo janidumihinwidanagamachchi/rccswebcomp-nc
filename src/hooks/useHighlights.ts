@@ -33,7 +33,7 @@ export function useHighlights(eventId?: string) {
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'highlights' },
         () => {
-          queryClient.invalidateQueries({ queryKey: [HIGHLIGHTS_KEY] })
+          queryClient.invalidateQueries({ queryKey: [HIGHLIGHTS_KEY, eventId || 'all'] })
         }
       )
       .subscribe()

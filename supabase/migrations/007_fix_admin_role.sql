@@ -1,9 +1,8 @@
 -- Fix demo admin role
 -- Run this in Supabase SQL Editor if you log in as the admin account but don't see
 -- the admin dashboard or the admin icon in the navbar.
--- The signup trigger defaults every new account to role='student', so admin users
--- created through Authentication > Users > Add User without {"role":"admin"} metadata
--- need this one-time fix.
+-- The signup trigger only allows student/parent/teacher roles from client metadata,
+-- so admin users created through Authentication > Users > Add User need this one-time fix.
 
 DO $$
 DECLARE

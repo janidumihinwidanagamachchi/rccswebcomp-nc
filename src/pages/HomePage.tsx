@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import {
   ArrowRight,
@@ -18,6 +19,7 @@ import { useEvents } from '@/hooks/useEvents'
 import { useAnnouncements } from '@/hooks/useAnnouncements'
 import { useSiteSettings } from '@/hooks/useSiteSettings'
 import { useAuthStore } from '@/stores/authStore'
+import { toDate } from '@/lib/utils'
 
 export function HomePage() {
   const { user, profile } = useAuthStore()
@@ -30,7 +32,8 @@ export function HomePage() {
   const upcomingEvents = events?.slice(0, 6) || []
   const latestAnnouncements = announcements?.slice(0, 3) || []
 
-  const nextEvent = events?.[0]
+  const now = new Date()
+  const nextEvent = events?.find((e) => toDate(e.end_date) >= now)
 
   return (
     <Shell>
@@ -64,27 +67,7 @@ export function HomePage() {
               />
             )}
 
-            {Array.from({ length: 16 }).map((_, i) => {
-              const size = 4 + Math.random() * 8
-              const left = Math.random() * 100
-              const top = Math.random() * 100
-              const duration = 4 + Math.random() * 6
-              const delay = Math.random() * 4
-              return (
-                <div
-                  key={i}
-                  className="animate-float pointer-events-none absolute rounded-full bg-brand/30"
-                  style={{
-                    left: `${left}%`,
-                    top: `${top}%`,
-                    width: size,
-                    height: size,
-                    animationDuration: `${duration}s`,
-                    animationDelay: `${delay}s`,
-                  }}
-                />
-              )
-            })}
+            <HeroParticles />
 
             <div className="container relative z-10 mx-auto px-4">
               <div className="mx-auto max-w-4xl text-center">
@@ -120,15 +103,15 @@ export function HomePage() {
                     style={{ animationDelay: '300ms' }}
                   >
                     <Button asChild size="lg" className="shadow-lg shadow-brand/20">
-                      <Link to={hero?.primaryCta.href || '/events'}>
-                        {hero?.primaryCta.label || 'Browse Events'}
+                      <Link to={hero?.primaryCta?.href || '/events'}>
+                        {hero?.primaryCta?.label || 'Browse Events'}
                         <ArrowRight className="ml-2 h-5 w-5" />
                       </Link>
                     </Button>
                     <Button asChild variant="outline" size="lg">
-                      <Link to={hero?.secondaryCta.href || '/calendar'}>
+                      <Link to={hero?.secondaryCta?.href || '/calendar'}>
                         <CalendarDays className="mr-2 h-5 w-5" />
-                        {hero?.secondaryCta.label || 'View Calendar'}
+                        {hero?.secondaryCta?.label || 'View Calendar'}
                       </Link>
                     </Button>
                   </div>
@@ -149,6 +132,7 @@ export function HomePage() {
                 </div>
                 <Countdown
                   targetDate={nextEvent.start_date}
+                  eventEndDate={nextEvent.end_date}
                   registrationOpensAt={nextEvent.registration_opens_at}
                   registrationClosesAt={nextEvent.registration_closes_at}
                   capacity={nextEvent.capacity}
@@ -229,5 +213,46 @@ export function HomePage() {
         </section>
       </div>
     </Shell>
+  )
+}
+
+function HeroParticles() {
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 16 }).map((_, i) => {
+        const size = 4 + Math.random() * 8
+        const left = Math.random() * 100
+        const top = Math.random() * 100
+        const duration = 4 + Math.random() * 6
+        const delay = Math.random() * 4
+        return {
+          key: i,
+          size,
+          left,
+          top,
+          duration,
+          delay,
+        }
+      }),
+    []
+  )
+
+  return (
+    <>
+      {particles.map((p) => (
+        <div
+          key={p.key}
+          className="animate-float pointer-events-none absolute rounded-full bg-brand/30"
+          style={{
+            left: `${p.left}%`,
+            top: `${p.top}%`,
+            width: p.size,
+            height: p.size,
+            animationDuration: `${p.duration}s`,
+            animationDelay: `${p.delay}s`,
+          }}
+        />
+      ))}
+    </>
   )
 }

@@ -24,12 +24,6 @@ export function formatDateTime(date: string | Date) {
   })
 }
 
-export function generateTicketNumber(eventId: string) {
-  const segment = eventId.slice(-6).toUpperCase()
-  const random = Math.random().toString(36).substring(2, 6).toUpperCase()
-  return `EVT-${segment}-${random}`
-}
-
 export function slugify(text: string) {
   return text
     .toLowerCase()

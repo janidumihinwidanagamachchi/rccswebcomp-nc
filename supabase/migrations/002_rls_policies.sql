@@ -13,7 +13,9 @@ CREATE POLICY "Profiles are viewable by everyone"
 
 DROP POLICY IF EXISTS "Users can update own profile" ON profiles;
 CREATE POLICY "Users can update own profile"
-  ON profiles FOR UPDATE USING (auth.uid() = id);
+  ON profiles FOR UPDATE
+  USING (auth.uid() = id)
+  WITH CHECK (auth.uid() = id);
 
 -- Categories: readable by all, manageable by admins
 DROP POLICY IF EXISTS "Categories are viewable by everyone" ON categories;
@@ -63,7 +65,23 @@ CREATE POLICY "Admins can view all registrations"
 
 DROP POLICY IF EXISTS "Users can create own registrations" ON registrations;
 CREATE POLICY "Users can create own registrations"
-  ON registrations FOR INSERT WITH CHECK (auth.uid() = user_id);
+  ON registrations FOR INSERT WITH CHECK (
+    auth.uid() = user_id
+    AND status = 'registered'
+    AND EXISTS (
+      SELECT 1 FROM public.events e
+      WHERE e.id = event_id
+        AND e.status = 'published'
+        AND e.registration_opens_at <= NOW()
+        AND e.registration_closes_at >= NOW()
+    )
+  );
+
+DROP POLICY IF EXISTS "Users can cancel own registrations" ON registrations;
+CREATE POLICY "Users can cancel own registrations"
+  ON registrations FOR UPDATE
+  USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id AND status = 'cancelled');
 
 DROP POLICY IF EXISTS "Admins can update registrations" ON registrations;
 CREATE POLICY "Admins can update registrations"
@@ -78,7 +96,13 @@ CREATE POLICY "Highlights are viewable by everyone"
 
 DROP POLICY IF EXISTS "Authenticated users can create highlights" ON highlights;
 CREATE POLICY "Authenticated users can create highlights"
-  ON highlights FOR INSERT WITH CHECK (auth.uid() = author_id);
+  ON highlights FOR INSERT WITH CHECK (
+    auth.uid() = author_id
+    AND EXISTS (
+      SELECT 1 FROM public.events e
+      WHERE e.id = event_id AND e.status IN ('published', 'completed')
+    )
+  );
 
 DROP POLICY IF EXISTS "Admins can delete highlights" ON highlights;
 CREATE POLICY "Admins can delete highlights"

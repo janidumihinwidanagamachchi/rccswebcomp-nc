@@ -7,8 +7,8 @@ import { useAnnouncements } from '@/hooks/useAnnouncements'
 import { CalendarDays, Users, Megaphone, Ticket } from 'lucide-react'
 
 export function AdminDashboardPage() {
-  const { data: events, isLoading: eventsLoading } = useEvents({})
-  const { data: announcements, isLoading: announcementsLoading } = useAnnouncements()
+  const { data: events, isLoading: eventsLoading } = useEvents({ status: 'all' })
+  const { data: announcements, isLoading: announcementsLoading } = useAnnouncements({ admin: true })
 
   const totalEvents = events?.length || 0
   const upcomingEvents = events?.filter((e) => new Date(e.start_date) > new Date()).length || 0

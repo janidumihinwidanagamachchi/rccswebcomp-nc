@@ -4,16 +4,22 @@ import type { Announcement } from '@/types'
 
 const ANNOUNCEMENTS_KEY = 'announcements'
 
-export function useAnnouncements() {
+export function useAnnouncements({ admin = false }: { admin?: boolean } = {}) {
   return useQuery({
-    queryKey: [ANNOUNCEMENTS_KEY],
+    queryKey: [ANNOUNCEMENTS_KEY, { admin }],
     queryFn: async () => {
-      const { data, error } = await supabase
+      let query = supabase
         .from('announcements')
         .select('*, category:categories(*), event:events(id,title,slug)')
-        .lte('published_at', new Date().toISOString())
-        .or('expires_at.is.null,expires_at.gt.now()')
         .order('published_at', { ascending: false })
+
+      if (!admin) {
+        query = query
+          .lte('published_at', new Date().toISOString())
+          .or('expires_at.is.null,expires_at.gt.now()')
+      }
+
+      const { data, error } = await query
       if (error) throw error
       return (data || []) as Announcement[]
     },

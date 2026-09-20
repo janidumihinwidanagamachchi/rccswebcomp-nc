@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useAuthStore } from '@/stores/authStore'
 import { supabase } from '@/lib/supabase'
+import { queryClient } from '@/lib/queryClient'
 
 export function useAuth() {
   const { user, profile, isLoading, isAdmin, refreshProfile, signOut } = useAuthStore()
@@ -10,9 +11,11 @@ export function useAuth() {
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
-        refreshProfile()
+        // Defer profile fetch out of the auth callback to avoid deadlock.
+        setTimeout(() => refreshProfile(), 0)
       } else {
         useAuthStore.getState().setAuth(null, null)
+        queryClient.clear()
       }
     })
 

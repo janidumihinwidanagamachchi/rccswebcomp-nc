@@ -1,6 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
 import { mkdirSync, writeFileSync } from 'node:fs'
-import { createHash } from 'node:crypto'
 import { resolve } from 'node:path'
 
 const supabaseUrl = process.env.VITE_SUPABASE_URL
@@ -31,20 +30,26 @@ const TABLES = [
 const PAGE_SIZE = 1000
 const OUTPUT_DIR = resolve(process.cwd(), 'supabase', 'data')
 
-function redactTicketNumber(ticket) {
-  const hash = createHash('sha256').update(String(ticket)).digest('hex')
-  return `REDACTED-${hash.slice(0, 12).toUpperCase()}`
+function redactProfiles(rows) {
+  if (!redact) return rows
+  return rows.map((row) => ({
+    id: row.id,
+    role: row.role,
+    created_at: row.created_at,
+    updated_at: row.updated_at,
+  }))
 }
 
 function redactRegistrations(rows) {
   if (!redact) return rows
   return rows.map((row) => ({
     ...row,
+    attendee_name: '[redacted]',
     attendee_email: '[redacted]',
-    attendee_grade: row.attendee_grade ?? null,
+    attendee_grade: null,
     notes: null,
     qr_code_data: '[redacted]',
-    ticket_number: redactTicketNumber(row.ticket_number),
+    ticket_number: '[redacted]',
   }))
 }
 
@@ -114,13 +119,20 @@ async function main() {
   const snapshot = {
     exported_at: new Date().toISOString(),
     mode,
-    redacted: redact,
+    redacted: redact
+      ? 'names, emails, grades, notes, QR data and ticket numbers removed; profile details limited'
+      : false,
     tables: {},
   }
 
   for (const { name, orderBy } of TABLES) {
     const rows = await fetchAll(supabase, name, orderBy)
-    const output = name === 'registrations' ? redactRegistrations(rows) : rows
+    const output =
+      name === 'registrations'
+        ? redactRegistrations(rows)
+        : name === 'profiles'
+        ? redactProfiles(rows)
+        : rows
 
     writeFileSync(
       resolve(OUTPUT_DIR, `${name}.json`),

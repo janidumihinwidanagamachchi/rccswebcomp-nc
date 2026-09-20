@@ -30,6 +30,8 @@ You'll need Node 18+, a Supabase project, and a Vercel account if you plan to de
    npm install
    ```
 
+   You can also run `npm run lint` to check TypeScript/React code quality.
+
 2. Copy the env template and add your Supabase URL and anon key (found under Project Settings > API).
 
    ```bash
@@ -43,9 +45,11 @@ You'll need Node 18+, a Supabase project, and a Vercel account if you plan to de
 
 3. In the Supabase SQL editor, run `supabase/migrations/00_combined_setup.sql`. One file sets up the tables, RLS policies, functions, and default settings.
 
-4. Create the demo admin under Authentication > Users > Add User, using `admin@rccswebcomp.demo` and `DemoAdmin123!`. A trigger creates the matching profile for you. You can also set the user metadata to `{"role": "admin"}` when creating the user so the profile starts with the right role.
+4. Create the demo admin under Authentication > Users > Add User, using `admin@rccswebcomp.demo` and `DemoAdmin123!`. A trigger creates the matching profile for you.
 
-5. Run `supabase/migrations/004_seed_data.sql`. Do this after the admin user exists, since it sets the admin role and adds the sample categories and events.
+5. Run `supabase/migrations/007_fix_admin_role.sql` to promote the demo account to `role='admin'`. (Client signup metadata can no longer grant admin for security reasons.)
+
+6. Run `supabase/migrations/004_seed_data.sql`. Do this after the admin user exists, since it sets the admin role and adds the sample categories and events.
 
 6. Start the dev server and open http://localhost:3000.
 
@@ -57,7 +61,7 @@ The admin login is `admin@rccswebcomp.demo` / `DemoAdmin123!`. Everyone else can
 
 ### Admin panel not showing?
 
-If you log in with the admin account but you don't see the admin icon in the navbar, or `/admin` redirects you back home, the profile's `role` isn't set to `admin`. This usually happens when the admin user is created in the Supabase dashboard without `{"role": "admin"}` metadata.
+If you log in with the admin account but you don't see the admin icon in the navbar, or `/admin` redirects you back home, the profile's `role` isn't set to `admin`. Client signup metadata can no longer grant admin, so admin accounts must be promoted with SQL.
 
 Run this in the Supabase SQL Editor:
 
@@ -85,16 +89,25 @@ You can find this under **Authentication → URL Configuration** in the Supabase
 
 ## Demo content
 
-The migrations in `supabase/migrations/` add demo data in order:
+The migrations in `supabase/migrations/` add demo data in order. `00_combined_setup.sql` is generated from `001_initial_schema.sql` + `002_rls_policies.sql` + `003_functions.sql` + `005_site_settings.sql`, so use either the combined file or the numbered files, not both.
 
 1. `00_combined_setup.sql` — schema, RLS policies, functions, default site settings.
 2. `004_seed_data.sql` — categories, admin role, sample events and announcements.
 3. `006_content_update.sql` — refreshed copy and extra events/announcements.
-4. `008_passport_test_data.sql` — 4 test students with attended events for the Passport page.
+4. `008_passport_test_data.sql` — attended events for the Passport page. Requires the four test students to exist in Auth first (see below).
 5. `009_content_expansion.sql` — more events, announcements, highlights, and registrations.
 6. `010_remove_event_images.sql` — clears stored event images (the UI no longer displays them).
+7. `011_security_and_counts.sql` — security hardening, server-side ticket numbers, and `registration_count` maintenance.
+8. `012_hygiene.sql` — `updated_at` triggers.
 
-Run them in the Supabase SQL Editor in that order.
+For `008_passport_test_data.sql`, create these four students in **Authentication > Users** with metadata `{"full_name": "...", "role": "student"}` before running the file:
+
+- `passport1@rccswebcomp.demo` (Aisha Perera)
+- `passport2@rccswebcomp.demo` (Binuka Silva)
+- `passport3@rccswebcomp.demo` (Chamari Fernando)
+- `passport4@rccswebcomp.demo` (Dinuka Ranasinghe)
+
+Run all migrations in the Supabase SQL Editor in order.
 
 ## Backing up data
 
@@ -118,7 +131,7 @@ $env:EXPORT_ADMIN_PASSWORD='DemoAdmin123!'
 npm run export:data
 ```
 
-This writes one JSON file per table into `supabase/data/`, plus a `snapshot.json` with counts and metadata. Personal data is redacted by default: `registrations.attendee_email`, `notes`, and `qr_code_data` are replaced, and `ticket_number` is hashed. Pass `--no-redact` only for a local copy that you will **not** commit.
+This writes one JSON file per table into `supabase/data/`, plus a `snapshot.json` with counts and metadata. Personal data is redacted by default: profile `full_name`, `avatar_url`, and `grade` are removed; registration `attendee_name`, `attendee_email`, `attendee_grade`, `notes`, `qr_code_data`, and `ticket_number` are replaced. Pass `--no-redact` only for a local copy that you will **not** commit.
 
 ## Recent updates
 
@@ -126,7 +139,8 @@ This writes one JSON file per table into `supabase/data/`, plus a `snapshot.json
 - **Removed Framer Motion and `class-variance-authority`** — components now use React 19 ref-as-prop functions and CSS keyframes, shrinking the bundle.
 - **Calendar upgrade** — added week/agenda views, multi-day event bars, month/year pickers, category filtering, URL state, and `.ics` / Google Calendar export.
 - **Ticket validation page** — new `/admin/validate` route with a lazy-loaded ZXing QR scanner and manual ticket lookup.
-- **Admin role fix** — `007_fix_admin_role.sql` makes it easy to recover when the demo admin is created without the right role metadata.
+- **Security hardening** — `011_security_and_counts.sql` locks down admin role escalation, adds row-locked capacity enforcement, server-side ticket numbers, and a cached `registration_count` column. `012_hygiene.sql` adds `updated_at` triggers.
+- **Admin role fix** — `007_fix_admin_role.sql` promotes the demo admin after creation (client metadata can no longer grant admin).
 
 ## Deploying
 
@@ -153,7 +167,7 @@ Alternatively, push to GitHub and import the project in Vercel with the Vite pre
 
 A few decisions worth calling out:
 
-**Security lives in the database, not the UI.** Supabase RLS policies decide who can read and write each table, so a wrong query in the frontend can't leak anything. Event capacity is enforced by a trigger on `registrations` — a registration that would overflow an event gets rejected by Postgres itself, not just hidden in the interface. There's also a unique constraint on `(event_id, user_id)` so double registration is impossible.
+**Security lives in the database, not the UI.** Supabase RLS policies decide who can read and write each table, and admin privileges are protected by a trigger that blocks self role changes. Event capacity is enforced by a row-locked trigger on `registrations` — a registration that would overflow an event gets rejected by Postgres itself, and the `registration_count` column is maintained automatically. There's also a unique constraint on `(event_id, user_id)` so double registration is impossible.
 
 **Server state and client state are kept apart.** Anything that comes from Supabase goes through TanStack Query for caching and loading states. Zustand only holds things that are truly local: the auth session, the theme choice, and the mobile menu.
 

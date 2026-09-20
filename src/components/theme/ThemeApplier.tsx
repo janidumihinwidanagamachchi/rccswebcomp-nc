@@ -13,8 +13,14 @@ export function ThemeApplier({ pageTitle }: { pageTitle?: string }) {
   React.useEffect(() => {
     if (!settings) return
     const stored = localStorage.getItem('rccswebcomp-ui')
-    const hasUserOverride = stored ? JSON.parse(stored).state?.theme : false
-    if (!hasUserOverride) {
+    let storedTheme: string | undefined
+    try {
+      const parsed = stored ? JSON.parse(stored) : null
+      storedTheme = parsed?.state?.theme
+    } catch {
+      storedTheme = undefined
+    }
+    if (!storedTheme) {
       setTheme(settings.theme.mode)
     }
   }, [settings, setTheme])
@@ -27,8 +33,9 @@ export function ThemeApplier({ pageTitle }: { pageTitle?: string }) {
     if (theme === 'system') {
       const media = window.matchMedia('(prefers-color-scheme: dark)')
       const handler = () => {
+        const next = resolveTheme('system')
         root.classList.remove('light', 'dark')
-        root.classList.add(resolveTheme('system'))
+        root.classList.add(next)
       }
       media.addEventListener('change', handler)
       return () => media.removeEventListener('change', handler)

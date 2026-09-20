@@ -38,7 +38,7 @@ export function EventFormPage() {
     reset,
     formState: { errors, isSubmitting },
   } = useForm<EventFormData>({
-    resolver: zodResolver(eventSchema),
+    resolver: zodResolver(eventSchema) as any,
     defaultValues: {
       status: 'draft',
       featured: false,
@@ -70,7 +70,7 @@ export function EventFormPage() {
   const onSubmit = async (data: EventFormData) => {
     const payload = {
       title: data.title,
-      slug: slugify(data.title),
+      slug: isEdit && event ? event.slug : slugify(data.title),
       short_description: data.shortDescription,
       description: data.description,
       category_id: data.categoryId,
@@ -79,19 +79,23 @@ export function EventFormPage() {
       end_date: new Date(data.endDate).toISOString(),
       registration_opens_at: new Date(data.registrationOpensAt).toISOString(),
       registration_closes_at: new Date(data.registrationClosesAt).toISOString(),
-      capacity: data.capacity || null,
+      capacity: data.capacity ?? null,
       featured: data.featured,
       status: data.status,
       image_url: data.imageUrl || null,
       organizer_id: profile?.id,
     }
 
-    if (isEdit && id) {
-      await updateEvent.mutateAsync({ id, ...payload })
-    } else {
-      await createEvent.mutateAsync(payload)
+    try {
+      if (isEdit && id) {
+        await updateEvent.mutateAsync({ id, ...payload })
+      } else {
+        await createEvent.mutateAsync(payload)
+      }
+      navigate('/admin/events')
+    } catch {
+      // mutation error displayed below
     }
-    navigate('/admin/events')
   }
 
   if (isEdit && eventLoading) {
@@ -143,8 +147,8 @@ export function EventFormPage() {
                 <div className="space-y-1">
                   <Label htmlFor="categoryId">Category</Label>
                   <Select
-                    value={watch('categoryId')}
-                    onValueChange={(v) => setValue('categoryId', v)}
+                    value={watch('categoryId') || ''}
+                    onValueChange={(v) => setValue('categoryId', v === '' ? undefined : v)}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select category" />
@@ -153,11 +157,14 @@ export function EventFormPage() {
                       {categoriesLoading ? (
                         <SelectItem value="loading">Loading...</SelectItem>
                       ) : (
-                        categories?.map((cat) => (
-                          <SelectItem key={cat.id} value={cat.id}>
-                            {cat.name}
-                          </SelectItem>
-                        ))
+                        <>
+                          <SelectItem value="">None</SelectItem>
+                          {categories?.map((cat) => (
+                            <SelectItem key={cat.id} value={cat.id}>
+                              {cat.name}
+                            </SelectItem>
+                          ))}
+                        </>
                       )}
                     </SelectContent>
                   </Select>
@@ -197,6 +204,7 @@ export function EventFormPage() {
                 <div className="space-y-1">
                   <Label htmlFor="capacity">Capacity (leave empty for unlimited)</Label>
                   <Input id="capacity" type="number" {...register('capacity')} />
+                  {errors.capacity && <p className="text-xs text-danger">{errors.capacity.message}</p>}
                 </div>
                 <div className="space-y-1">
                   <Label htmlFor="imageUrl">Image URL (optional)</Label>
@@ -227,6 +235,11 @@ export function EventFormPage() {
                 </div>
               </div>
 
+              {(createEvent.error || updateEvent.error) && (
+                <p className="text-sm text-danger">
+                  {(createEvent.error ?? updateEvent.error)?.message || 'Save failed'}
+                </p>
+              )}
               <div className="flex justify-end gap-3">
                 <Button variant="outline" asChild>
                   <Link to="/admin/events">Cancel</Link>

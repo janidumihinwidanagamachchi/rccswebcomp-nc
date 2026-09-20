@@ -41,15 +41,6 @@ export const HIGHLIGHT_TYPE = {
 
 export type HighlightType = (typeof HIGHLIGHT_TYPE)[keyof typeof HIGHLIGHT_TYPE]
 
-export const DEFAULT_CATEGORIES = [
-  { name: 'Academic', slug: 'academic', color: 'bg-blue-500', icon: 'GraduationCap' },
-  { name: 'Sports', slug: 'sports', color: 'bg-orange-500', icon: 'Trophy' },
-  { name: 'Arts', slug: 'arts', color: 'bg-pink-500', icon: 'Palette' },
-  { name: 'Culture', slug: 'culture', color: 'bg-purple-500', icon: 'Globe' },
-  { name: 'Tech', slug: 'tech', color: 'bg-cyan-500', icon: 'Cpu' },
-  { name: 'Music', slug: 'music', color: 'bg-rose-500', icon: 'Music' },
-]
-
 export const BADGES = [
   { id: 'culture-explorer', name: 'Culture Explorer', description: 'Attended 3+ culture events', category: 'culture', threshold: 3 },
   { id: 'sports-fanatic', name: 'Sports Fanatic', description: 'Attended 3+ sports events', category: 'sports', threshold: 3 },
