@@ -516,7 +516,7 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   },
   brand: {
     name: 'RCCSWebComp-NC',
-    motto: 'Disce Aut Discede',
+    motto: '',
     logoUrl: '',
   },
   seo: {

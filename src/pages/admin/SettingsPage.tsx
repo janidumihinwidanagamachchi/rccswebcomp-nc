@@ -417,7 +417,7 @@ export function SettingsPage() {
                 ))}
 
                 <div className="rounded-lg border p-4">
-                  <p className="font-display text-3xl">DISCE AUT DISCEDE</p>
+                  <p className="font-display text-3xl">What's on at school, without the guesswork.</p>
                   <h3>The quick brown fox jumps over the lazy dog.</h3>
                   <p>Body text uses the selected sans-serif font.</p>
                 </div>
@@ -433,7 +433,7 @@ export function SettingsPage() {
                   <Briefcase className="h-5 w-5" />
                   Brand
                 </CardTitle>
-                <CardDescription>Site name, motto, and crest/logo.</CardDescription>
+                <CardDescription>Site name, motto, and logo.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
@@ -453,7 +453,7 @@ export function SettingsPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="brand-logo">Logo / Crest URL</Label>
+                  <Label htmlFor="brand-logo">Logo URL</Label>
                   <Input
                     id="brand-logo"
                     value={draft.brand.logoUrl}
