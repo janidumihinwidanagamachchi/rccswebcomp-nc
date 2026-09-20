@@ -57,7 +57,13 @@ You'll need Node 18+, a Supabase project, and a Vercel account if you plan to de
    npm run dev
    ```
 
-The admin login is `admin@rccswebcomp.demo` / `DemoAdmin123!`. Everyone else can sign up at `/auth/register`.
+Demo logins:
+
+- Admin: `admin@rccswebcomp.demo` / `DemoAdmin123!`
+- Student: `passport2@rccswebcomp.demo` (Binuka Silva) / `Student123!`
+- Student: `passport3@rccswebcomp.demo` (Chamari Fernando) / `Student123!`
+
+Everyone can also sign up at `/auth/register`.
 
 ### Admin panel not showing?
 
@@ -102,7 +108,7 @@ All demo events, student names, and announcements are fictional sample data.
 7. `011_security_and_counts.sql` — security hardening, server-side ticket numbers, and `registration_count` maintenance.
 8. `012_hygiene.sql` — `updated_at` triggers.
 
-For `008_passport_test_data.sql`, create these four students in **Authentication > Users** with metadata `{"full_name": "...", "role": "student"}` before running the file:
+For `008_passport_test_data.sql`, create these four students in **Authentication > Users** with the password `Student123!` and metadata `{"full_name": "...", "role": "student"}` before running the file:
 
 - `passport1@rccswebcomp.demo` (Aisha Perera)
 - `passport2@rccswebcomp.demo` (Binuka Silva)
