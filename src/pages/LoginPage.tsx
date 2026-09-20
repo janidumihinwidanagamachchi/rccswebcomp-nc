@@ -57,7 +57,7 @@ export function LoginPage() {
     const { error } = await supabase.auth.resend({
       type: 'signup',
       email,
-      options: { emailRedirectTo: window.location.origin },
+      options: { emailRedirectTo: `${window.location.origin}${import.meta.env.BASE_URL}` },
     })
     if (error) {
       setResendStatus('error')

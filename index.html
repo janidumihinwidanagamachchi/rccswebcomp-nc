@@ -1,11 +1,39 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="School events, QR tickets, and announcements for one campus." />
     <title>RCCSWebComp-NC | School Events</title>
+  <!-- theme:start -->
+<script>
+  (function () {
+    try {
+      var t = {"palette":{"light":{"alt":"#e5e5e5","ink":"#171717","line":"#d4d4d4","brand":"#262626","field":"#e5e5e5","focus":"#171717","panel":"#f5f5f5","quiet":"#f0f0f0","altInk":"#171717","canvas":"#ffffff","danger":"#ef4444","brandInk":"#ffffff","floating":"#ffffff","panelInk":"#171717","quietInk":"#737373","dangerInk":"#ffffff","highlight":"#525252","floatingInk":"#171717","highlightInk":"#ffffff"},"dark":{"alt":"#262626","ink":"#f5f5f5","line":"#262626","brand":"#e5e5e5","field":"#171717","focus":"#e5e5e5","panel":"#171717","quiet":"#141414","altInk":"#f5f5f5","canvas":"#0a0a0a","danger":"#ef4444","brandInk":"#0a0a0a","floating":"#262626","panelInk":"#f5f5f5","quietInk":"#a3a3a3","dangerInk":"#ffffff","highlight":"#a3a3a3","floatingInk":"#f5f5f5","highlightInk":"#0a0a0a"}},"fonts":{"sans":"\"Inter\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif","serif":"\"Inter\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif","display":"\"Bebas Neue\", Impact, Haettenschweiler, \"Arial Narrow Bold\", sans-serif"},"radius":"0.75rem","mode":"dark"};
+      var mode = null;
+      try {
+        var stored = JSON.parse(localStorage.getItem('rccswebcomp-ui') || 'null');
+        mode = stored && stored.state && stored.state.theme;
+      } catch (e) { /* ignore */ }
+      if (!mode) mode = t.mode;
+      var dark = mode === 'dark' || (mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      var html = document.documentElement;
+      html.classList.remove('light', 'dark');
+      html.classList.add(dark ? 'dark' : 'light');
+      var colors = dark ? t.palette.dark : t.palette.light;
+      Object.keys(colors).forEach(function (key) {
+        var name = key.replace(/([A-Z])/g, '-$1').toLowerCase();
+        html.style.setProperty('--' + name, colors[key]);
+      });
+      html.style.setProperty('--font-sans', t.fonts.sans);
+      html.style.setProperty('--font-serif', t.fonts.serif);
+      html.style.setProperty('--font-display', t.fonts.display);
+      html.style.setProperty('--radius', t.radius);
+    } catch (e) { /* never block first paint */ }
+  })();
+</script>
+<!-- theme:end -->
   </head>
   <body>
     <div id="root"></div>
