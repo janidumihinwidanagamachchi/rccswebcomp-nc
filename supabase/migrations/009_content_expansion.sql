@@ -22,7 +22,7 @@ SELECT
 FROM (VALUES
   ('Founders'' Day Assembly', 'founders-day-assembly',
    'Annual assembly honouring the school''s founders.',
-   'The Founders'' Day Assembly brings the whole school together for speeches, prize-giving, and performances. Parents are welcome.',
+   'Speeches, prize-giving and performances in Main Hall. The whole school files in for the morning, parents welcome.',
    'academic', 'completed',
    '2026-08-15 08:30:00+05:30'::timestamptz, '2026-08-15 11:00:00+05:30'::timestamptz,
    'Main Hall', 500, '2026-08-01 08:00:00+05:30'::timestamptz, '2026-08-14 17:00:00+05:30'::timestamptz, true),
@@ -35,7 +35,7 @@ FROM (VALUES
    'School Swimming Pool', 200, '2026-08-08 08:00:00+05:30'::timestamptz, '2026-08-20 17:00:00+05:30'::timestamptz, true),
 
   ('Book Week Quiz', 'book-week-quiz',
-   'A literary knockout for teams of four.',
+   'Team trivia for book lovers.',
    'Questions cover classics, local authors, and recent releases. Teams can register through the library by Wednesday.',
    'culture', 'completed',
    '2026-09-05 14:00:00+05:30'::timestamptz, '2026-09-05 16:00:00+05:30'::timestamptz,
@@ -49,7 +49,7 @@ FROM (VALUES
    'Classroom Block', 300, '2026-09-20 08:00:00+05:30'::timestamptz, '2026-10-04 17:00:00+05:30'::timestamptz, true),
 
   ('Inter-House Netball Tournament', 'inter-house-netball',
-   'Round-robin matches followed by finals.',
+   'Round-robin first, then the finals.',
    'Teams of seven per house. Matches run on both courts; the final is at 3pm.',
    'sports', 'published',
    '2026-10-12 09:00:00+05:30'::timestamptz, '2026-10-12 16:00:00+05:30'::timestamptz,

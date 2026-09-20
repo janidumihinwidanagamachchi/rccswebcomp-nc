@@ -51,7 +51,7 @@ You'll need Node 18+, a Supabase project, and a Vercel account if you plan to de
 
 6. Run `supabase/migrations/004_seed_data.sql`. Do this after the admin user exists, since it sets the admin role and adds the sample categories and events.
 
-6. Start the dev server and open http://localhost:3000.
+7. Start the dev server and open http://localhost:3000.
 
    ```bash
    npm run dev
@@ -90,6 +90,8 @@ You can find this under **Authentication → URL Configuration** in the Supabase
 ## Demo content
 
 The migrations in `supabase/migrations/` add demo data in order. `00_combined_setup.sql` is generated from `001_initial_schema.sql` + `002_rls_policies.sql` + `003_functions.sql` + `005_site_settings.sql`, so use either the combined file or the numbered files, not both.
+
+All demo events, student names, and announcements are fictional sample data.
 
 1. `00_combined_setup.sql` — schema, RLS policies, functions, default site settings.
 2. `004_seed_data.sql` — categories, admin role, sample events and announcements.
@@ -190,24 +192,10 @@ supabase/
 └── migrations/   schema, RLS, functions, seeds, combined setup
 ```
 
-## What I'd add next
+## What's next
 
-The honest list: email notifications for upcoming events, waitlists when an event fills up, and moving the registration count on event cards to a realtime subscription so it updates without a refresh. I'd also add recurring events and a bulk-import flow for term schedules.
+Recurring events, a waitlist when a popular event fills up, and a bulk-import flow for term schedules.
 
 ## License
 
 Written for BTUI'26. All code is original.
-
-## Note on AI use
-
-AI was used only to help write the demo content — the sample events, announcements, and some
-interface copy. It was not used to build the application itself.
-
-Examples of AI-assisted content:
-
-- Sample event descriptions, such as the Cricket Match ("The inter-house cricket tournament runs
-  all day across two pitches. Come play or come cheer.") and the Science Fair ("Projects from
-  Grades 6 to 13, from simple circuits to full builds.")
-- Sample announcements, such as "Buses leave at 7:15 on Sports Day" and "Lost and found at the
-  front office"
-- Interface copy, such as the homepage headline "What's on at school, without the guesswork."

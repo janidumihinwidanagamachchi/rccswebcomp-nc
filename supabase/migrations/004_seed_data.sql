@@ -42,7 +42,7 @@ SELECT v.title, v.slug, v.short_description, v.description, c.id, 'published',
 FROM (VALUES
   ('Annual Sports Day', 'annual-sports-day',
    'A full day of athletics, team games, and house events.',
-   'Track and field, team games, and house events all day. Students from every grade compete; parents and teachers are welcome to watch.',
+   'Sprints, relays, team games and house events spread across the day. Students from every grade compete, and parents and teachers are welcome to watch.',
    'sports', '2026-10-23 08:00:00+05:30'::timestamptz, '2026-10-23 14:00:00+05:30'::timestamptz,
    'School Sports Ground', 200, '2026-09-15 08:00:00+05:30'::timestamptz, '2026-10-20 17:00:00+05:30'::timestamptz, true),
 
@@ -54,7 +54,7 @@ FROM (VALUES
 
   ('Robotics Workshop', 'robotics-workshop',
    'Build and program a robot in three hours.',
-   'Build and program a simple robot. No experience needed, and all parts are provided.',
+   'You get to build and program a small robot. No experience needed — all the parts are provided.',
    'tech', '2026-10-09 10:00:00+05:30'::timestamptz, '2026-10-09 13:00:00+05:30'::timestamptz,
    'STEM Lab', 30, '2026-09-15 08:00:00+05:30'::timestamptz, '2026-10-07 17:00:00+05:30'::timestamptz, false),
 

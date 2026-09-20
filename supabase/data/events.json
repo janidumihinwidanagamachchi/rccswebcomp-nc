@@ -17,7 +17,8 @@
     "featured": false,
     "organizer_id": null,
     "created_at": "2026-09-19T12:01:41.933599+00:00",
-    "updated_at": "2026-09-19T12:01:41.933599+00:00"
+    "updated_at": "2026-09-20T05:39:56.024092+00:00",
+    "registration_count": 1
   },
   {
     "id": "0bdb7190-f965-4579-8602-30eec3beb031",
@@ -37,7 +38,8 @@
     "featured": false,
     "organizer_id": null,
     "created_at": "2026-09-19T12:01:41.933599+00:00",
-    "updated_at": "2026-09-19T12:01:41.933599+00:00"
+    "updated_at": "2026-09-20T05:39:56.024092+00:00",
+    "registration_count": 2
   },
   {
     "id": "1a19c0b0-e011-4ce5-a584-6e5c04faac66",
@@ -57,27 +59,8 @@
     "featured": true,
     "organizer_id": "6dfbb4d7-dcfe-4492-b8b6-6ba97a834eb0",
     "created_at": "2026-09-19T18:06:48.91658+00:00",
-    "updated_at": "2026-09-19T18:06:48.91658+00:00"
-  },
-  {
-    "id": "1f438493-095a-42fa-859e-90a1e94e64b3",
-    "title": "Outdoor Cinema Night",
-    "slug": "outdoor-cinema-night",
-    "short_description": "A film under the stars — cancelled due to weather.",
-    "description": "This event has been cancelled. We will reschedule for later in the term.",
-    "category_id": "27043623-915c-4451-a8e1-b855c55ef25e",
-    "status": "cancelled",
-    "start_date": "2026-10-01T12:30:00+00:00",
-    "end_date": "2026-10-01T16:00:00+00:00",
-    "location": "School Grounds",
-    "capacity": 300,
-    "registration_opens_at": "2026-09-15T02:30:00+00:00",
-    "registration_closes_at": "2026-09-30T11:30:00+00:00",
-    "image_url": null,
-    "featured": false,
-    "organizer_id": "6dfbb4d7-dcfe-4492-b8b6-6ba97a834eb0",
-    "created_at": "2026-09-19T18:06:48.91658+00:00",
-    "updated_at": "2026-09-19T18:06:48.91658+00:00"
+    "updated_at": "2026-09-20T05:47:30.458331+00:00",
+    "registration_count": 5
   },
   {
     "id": "25ee5a66-0fa5-478a-90e4-777fda73a714",
@@ -97,7 +80,8 @@
     "featured": true,
     "organizer_id": null,
     "created_at": "2026-09-19T12:01:41.933599+00:00",
-    "updated_at": "2026-09-19T12:01:41.933599+00:00"
+    "updated_at": "2026-09-20T05:39:56.024092+00:00",
+    "registration_count": 2
   },
   {
     "id": "26f8612e-f857-4b2c-805c-e0256f3009ca",
@@ -117,7 +101,8 @@
     "featured": true,
     "organizer_id": null,
     "created_at": "2026-09-19T12:01:41.933599+00:00",
-    "updated_at": "2026-09-19T12:01:41.933599+00:00"
+    "updated_at": "2026-09-20T05:39:56.024092+00:00",
+    "registration_count": 4
   },
   {
     "id": "2f233c6a-ce15-49fd-bf18-c946bc5c3058",
@@ -137,14 +122,15 @@
     "featured": false,
     "organizer_id": null,
     "created_at": "2026-09-19T12:01:41.933599+00:00",
-    "updated_at": "2026-09-19T12:01:41.933599+00:00"
+    "updated_at": "2026-09-20T05:39:56.024092+00:00",
+    "registration_count": 1
   },
   {
     "id": "3c92ed6e-b0d5-4777-97b9-06955edfc83b",
     "title": "Founders' Day Assembly",
     "slug": "founders-day-assembly",
     "short_description": "Annual assembly honouring the school's founders.",
-    "description": "The Founders' Day Assembly brings the whole school together for speeches, prize-giving, and performances. Parents are welcome.",
+    "description": "Speeches, prize-giving and performances in Main Hall. The whole school files in for the morning, parents welcome.",
     "category_id": "ca677817-54b5-4b90-8cf4-ebc6de0df820",
     "status": "completed",
     "start_date": "2026-08-15T03:00:00+00:00",
@@ -157,7 +143,8 @@
     "featured": true,
     "organizer_id": "6dfbb4d7-dcfe-4492-b8b6-6ba97a834eb0",
     "created_at": "2026-09-19T18:06:48.91658+00:00",
-    "updated_at": "2026-09-19T18:06:48.91658+00:00"
+    "updated_at": "2026-09-20T06:03:04.198061+00:00",
+    "registration_count": 5
   },
   {
     "id": "5110ace1-b429-4c44-b5fd-2a48654540da",
@@ -177,7 +164,8 @@
     "featured": true,
     "organizer_id": "6dfbb4d7-dcfe-4492-b8b6-6ba97a834eb0",
     "created_at": "2026-09-19T18:06:48.91658+00:00",
-    "updated_at": "2026-09-19T18:06:48.91658+00:00"
+    "updated_at": "2026-09-20T05:47:30.458331+00:00",
+    "registration_count": 5
   },
   {
     "id": "633c6d7f-4327-4179-aa42-bbad49366c86",
@@ -197,13 +185,14 @@
     "featured": false,
     "organizer_id": null,
     "created_at": "2026-09-19T12:01:41.933599+00:00",
-    "updated_at": "2026-09-19T12:01:41.933599+00:00"
+    "updated_at": "2026-09-20T05:39:56.024092+00:00",
+    "registration_count": 4
   },
   {
     "id": "78710ea9-7470-4ee3-845d-6d28bca1dd50",
     "title": "Book Week Quiz",
     "slug": "book-week-quiz",
-    "short_description": "A literary knockout for teams of four.",
+    "short_description": "Team trivia for book lovers.",
     "description": "Questions cover classics, local authors, and recent releases. Teams can register through the library by Wednesday.",
     "category_id": "27043623-915c-4451-a8e1-b855c55ef25e",
     "status": "completed",
@@ -217,7 +206,8 @@
     "featured": false,
     "organizer_id": "6dfbb4d7-dcfe-4492-b8b6-6ba97a834eb0",
     "created_at": "2026-09-19T18:06:48.91658+00:00",
-    "updated_at": "2026-09-19T18:06:48.91658+00:00"
+    "updated_at": "2026-09-20T06:03:04.198061+00:00",
+    "registration_count": 5
   },
   {
     "id": "8842dd9d-bca9-4b56-9a49-897754dd723e",
@@ -237,7 +227,8 @@
     "featured": false,
     "organizer_id": null,
     "created_at": "2026-09-19T12:01:41.933599+00:00",
-    "updated_at": "2026-09-19T12:01:41.933599+00:00"
+    "updated_at": "2026-09-20T05:39:56.024092+00:00",
+    "registration_count": 1
   },
   {
     "id": "89cafeaf-3a6c-4136-8543-e0d631236e0c",
@@ -257,7 +248,8 @@
     "featured": true,
     "organizer_id": null,
     "created_at": "2026-09-19T07:12:28.471709+00:00",
-    "updated_at": "2026-09-19T07:12:28.471709+00:00"
+    "updated_at": "2026-09-20T05:46:59.105729+00:00",
+    "registration_count": 2
   },
   {
     "id": "8b50ddde-3e62-4e99-8154-80f271b52e6e",
@@ -277,7 +269,8 @@
     "featured": false,
     "organizer_id": null,
     "created_at": "2026-09-19T12:01:41.933599+00:00",
-    "updated_at": "2026-09-19T12:01:41.933599+00:00"
+    "updated_at": "2026-09-20T05:39:56.024092+00:00",
+    "registration_count": 2
   },
   {
     "id": "91b9a450-5155-4fdc-acf1-a13ec3c0404e",
@@ -297,7 +290,8 @@
     "featured": false,
     "organizer_id": null,
     "created_at": "2026-09-19T12:01:41.933599+00:00",
-    "updated_at": "2026-09-19T12:01:41.933599+00:00"
+    "updated_at": "2026-09-20T05:39:56.024092+00:00",
+    "registration_count": 1
   },
   {
     "id": "92983cc0-961b-4edf-8396-1b0baaf8d717",
@@ -317,14 +311,15 @@
     "featured": false,
     "organizer_id": "6dfbb4d7-dcfe-4492-b8b6-6ba97a834eb0",
     "created_at": "2026-09-19T18:06:48.91658+00:00",
-    "updated_at": "2026-09-19T18:06:48.91658+00:00"
+    "updated_at": "2026-09-20T05:47:30.458331+00:00",
+    "registration_count": 1
   },
   {
     "id": "a1548a6e-99aa-46c6-a553-a6efd2174473",
     "title": "Robotics Workshop",
     "slug": "robotics-workshop",
     "short_description": "Build and program a robot in three hours.",
-    "description": "Build and program a simple robot. No experience needed, and all parts are provided.",
+    "description": "You get to build and program a small robot. No experience needed — all the parts are provided.",
     "category_id": "4744e545-fca1-4f25-995b-b3db9e206cd8",
     "status": "published",
     "start_date": "2026-10-09T04:30:00+00:00",
@@ -337,7 +332,8 @@
     "featured": false,
     "organizer_id": null,
     "created_at": "2026-09-19T07:12:28.471709+00:00",
-    "updated_at": "2026-09-19T07:12:28.471709+00:00"
+    "updated_at": "2026-09-20T06:03:04.198061+00:00",
+    "registration_count": 1
   },
   {
     "id": "a532ba9a-0749-4df9-85c8-8ee78aeaf15a",
@@ -357,27 +353,8 @@
     "featured": true,
     "organizer_id": "6dfbb4d7-dcfe-4492-b8b6-6ba97a834eb0",
     "created_at": "2026-09-19T18:06:48.91658+00:00",
-    "updated_at": "2026-09-19T18:06:48.91658+00:00"
-  },
-  {
-    "id": "ae4a154c-6e3a-4be5-9cb8-1b5a81988882",
-    "title": "Spring Musical Auditions",
-    "slug": "spring-musical-auditions",
-    "short_description": "Auditions for the term musical.",
-    "description": "Prepare a one-minute song and a short monologue. Sign-up sheets are outside the drama room.",
-    "category_id": "380ae6b9-72aa-42d9-b8e0-2f194db8f884",
-    "status": "draft",
-    "start_date": "2026-11-20T10:00:00+00:00",
-    "end_date": "2026-11-20T12:30:00+00:00",
-    "location": "Drama Room",
-    "capacity": 60,
-    "registration_opens_at": "2026-11-01T02:30:00+00:00",
-    "registration_closes_at": "2026-11-19T11:30:00+00:00",
-    "image_url": null,
-    "featured": false,
-    "organizer_id": "6dfbb4d7-dcfe-4492-b8b6-6ba97a834eb0",
-    "created_at": "2026-09-19T18:06:48.91658+00:00",
-    "updated_at": "2026-09-19T18:06:48.91658+00:00"
+    "updated_at": "2026-09-20T05:47:30.458331+00:00",
+    "registration_count": 5
   },
   {
     "id": "afb8a593-85c5-4305-bc8c-e94116548a29",
@@ -397,13 +374,14 @@
     "featured": false,
     "organizer_id": "6dfbb4d7-dcfe-4492-b8b6-6ba97a834eb0",
     "created_at": "2026-09-19T18:06:48.91658+00:00",
-    "updated_at": "2026-09-19T18:06:48.91658+00:00"
+    "updated_at": "2026-09-20T05:47:30.458331+00:00",
+    "registration_count": 3
   },
   {
     "id": "b9b94893-80b6-4a32-87bb-b394b53049cf",
     "title": "Inter-House Netball Tournament",
     "slug": "inter-house-netball",
-    "short_description": "Round-robin matches followed by finals.",
+    "short_description": "Round-robin first, then the finals.",
     "description": "Teams of seven per house. Matches run on both courts; the final is at 3pm.",
     "category_id": "34475fc9-de44-4699-92e5-de618e9208f2",
     "status": "published",
@@ -417,7 +395,8 @@
     "featured": true,
     "organizer_id": "6dfbb4d7-dcfe-4492-b8b6-6ba97a834eb0",
     "created_at": "2026-09-19T18:06:48.91658+00:00",
-    "updated_at": "2026-09-19T18:06:48.91658+00:00"
+    "updated_at": "2026-09-20T06:03:04.198061+00:00",
+    "registration_count": 5
   },
   {
     "id": "c8ea3922-0fcb-4f53-b772-add09abe6909",
@@ -437,7 +416,8 @@
     "featured": false,
     "organizer_id": null,
     "created_at": "2026-09-19T12:01:41.933599+00:00",
-    "updated_at": "2026-09-19T12:01:41.933599+00:00"
+    "updated_at": "2026-09-20T05:39:56.024092+00:00",
+    "registration_count": 1
   },
   {
     "id": "dd75afb0-e1b5-4db1-85b2-457fe968369c",
@@ -457,14 +437,15 @@
     "featured": true,
     "organizer_id": "6dfbb4d7-dcfe-4492-b8b6-6ba97a834eb0",
     "created_at": "2026-09-19T18:06:48.91658+00:00",
-    "updated_at": "2026-09-19T18:06:48.91658+00:00"
+    "updated_at": "2026-09-20T05:47:30.458331+00:00",
+    "registration_count": 5
   },
   {
     "id": "e137e999-6d43-4db1-acbd-b3d857b528a3",
     "title": "Annual Sports Day",
     "slug": "annual-sports-day",
     "short_description": "A full day of athletics, team games, and house events.",
-    "description": "Track and field, team games, and house events all day. Students from every grade compete; parents and teachers are welcome to watch.",
+    "description": "Sprints, relays, team games and house events spread across the day. Students from every grade compete, and parents and teachers are welcome to watch.",
     "category_id": "34475fc9-de44-4699-92e5-de618e9208f2",
     "status": "published",
     "start_date": "2026-10-23T02:30:00+00:00",
@@ -477,6 +458,7 @@
     "featured": true,
     "organizer_id": null,
     "created_at": "2026-09-19T07:12:28.471709+00:00",
-    "updated_at": "2026-09-19T07:12:28.471709+00:00"
+    "updated_at": "2026-09-20T06:03:04.198061+00:00",
+    "registration_count": 4
   }
 ]
