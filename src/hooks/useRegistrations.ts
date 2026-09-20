@@ -1,12 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
-import type { Registration, Event, Profile } from '@/types'
+import { type LeaderboardRow } from '@/lib/passport'
+import type { Registration, Event } from '@/types'
 
 const REGISTRATIONS_KEY = 'registrations'
-
-export interface ProfileWithRegistrations extends Profile {
-  registrations: Registration[]
-}
 
 export function useMyRegistrations() {
   return useQuery({
@@ -86,18 +83,14 @@ export function useRegisterForEvent() {
   })
 }
 
-export function useAllPassports({ enabled = true }: { enabled?: boolean } = {}) {
+export function useLeaderboard() {
   return useQuery({
-    queryKey: [REGISTRATIONS_KEY, 'all-passports'],
+    queryKey: ['leaderboard'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*, registrations(*, event:events(*, category:categories(*)))')
-        .order('full_name', { ascending: true })
+      const { data, error } = await supabase.rpc('get_passport_leaderboard')
       if (error) throw error
-      return (data || []) as ProfileWithRegistrations[]
+      return (data || []) as LeaderboardRow[]
     },
-    enabled,
   })
 }
 

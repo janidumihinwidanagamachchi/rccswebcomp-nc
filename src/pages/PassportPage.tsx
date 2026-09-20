@@ -3,26 +3,26 @@ import { Shell } from '@/components/layout/Shell'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useMyRegistrations, useAllPassports } from '@/hooks/useRegistrations'
+import { useMyRegistrations, useLeaderboard } from '@/hooks/useRegistrations'
 import { useAuthStore } from '@/stores/authStore'
 import { BADGES } from '@/lib/constants'
-import { computePassportStats } from '@/lib/passport'
+import { computePassportStats, computeLeaderboardStats } from '@/lib/passport'
 import { cn, formatDate } from '@/lib/utils'
 
 export function PassportPage() {
-  const { user, isAdmin } = useAuthStore()
+  const { user } = useAuthStore()
   const { data: registrations, isLoading } = useMyRegistrations()
-  const { data: allPassports, isLoading: passportsLoading } = useAllPassports({ enabled: isAdmin })
+  const { data: leaderboard, isLoading: passportLoading } = useLeaderboard()
 
   const stats = computePassportStats(registrations || [])
 
   const rankedSubjects =
-    allPassports
-      ?.map((p) => ({
-        ...p,
-        stats: computePassportStats(p.registrations || []),
+    leaderboard
+      ?.map((row) => ({
+        ...row,
+        stats: computeLeaderboardStats(row),
       }))
-      .sort((a, b) => b.stats.attended.length - a.stats.attended.length) || []
+      .sort((a, b) => b.stats.attended - a.stats.attended) || []
 
   return (
     <Shell>
@@ -82,61 +82,59 @@ export function PassportPage() {
           })}
         </div>
 
-        {isAdmin && (
-          <>
-            <h2 className="mb-4 text-xl font-bold">Leaderboard</h2>
-            {passportsLoading ? (
-              <div className="mb-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {[1, 2, 3].map((i) => (
-                  <Skeleton key={i} className="h-40 rounded-xl" />
-                ))}
-              </div>
-            ) : (
-              <div className="mb-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {rankedSubjects.map((subject, index) => (
-                  <Card
-                    key={subject.id}
-                    className={cn(
-                      'overflow-hidden',
-                      subject.id === user?.id && 'border-brand/50 bg-brand/5'
-                    )}
-                  >
-                    <div className="flex items-center justify-between border-b bg-panel/40 px-5 py-3">
-                      <div className="flex items-center gap-2">
-                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand text-xs font-bold text-brand-ink">
-                          {index + 1}
-                        </span>
-                        <p className="font-semibold">{subject.full_name}</p>
-                      </div>
-                      {subject.role === 'admin' && (
-                        <Badge variant="secondary" className="gap-1">
-                          <Crown className="h-3 w-3" />
-                          Admin
-                        </Badge>
-                      )}
+        <>
+          <h2 className="mb-4 text-xl font-bold">Leaderboard</h2>
+          {passportLoading ? (
+            <div className="mb-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {[1, 2, 3].map((i) => (
+                <Skeleton key={i} className="h-40 rounded-xl" />
+              ))}
+            </div>
+          ) : (
+            <div className="mb-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {rankedSubjects.map((subject, index) => (
+                <Card
+                  key={subject.user_id}
+                  className={cn(
+                    'overflow-hidden',
+                    subject.user_id === user?.id && 'border-brand/50 bg-brand/5'
+                  )}
+                >
+                  <div className="flex items-center justify-between border-b bg-panel/40 px-5 py-3">
+                    <div className="flex items-center gap-2">
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand text-xs font-bold text-brand-ink">
+                        {index + 1}
+                      </span>
+                      <p className="font-semibold">{subject.full_name}</p>
                     </div>
-                    <CardContent className="p-5">
-                      <div className="mt-1 flex flex-wrap gap-2">
-                        <Badge variant="secondary">{subject.stats.attended.length} attended</Badge>
-                        <Badge variant="secondary">{subject.stats.uniqueCategories} categories</Badge>
-                        <Badge variant="secondary">{subject.stats.earnedBadges.length} badges</Badge>
+                    {subject.role === 'admin' && (
+                      <Badge variant="secondary" className="gap-1">
+                        <Crown className="h-3 w-3" />
+                        Admin
+                      </Badge>
+                    )}
+                  </div>
+                  <CardContent className="p-5">
+                    <div className="mt-1 flex flex-wrap gap-2">
+                      <Badge variant="secondary">{subject.stats.attended} attended</Badge>
+                      <Badge variant="secondary">{subject.stats.uniqueCategories} categories</Badge>
+                      <Badge variant="secondary">{subject.stats.earnedBadges.length} badges</Badge>
+                    </div>
+                    {subject.stats.earnedBadges.length > 0 && (
+                      <div className="mt-3 flex flex-wrap gap-1">
+                        {subject.stats.earnedBadges.map((badge) => (
+                          <Badge key={badge.id} className="text-[10px]">
+                            {badge.name}
+                          </Badge>
+                        ))}
                       </div>
-                      {subject.stats.earnedBadges.length > 0 && (
-                        <div className="mt-3 flex flex-wrap gap-1">
-                          {subject.stats.earnedBadges.map((badge) => (
-                            <Badge key={badge.id} className="text-[10px]">
-                              {badge.name}
-                            </Badge>
-                          ))}
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </>
-        )}
+                    )}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </>
 
         <h2 className="mb-4 text-xl font-bold">Collected Stamps</h2>
         {isLoading ? (
