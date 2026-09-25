@@ -24,7 +24,7 @@ export function EventsPage() {
   }, [events, search, category])
 
   return (
-    <Shell>
+    <Shell transition>
       <div className="container mx-auto px-4 py-12">
         <div className="mb-8">
           <h1 className="text-3xl font-bold md:text-4xl">Events</h1>

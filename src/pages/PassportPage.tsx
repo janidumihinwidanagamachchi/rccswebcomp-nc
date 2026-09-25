@@ -3,6 +3,8 @@ import { Shell } from '@/components/layout/Shell'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
+import { CountUp } from '@/components/motion/CountUp'
+import { Stagger, StaggerItem } from '@/components/motion/Stagger'
 import { useMyRegistrations, useLeaderboard } from '@/hooks/useRegistrations'
 import { useAuthStore } from '@/stores/authStore'
 import { BADGES } from '@/lib/constants'
@@ -25,62 +27,69 @@ export function PassportPage() {
       .sort((a, b) => b.stats.attended - a.stats.attended) || []
 
   return (
-    <Shell>
+    <Shell transition>
       <div className="container mx-auto px-4 py-12">
         <div className="mb-8">
           <h1 className="text-3xl font-bold md:text-4xl">Event Passport</h1>
           <p className="text-quiet-ink">Every event you attend adds a stamp.</p>
         </div>
 
-        <div className="mb-8 grid gap-4 sm:grid-cols-3">
-          <Card>
-            <CardContent className="p-5">
-              <p className="text-sm text-quiet-ink">Events attended</p>
-              <p className="text-3xl font-bold">{stats.attended.length}</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-5">
-              <p className="text-sm text-quiet-ink">Categories explored</p>
-              <p className="text-3xl font-bold">{stats.uniqueCategories}</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-5">
-              <p className="text-sm text-quiet-ink">Badges earned</p>
-              <p className="text-3xl font-bold">{stats.earnedBadges.length}</p>
-            </CardContent>
-          </Card>
-        </div>
+        <Stagger className="mb-8 grid gap-4 sm:grid-cols-3">
+          <StaggerItem>
+            <Card className="h-full">
+              <CardContent className="p-5">
+                <p className="text-sm text-quiet-ink">Events attended</p>
+                <CountUp className="block text-3xl font-bold" value={stats.attended.length} />
+              </CardContent>
+            </Card>
+          </StaggerItem>
+          <StaggerItem>
+            <Card className="h-full">
+              <CardContent className="p-5">
+                <p className="text-sm text-quiet-ink">Categories explored</p>
+                <CountUp className="block text-3xl font-bold" value={stats.uniqueCategories} />
+              </CardContent>
+            </Card>
+          </StaggerItem>
+          <StaggerItem>
+            <Card className="h-full">
+              <CardContent className="p-5">
+                <p className="text-sm text-quiet-ink">Badges earned</p>
+                <CountUp className="block text-3xl font-bold" value={stats.earnedBadges.length} />
+              </CardContent>
+            </Card>
+          </StaggerItem>
+        </Stagger>
 
         <h2 className="mb-4 text-xl font-bold">Badges</h2>
-        <div className="mb-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <Stagger className="mb-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {BADGES.map((badge) => {
             const earned = stats.earnedBadges.some((b) => b.id === badge.id)
             return (
-              <Card
-                key={badge.id}
-                className={earned ? 'border-brand/50 bg-brand/5' : 'opacity-60'}
-              >
-                <CardContent className="flex items-start gap-4 p-5">
-                  <div
-                    className={cn(
-                      'flex h-12 w-12 items-center justify-center rounded-full',
-                      earned ? 'bg-brand text-brand-ink' : 'bg-quiet text-quiet-ink'
-                    )}
-                  >
-                    <Trophy className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">{badge.name}</h3>
-                    <p className="text-sm text-quiet-ink">{badge.description}</p>
-                    {earned && <Badge className="mt-2">Earned</Badge>}
-                  </div>
-                </CardContent>
-              </Card>
+              <StaggerItem key={badge.id}>
+                <Card
+                  className={cn('h-full', earned ? 'border-brand/50 bg-brand/5' : 'opacity-60')}
+                >
+                  <CardContent className="flex items-start gap-4 p-5">
+                    <div
+                      className={cn(
+                        'flex h-12 w-12 items-center justify-center rounded-full',
+                        earned ? 'bg-brand text-brand-ink' : 'bg-quiet text-quiet-ink'
+                      )}
+                    >
+                      <Trophy className={cn('h-6 w-6', earned && 'animate-heartbeat')} />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold">{badge.name}</h3>
+                      <p className="text-sm text-quiet-ink">{badge.description}</p>
+                      {earned && <Badge className="mt-2">Earned</Badge>}
+                    </div>
+                  </CardContent>
+                </Card>
+              </StaggerItem>
             )
           })}
-        </div>
+        </Stagger>
 
         <>
           <h2 className="mb-4 text-xl font-bold">Leaderboard</h2>
@@ -91,15 +100,15 @@ export function PassportPage() {
               ))}
             </div>
           ) : (
-            <div className="mb-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <Stagger className="mb-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {rankedSubjects.map((subject, index) => (
-                <Card
-                  key={subject.user_id}
-                  className={cn(
-                    'overflow-hidden',
-                    subject.user_id === user?.id && 'border-brand/50 bg-brand/5'
-                  )}
-                >
+                <StaggerItem key={subject.user_id}>
+                  <Card
+                    className={cn(
+                      'h-full overflow-hidden',
+                      subject.user_id === user?.id && 'border-brand/50 bg-brand/5'
+                    )}
+                  >
                   <div className="flex items-center justify-between border-b bg-panel/40 px-5 py-3">
                     <div className="flex items-center gap-2">
                       <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand text-xs font-bold text-brand-ink">
@@ -131,8 +140,9 @@ export function PassportPage() {
                     )}
                   </CardContent>
                 </Card>
+                </StaggerItem>
               ))}
-            </div>
+            </Stagger>
           )}
         </>
 
@@ -144,9 +154,10 @@ export function PassportPage() {
             ))}
           </div>
         ) : stats.attended.length > 0 ? (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Stagger className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {stats.attended.map((registration) => (
-              <Card key={registration.id} className="overflow-hidden">
+              <StaggerItem key={registration.id}>
+              <Card className="h-full overflow-hidden">
                 <div
                   className="h-2 w-full"
                   style={{ backgroundColor: registration.event?.category?.color || 'var(--brand)' }}
@@ -170,8 +181,9 @@ export function PassportPage() {
                   </Badge>
                 </CardContent>
               </Card>
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
         ) : (
           <p className="text-quiet-ink">No stamps yet. Attend an event to get started.</p>
         )}

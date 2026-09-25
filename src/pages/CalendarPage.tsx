@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { format, parseISO, addMonths, subMonths, addWeeks, subWeeks, startOfToday, isValid } from 'date-fns'
+import { AnimatePresence, motion } from 'motion/react'
 import { Shell } from '@/components/layout/Shell'
 import { CalendarToolbar } from '@/components/calendar/CalendarToolbar'
 import { CalendarMonth } from '@/components/calendar/CalendarMonth'
@@ -8,6 +9,7 @@ import { CalendarWeek } from '@/components/calendar/CalendarWeek'
 import { CalendarAgenda } from '@/components/calendar/CalendarAgenda'
 import { CalendarList } from '@/components/calendar/CalendarList'
 import { Skeleton } from '@/components/ui/skeleton'
+import { EASE_OUT } from '@/components/motion/ease'
 import { useEvents } from '@/hooks/useEvents'
 import { useCategories } from '@/hooks/useEvents'
 import { filterEventsByCategory, type CalendarView } from '@/lib/calendar'
@@ -118,7 +120,7 @@ export function CalendarPage() {
   const isLoading = eventsLoading || categoriesLoading
 
   return (
-    <Shell>
+    <Shell transition>
       <div className="container mx-auto px-4 py-12">
         {isLoading ? (
           <div className="space-y-6">
@@ -147,24 +149,34 @@ export function CalendarPage() {
 
             <div className="grid gap-8 lg:grid-cols-3">
               <div className={cn('lg:col-span-2', view === 'agenda' && 'lg:col-span-3')}>
-                {view === 'month' && (
-                  <CalendarMonth
-                    events={filteredEvents}
-                    currentDate={currentDate}
-                    selectedDate={selectedDate}
-                    onSelectDate={handleSelectDate}
-                    onMonthChange={setCurrentDate}
-                  />
-                )}
-                {view === 'week' && (
-                  <CalendarWeek
-                    events={filteredEvents}
-                    currentDate={currentDate}
-                    selectedDate={selectedDate}
-                    onSelectDate={handleSelectDate}
-                  />
-                )}
-                {view === 'agenda' && <CalendarAgenda events={filteredEvents} />}
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={`${view}:${format(currentDate, 'yyyy-MM-dd')}`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2, ease: EASE_OUT }}
+                  >
+                    {view === 'month' && (
+                      <CalendarMonth
+                        events={filteredEvents}
+                        currentDate={currentDate}
+                        selectedDate={selectedDate}
+                        onSelectDate={handleSelectDate}
+                        onMonthChange={setCurrentDate}
+                      />
+                    )}
+                    {view === 'week' && (
+                      <CalendarWeek
+                        events={filteredEvents}
+                        currentDate={currentDate}
+                        selectedDate={selectedDate}
+                        onSelectDate={handleSelectDate}
+                      />
+                    )}
+                    {view === 'agenda' && <CalendarAgenda events={filteredEvents} />}
+                  </motion.div>
+                </AnimatePresence>
               </div>
 
               {view !== 'agenda' && (

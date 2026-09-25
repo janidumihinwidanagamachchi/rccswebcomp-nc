@@ -2,12 +2,14 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { AnimatePresence, motion } from 'motion/react'
 import { Eye, EyeOff, Ticket } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Shell } from '@/components/layout/Shell'
+import { Appear } from '@/components/motion/Appear'
 import { supabase } from '@/lib/supabase'
 import { useAuthStore } from '@/stores/authStore'
 import { loginSchema, type LoginFormData } from '@/lib/validators'
@@ -68,7 +70,7 @@ export function LoginPage() {
   }
 
   return (
-    <Shell>
+    <Shell transition>
       <div className="container mx-auto flex max-w-md flex-col items-center justify-center px-4 py-16">
         <Link to="/" className="mb-6 flex items-center gap-2 text-2xl font-bold">
           <Ticket className="h-8 w-8 text-brand" />
@@ -98,16 +100,29 @@ export function LoginPage() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-quiet-ink"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-quiet-ink transition-colors hover:text-ink"
                     aria-label={showPassword ? 'Hide password' : 'Show password'}
                   >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    <AnimatePresence mode="wait" initial={false}>
+                      <motion.span
+                        key={showPassword ? 'off' : 'on'}
+                        initial={{ opacity: 0, scale: 0.7 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.7 }}
+                        transition={{ duration: 0.15, ease: 'easeOut' }}
+                        className="flex"
+                      >
+                        {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      </motion.span>
+                    </AnimatePresence>
                   </button>
                 </div>
                 {errors.password && <p className="text-xs text-danger">{errors.password.message}</p>}
               </div>
-              {error && <p className="text-sm text-danger">{error}</p>}
-              {needsConfirmation && (
+              <Appear show={Boolean(error)}>
+                <p className="text-sm text-danger">{error}</p>
+              </Appear>
+              <Appear show={needsConfirmation}>
                 <div className="rounded-lg bg-amber-50 p-3 text-sm text-amber-800 dark:bg-amber-950 dark:text-amber-200">
                   <p className="mb-2">Your email hasn&apos;t been confirmed yet.</p>
                   <Button
@@ -123,7 +138,7 @@ export function LoginPage() {
                     <p className="mt-2 text-danger">Failed to resend. Try again.</p>
                   )}
                 </div>
-              )}
+              </Appear>
               <Button type="submit" className="w-full" disabled={isSubmitting}>
                 {isSubmitting ? 'Signing in...' : 'Sign In'}
               </Button>

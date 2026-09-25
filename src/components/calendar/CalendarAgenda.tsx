@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { format, isBefore, isSameDay, startOfDay } from 'date-fns'
-import { Calendar, ChevronDown, ChevronUp, MapPin } from 'lucide-react'
+import { Calendar, ChevronDown, MapPin } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Collapse } from '@/components/motion/Collapse'
 import { groupEventsByStartDate, formatDateRange } from '@/lib/calendar'
 import { AddToCalendar } from './AddToCalendar'
 import { cn } from '@/lib/utils'
@@ -56,20 +57,20 @@ export function CalendarAgenda({ events }: CalendarAgendaProps) {
             className="mb-2 w-full justify-between"
           >
             <span className="font-medium">Earlier events</span>
-            {showEarlier ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            <ChevronDown
+              className={cn('h-4 w-4 transition-transform duration-200', showEarlier && 'rotate-180')}
+            />
           </Button>
-          {showEarlier && (
-            <div className="space-y-6">
-              {earlierDates.map((date) => (
-                <AgendaDay
-                  key={date.toISOString()}
-                  date={date}
-                  events={byDate.get(format(date, 'yyyy-MM-dd')) || []}
-                  past
-                />
-              ))}
-            </div>
-          )}
+          <Collapse show={showEarlier} className="space-y-6">
+            {earlierDates.map((date) => (
+              <AgendaDay
+                key={date.toISOString()}
+                date={date}
+                events={byDate.get(format(date, 'yyyy-MM-dd')) || []}
+                past
+              />
+            ))}
+          </Collapse>
         </div>
       )}
     </div>
@@ -86,7 +87,7 @@ function AgendaDay({ date, events, past }: { date: Date; events: Event[]; past?:
       </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {events.map((event) => (
-          <Card key={event.id} className="overflow-hidden transition-shadow hover:shadow-md">
+          <Card key={event.id} className="overflow-hidden">
             <CardContent className="flex flex-col gap-3 p-4">
               <div className="flex items-start justify-between gap-2">
                 <Badge style={{ backgroundColor: event.category?.color }}>{event.category?.name}</Badge>

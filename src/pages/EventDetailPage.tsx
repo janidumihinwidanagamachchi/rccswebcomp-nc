@@ -10,6 +10,7 @@ import {
 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { AnimatePresence, motion } from 'motion/react'
 import { Shell } from '@/components/layout/Shell'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -20,6 +21,8 @@ import { Textarea } from '@/components/ui/textarea'
 import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Countdown } from '@/components/events/Countdown'
+import { Reveal } from '@/components/motion/Reveal'
+import { EASE_OUT } from '@/components/motion/ease'
 import { HighlightComposer } from '@/components/announcements/HighlightComposer'
 import { HighlightCard } from '@/components/announcements/HighlightCard'
 import { AddToCalendar } from '@/components/calendar/AddToCalendar'
@@ -119,7 +122,7 @@ export function EventDetailPage() {
   const isHappeningNow = toDate(event.start_date) <= new Date() && toDate(event.end_date) >= new Date()
 
   return (
-    <Shell>
+    <Shell transition>
       <div className="container mx-auto px-4 py-12">
         <Button variant="ghost" className="mb-6" onClick={() => navigate(-1)}>
           <ArrowLeft className="mr-2 h-4 w-4" />
@@ -165,6 +168,7 @@ export function EventDetailPage() {
 
           {/* Sidebar */}
           <div className="space-y-6">
+            <Reveal>
             <Card>
               <CardContent className="p-5">
                 <Countdown
@@ -210,79 +214,113 @@ export function EventDetailPage() {
                 </div>
               </CardContent>
             </Card>
+            </Reveal>
 
             {/* Registration Form */}
+            <Reveal delay={0.08}>
             <Card>
               <CardHeader>
                 <CardTitle>Register for this event</CardTitle>
               </CardHeader>
               <CardContent>
-                {!user ? (
-                  <div className="text-center">
-                    <p className="mb-4 text-sm text-quiet-ink">
-                      Sign in to register and get your ticket.
-                    </p>
-                    <Button asChild className="w-full">
-                      <Link to="/auth/login">Sign In</Link>
-                    </Button>
-                  </div>
-                ) : submitted || (existingRegistration && existingRegistration.status !== 'cancelled') ? (
-                  <div className="text-center">
-                    <CheckCircle2 className="mx-auto mb-3 h-10 w-10 text-emerald-500" />
-                    <p className="font-semibold">You&apos;re registered!</p>
-                    <p className="mb-4 text-sm text-quiet-ink">
-                      Your ticket is waiting in My Tickets.
-                    </p>
-                    <Button asChild className="w-full">
-                      <Link to="/tickets">View My Tickets</Link>
-                    </Button>
-                  </div>
-                ) : !registrationOpen ? (
-                  <div className="flex items-start gap-3 rounded-lg bg-quiet p-3 text-sm">
-                    <AlertCircle className="mt-0.5 h-4 w-4 text-quiet-ink" />
-                    <p className="text-quiet-ink">
-                      Registration is closed, or the event is full.
-                    </p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                    <div className="space-y-1">
-                      <Label htmlFor="attendeeName">Full name</Label>
-                      <Input id="attendeeName" {...formRegister('attendeeName')} />
-                      {errors.attendeeName && (
-                        <p className="text-xs text-danger">{errors.attendeeName.message}</p>
-                      )}
-                    </div>
-                    <div className="space-y-1">
-                      <Label htmlFor="attendeeEmail">Email</Label>
-                      <Input id="attendeeEmail" type="email" {...formRegister('attendeeEmail')} />
-                      {errors.attendeeEmail && (
-                        <p className="text-xs text-danger">{errors.attendeeEmail.message}</p>
-                      )}
-                    </div>
-                    <div className="space-y-1">
-                      <Label htmlFor="attendeeGrade">Grade (optional)</Label>
-                      <Input id="attendeeGrade" type="number" {...formRegister('attendeeGrade')} />
-                      {errors.attendeeGrade && (
-                        <p className="text-xs text-danger">{errors.attendeeGrade.message}</p>
-                      )}
-                    </div>
-                    <div className="space-y-1">
-                      <Label htmlFor="notes">Notes (optional)</Label>
-                      <Textarea id="notes" {...formRegister('notes')} />
-                    </div>
-                    {register.isError && (
-                      <p className="text-sm text-danger">
-                        {(register.error as Error)?.message || 'Registration failed. You may already be registered.'}
+                <AnimatePresence mode="wait" initial={false}>
+                  {!user ? (
+                    <motion.div
+                      key="signed-out"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.2, ease: EASE_OUT }}
+                      className="text-center"
+                    >
+                      <p className="mb-4 text-sm text-quiet-ink">
+                        Sign in to register and get your ticket.
                       </p>
-                    )}
-                    <Button type="submit" className="w-full" disabled={register.isPending}>
-                      {register.isPending ? 'Registering...' : 'Get My Ticket'}
-                    </Button>
-                  </form>
-                )}
+                      <Button asChild className="w-full">
+                        <Link to="/auth/login">Sign In</Link>
+                      </Button>
+                    </motion.div>
+                  ) : submitted || (existingRegistration && existingRegistration.status !== 'cancelled') ? (
+                    <motion.div
+                      key="success"
+                      initial={{ opacity: 0, scale: 0.96 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.98 }}
+                      transition={{ duration: 0.25, ease: EASE_OUT }}
+                      className="text-center"
+                    >
+                      <CheckCircle2 className="mx-auto mb-3 h-10 w-10 text-emerald-500" />
+                      <p className="font-semibold">You&apos;re registered!</p>
+                      <p className="mb-4 text-sm text-quiet-ink">
+                        Your ticket is waiting in My Tickets.
+                      </p>
+                      <Button asChild className="w-full">
+                        <Link to="/tickets">View My Tickets</Link>
+                      </Button>
+                    </motion.div>
+                  ) : !registrationOpen ? (
+                    <motion.div
+                      key="closed"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.2, ease: EASE_OUT }}
+                      className="flex items-start gap-3 rounded-lg bg-quiet p-3 text-sm"
+                    >
+                      <AlertCircle className="mt-0.5 h-4 w-4 text-quiet-ink" />
+                      <p className="text-quiet-ink">
+                        Registration is closed, or the event is full.
+                      </p>
+                    </motion.div>
+                  ) : (
+                    <motion.form
+                      key="form"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.2, ease: EASE_OUT }}
+                      onSubmit={handleSubmit(onSubmit)}
+                      className="space-y-4"
+                    >
+                      <div className="space-y-1">
+                        <Label htmlFor="attendeeName">Full name</Label>
+                        <Input id="attendeeName" {...formRegister('attendeeName')} />
+                        {errors.attendeeName && (
+                          <p className="text-xs text-danger">{errors.attendeeName.message}</p>
+                        )}
+                      </div>
+                      <div className="space-y-1">
+                        <Label htmlFor="attendeeEmail">Email</Label>
+                        <Input id="attendeeEmail" type="email" {...formRegister('attendeeEmail')} />
+                        {errors.attendeeEmail && (
+                          <p className="text-xs text-danger">{errors.attendeeEmail.message}</p>
+                        )}
+                      </div>
+                      <div className="space-y-1">
+                        <Label htmlFor="attendeeGrade">Grade (optional)</Label>
+                        <Input id="attendeeGrade" type="number" {...formRegister('attendeeGrade')} />
+                        {errors.attendeeGrade && (
+                          <p className="text-xs text-danger">{errors.attendeeGrade.message}</p>
+                        )}
+                      </div>
+                      <div className="space-y-1">
+                        <Label htmlFor="notes">Notes (optional)</Label>
+                        <Textarea id="notes" {...formRegister('notes')} />
+                      </div>
+                      {register.isError && (
+                        <p className="text-sm text-danger">
+                          {(register.error as Error)?.message || 'Registration failed. You may already be registered.'}
+                        </p>
+                      )}
+                      <Button type="submit" className="w-full" disabled={register.isPending}>
+                        {register.isPending ? 'Registering...' : 'Get My Ticket'}
+                      </Button>
+                    </motion.form>
+                  )}
+                </AnimatePresence>
               </CardContent>
             </Card>
+            </Reveal>
           </div>
         </div>
       </div>

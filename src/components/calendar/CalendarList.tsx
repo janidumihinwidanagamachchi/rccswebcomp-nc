@@ -1,12 +1,13 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
-import { Calendar, ChevronDown, ChevronUp, MapPin } from 'lucide-react'
+import { Calendar, ChevronDown, MapPin } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Collapse } from '@/components/motion/Collapse'
 import { eventSegments, eventsForDate, isEventUpcoming, isEventPast } from '@/lib/calendar'
-import { formatDateTime } from '@/lib/utils'
+import { cn, formatDateTime } from '@/lib/utils'
 import type { Event } from '@/types'
 
 interface CalendarListProps {
@@ -70,15 +71,15 @@ export function CalendarList({ events, selectedDate }: CalendarListProps) {
             className="w-full justify-between"
           >
             <span>Earlier events</span>
-            {showEarlier ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            <ChevronDown
+              className={cn('h-4 w-4 transition-transform duration-200', showEarlier && 'rotate-180')}
+            />
           </Button>
-          {showEarlier && (
-            <div className="mt-2 space-y-3">
-              {earlier.map((event) => (
-                <EventListItem key={event.id} event={event} muted />
-              ))}
-            </div>
-          )}
+          <Collapse show={showEarlier} className="mt-2 space-y-3">
+            {earlier.map((event) => (
+              <EventListItem key={event.id} event={event} muted />
+            ))}
+          </Collapse>
         </div>
       )}
     </div>

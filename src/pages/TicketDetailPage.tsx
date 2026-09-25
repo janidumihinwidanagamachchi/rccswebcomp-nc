@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import { Shell } from '@/components/layout/Shell'
 import { QRCodeDisplay } from '@/components/tickets/QRCodeDisplay'
+import { Reveal } from '@/components/motion/Reveal'
 import { useTicket } from '@/hooks/useRegistrations'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -39,7 +40,7 @@ export function TicketDetailPage() {
   const event = registration.event
 
   return (
-    <Shell>
+    <Shell transition>
       <div className="container mx-auto px-4 py-12">
         <Button variant="ghost" className="mb-6" asChild>
           <Link to="/tickets">
@@ -48,7 +49,8 @@ export function TicketDetailPage() {
           </Link>
         </Button>
 
-        <Card className="mx-auto max-w-md overflow-hidden">
+        <Reveal className="mx-auto max-w-md">
+        <Card className="overflow-hidden">
           <div className="bg-brand p-6 text-brand-ink">
             <div className="flex items-center gap-2">
               <Ticket className="h-6 w-6" />
@@ -73,9 +75,15 @@ export function TicketDetailPage() {
               </div>
             </div>
 
-            <div className="flex flex-col items-center justify-center rounded-xl bg-quiet p-6">
-              <QRCodeDisplay value={registration.qr_code_data} size={200} />
-              <p className="mt-4 font-mono text-sm font-medium">{registration.ticket_number}</p>
+            <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-xl bg-quiet p-6">
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-4 animate-pulse rounded-2xl bg-brand/20 blur-2xl print:hidden"
+              />
+              <div className="relative">
+                <QRCodeDisplay value={registration.qr_code_data} size={200} />
+              </div>
+              <p className="relative mt-4 font-mono text-sm font-medium">{registration.ticket_number}</p>
             </div>
 
             <div className="text-center text-xs text-quiet-ink">
@@ -89,6 +97,7 @@ export function TicketDetailPage() {
             </Button>
           </CardContent>
         </Card>
+        </Reveal>
       </div>
     </Shell>
   )

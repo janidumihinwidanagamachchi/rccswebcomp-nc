@@ -1,4 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react'
 import { Menu, Moon, Sun, Ticket, LayoutDashboard, LogOut, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
@@ -12,8 +13,15 @@ interface NavbarProps {
 
 export function Navbar({ className }: NavbarProps) {
   const navigate = useNavigate()
+  const { pathname } = useLocation()
   const { theme, toggleTheme, mobileMenuOpen, setMobileMenuOpen } = useUIStore()
   const { user, profile, isAdmin, signOut } = useAuthStore()
+  const { scrollY } = useScroll()
+  const shadow = useTransform(
+    scrollY,
+    [0, 60],
+    ['0 1px 0 rgba(0,0,0,0)', '0 14px 30px -18px rgba(0,0,0,0.35)']
+  )
 
   const handleSignOut = async () => {
     await signOut()
@@ -32,7 +40,8 @@ export function Navbar({ className }: NavbarProps) {
   }
 
   return (
-    <header
+    <motion.header
+      style={{ boxShadow: shadow }}
       className={cn(
         'sticky top-0 z-40 w-full border-b bg-canvas/80 backdrop-blur-md',
         className
@@ -46,16 +55,31 @@ export function Navbar({ className }: NavbarProps) {
           <span>RCCSWebComp-NC</span>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-6 text-sm font-medium">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              to={link.href}
-              className="text-quiet-ink transition-colors hover:text-ink"
-            >
-              {link.label}
-            </Link>
-          ))}
+        <nav className="hidden lg:flex items-center gap-1 text-sm font-medium">
+          {navLinks.map((link) => {
+            const active = pathname === link.href || pathname.startsWith(`${link.href}/`)
+            return (
+              <Link
+                key={link.href}
+                to={link.href}
+                className={cn(
+                  'relative rounded-md px-3 py-1.5 transition-colors',
+                  active ? 'text-ink' : 'text-quiet-ink hover:text-ink'
+                )}
+              >
+                {active && (
+                  <motion.span
+                    layoutId="nav-active"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="absolute inset-0 rounded-md bg-quiet"
+                    transition={{ type: 'spring', duration: 0.5, bounce: 0.2 }}
+                  />
+                )}
+                <span className="relative">{link.label}</span>
+              </Link>
+            )
+          })}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -65,7 +89,18 @@ export function Navbar({ className }: NavbarProps) {
             onClick={toggleTheme}
             aria-label="Toggle theme"
           >
-            {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={theme}
+                initial={{ opacity: 0, rotate: -45, scale: 0.8 }}
+                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                exit={{ opacity: 0, rotate: 45, scale: 0.8 }}
+                transition={{ duration: 0.18, ease: 'easeOut' }}
+                className="flex"
+              >
+                {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+              </motion.span>
+            </AnimatePresence>
           </Button>
 
           {isAdmin && (
@@ -147,6 +182,6 @@ export function Navbar({ className }: NavbarProps) {
           </Sheet>
         </div>
       </div>
-    </header>
+    </motion.header>
   )
 }

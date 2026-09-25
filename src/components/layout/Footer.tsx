@@ -15,7 +15,7 @@ export function Footer() {
             <p>Questions? front.office@rccswebcomp.demo</p>
           </div>
           <p className="flex items-center gap-1 text-sm text-quiet-ink">
-            Made with <Heart className="h-4 w-4 text-rose-500" /> for BTUI&apos;26
+            Made with <Heart className="h-4 w-4 animate-heartbeat text-rose-500" /> for BTUI&apos;26
           </p>
         </div>
       </div>

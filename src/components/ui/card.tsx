@@ -2,10 +2,25 @@ import * as React from 'react'
 import { cn } from '@/lib/utils'
 
 function Card({ className, onMouseMove, ...props }: React.ComponentProps<'div'>) {
+  const frame = React.useRef(0)
+
+  React.useEffect(() => {
+    return () => {
+      if (frame.current) cancelAnimationFrame(frame.current)
+    }
+  }, [])
+
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect()
-    event.currentTarget.style.setProperty('--mx', `${event.clientX - rect.left}px`)
-    event.currentTarget.style.setProperty('--my', `${event.clientY - rect.top}px`)
+    if (!frame.current) {
+      const el = event.currentTarget
+      const { clientX, clientY } = event
+      frame.current = requestAnimationFrame(() => {
+        const rect = el.getBoundingClientRect()
+        el.style.setProperty('--mx', `${clientX - rect.left}px`)
+        el.style.setProperty('--my', `${clientY - rect.top}px`)
+        frame.current = 0
+      })
+    }
     onMouseMove?.(event)
   }
 
@@ -13,7 +28,7 @@ function Card({ className, onMouseMove, ...props }: React.ComponentProps<'div'>)
     <div
       onMouseMove={handleMouseMove}
       className={cn(
-        'card-spotlight card-texture relative overflow-hidden rounded-xl border bg-panel/60 text-panel-ink shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl',
+        'card-spotlight card-texture relative overflow-hidden rounded-xl border bg-panel/60 text-panel-ink shadow-sm backdrop-blur-md transition-[transform,box-shadow,background-color,border-color] duration-300 ease-out hoverable:hover:-translate-y-0.5 hoverable:hover:shadow-xl motion-reduce:transition-none',
         className
       )}
       {...props}

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant hoverable (@media (hover: hover) and (pointer: fine));
 
 @theme inline {
   --font-sans: var(--font-sans);
@@ -32,6 +33,13 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+}
+
+@theme {
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 :root {
@@ -256,99 +264,132 @@ body {
   animation: drift-b 10s ease-in-out infinite;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .animate-fade-up,
-  .animate-float,
-  .animate-drift-a,
-  .animate-drift-b,
-  .animate-pulse-ring {
-    animation: none;
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.25);
+  }
+  30% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.15);
   }
 }
 
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.animate-heartbeat {
+  animation: heartbeat 1.4s ease-in-out infinite;
+  transform-origin: center;
 }
 
-@keyframes fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
-@keyframes zoom-in-95 {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+/* Radix / data-state enter & exit animations. Values compose through CSS
+   variables, so `data-[state=open]:animate-in fade-in-0 zoom-in-95` runs all
+   three together instead of the last one overriding the animation-name. */
+@keyframes enter {
+  from {
+    opacity: var(--tw-enter-opacity, 1);
+    transform: translate3d(var(--tw-enter-translate-x, 0), var(--tw-enter-translate-y, 0), 0)
+      scale(var(--tw-enter-scale, 1));
+  }
 }
 
-@keyframes zoom-out-95 {
-  from { opacity: 1; transform: scale(1); }
-  to { opacity: 0; transform: scale(0.95); }
+@keyframes exit {
+  to {
+    opacity: var(--tw-exit-opacity, 1);
+    transform: translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0)
+      scale(var(--tw-exit-scale, 1));
+  }
 }
 
-@keyframes slide-in-from-top {
-  from { transform: translateY(-100%); }
-  to { transform: translateY(0); }
-}
-
-@keyframes slide-out-to-top {
-  from { transform: translateY(0); }
-  to { transform: translateY(-100%); }
-}
-
-@keyframes slide-in-from-bottom {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
-}
-
-@keyframes slide-out-to-bottom {
-  from { transform: translateY(0); }
-  to { transform: translateY(100%); }
-}
-
-@keyframes slide-in-from-left {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(0); }
-}
-
-@keyframes slide-out-to-left {
-  from { transform: translateX(0); }
-  to { transform: translateX(-100%); }
-}
-
-@keyframes slide-in-from-right {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
-}
-
-@keyframes slide-out-to-right {
-  from { transform: translateX(0); }
-  to { transform: translateX(100%); }
-}
-
-.animate-in {
+@utility animate-in {
+  animation-name: enter;
+  animation-duration: 0.22s;
   animation-fill-mode: both;
+  animation-timing-function: var(--ease-out-quint);
 }
 
-.animate-out {
+@utility animate-out {
+  animation-name: exit;
+  animation-duration: 0.18s;
   animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
 
-.fade-in-0 { animation-name: fade-in; animation-duration: 0.2s; }
-.fade-out-0 { animation-name: fade-out; animation-duration: 0.2s; }
-.zoom-in-95 { animation-name: zoom-in-95; animation-duration: 0.2s; }
-.zoom-out-95 { animation-name: zoom-out-95; animation-duration: 0.2s; }
-.slide-in-from-top { animation-name: slide-in-from-top; animation-duration: 0.3s; }
-.slide-out-to-top { animation-name: slide-out-to-top; animation-duration: 0.3s; }
-.slide-in-from-bottom { animation-name: slide-in-from-bottom; animation-duration: 0.3s; }
-.slide-out-to-bottom { animation-name: slide-out-to-bottom; animation-duration: 0.3s; }
-.slide-in-from-left { animation-name: slide-in-from-left; animation-duration: 0.3s; }
-.slide-out-to-left { animation-name: slide-out-to-left; animation-duration: 0.3s; }
-.slide-in-from-right { animation-name: slide-in-from-right; animation-duration: 0.3s; }
-.slide-out-to-right { animation-name: slide-out-to-right; animation-duration: 0.3s; }
-.slide-in-from-top-2 { animation-name: slide-in-from-top-2; animation-duration: 0.2s; }
-
-@keyframes slide-in-from-top-2 {
-  from { opacity: 0; transform: translateY(-0.5rem); }
-  to { opacity: 1; transform: translateY(0); }
+@utility fade-in-0 {
+  --tw-enter-opacity: 0;
 }
+
+@utility fade-out-0 {
+  --tw-exit-opacity: 0;
+}
+
+@utility zoom-in-95 {
+  --tw-enter-scale: 0.95;
+}
+
+@utility zoom-out-95 {
+  --tw-exit-scale: 0.95;
+}
+
+@utility slide-in-from-top {
+  --tw-enter-translate-y: -100%;
+}
+
+@utility slide-out-to-top {
+  --tw-exit-translate-y: -100%;
+}
+
+@utility slide-in-from-bottom {
+  --tw-enter-translate-y: 100%;
+}
+
+@utility slide-out-to-bottom {
+  --tw-exit-translate-y: 100%;
+}
+
+@utility slide-in-from-left {
+  --tw-enter-translate-x: -100%;
+}
+
+@utility slide-out-to-left {
+  --tw-exit-translate-x: -100%;
+}
+
+@utility slide-in-from-right {
+  --tw-enter-translate-x: 100%;
+}
+
+@utility slide-out-to-right {
+  --tw-exit-translate-x: 100%;
+}
+
+@utility slide-in-from-top-2 {
+  --tw-enter-translate-y: -0.5rem;
+}
+
+@utility slide-in-from-bottom-2 {
+  --tw-enter-translate-y: 0.5rem;
+}
+
+@utility slide-in-from-left-2 {
+  --tw-enter-translate-x: -0.5rem;
+}
+
+@utility slide-in-from-right-2 {
+  --tw-enter-translate-x: 0.5rem;
+}
+

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Calendar, MapPin, Users } from 'lucide-react'
+import { ArrowRight, Calendar, MapPin, Users } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -27,8 +27,8 @@ export function EventCard({ event }: EventCardProps) {
   return (
     <Card className="group overflow-hidden">
       <div className="relative h-40 overflow-hidden bg-quiet">
-        <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand/20 to-brand/5">
-          <Calendar className="h-10 w-10 text-brand/40" />
+        <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand/20 to-brand/5 transition-transform duration-500 ease-out hoverable:group-hover:scale-105">
+          <Calendar className="h-10 w-10 text-brand/40 transition-transform duration-500 ease-out hoverable:group-hover:scale-90" />
         </div>
         {event.featured && (
           <Badge className="absolute left-3 top-3 bg-brand text-brand-ink">Featured</Badge>
@@ -69,7 +69,10 @@ export function EventCard({ event }: EventCardProps) {
           registeredCount={event.registration_count || 0}
         />
         <Button asChild className="mt-4 w-full">
-          <Link to={`/events/${event.slug}`}>View Event</Link>
+          <Link to={`/events/${event.slug}`}>
+            View Event
+            <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
+          </Link>
         </Button>
       </CardContent>
     </Card>

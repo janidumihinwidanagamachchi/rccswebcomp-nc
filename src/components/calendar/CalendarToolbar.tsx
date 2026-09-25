@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { format } from 'date-fns'
+import { motion } from 'motion/react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -9,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { EASE_OUT } from '@/components/motion/ease'
 import { cn } from '@/lib/utils'
 import type { CalendarView } from '@/lib/calendar'
 import type { Category } from '@/types'
@@ -58,7 +60,15 @@ export function CalendarToolbar({
   return (
     <div className="space-y-4">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <h2 className="text-2xl font-bold md:text-3xl">{heading}</h2>
+        <motion.h2
+          key={heading}
+          initial={{ opacity: 0, y: -6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2, ease: EASE_OUT }}
+          className="text-2xl font-bold md:text-3xl"
+        >
+          {heading}
+        </motion.h2>
         <div className="flex flex-wrap items-center gap-2">
           {view !== 'agenda' && onJumpToDate && (
             <div className="flex items-center gap-2">
@@ -98,20 +108,28 @@ export function CalendarToolbar({
           )}
 
           <div className="flex rounded-lg border bg-panel p-1">
-            {views.map((v) => (
-              <button
-                key={v.value}
-                onClick={() => onViewChange(v.value)}
-                className={cn(
-                  'rounded-md px-3 py-1 text-sm font-medium transition-colors',
-                  view === v.value
-                    ? 'bg-brand text-canvas'
-                    : 'text-quiet-ink hover:bg-highlight hover:text-ink'
-                )}
-              >
-                {v.label}
-              </button>
-            ))}
+            {views.map((v) => {
+              const active = view === v.value
+              return (
+                <button
+                  key={v.value}
+                  onClick={() => onViewChange(v.value)}
+                  className={cn(
+                    'relative rounded-md px-3 py-1 text-sm font-medium transition-colors',
+                    active ? 'text-canvas' : 'text-quiet-ink hover:bg-highlight hover:text-ink'
+                  )}
+                >
+                  {active && (
+                    <motion.span
+                      layoutId="calendar-view-pill"
+                      className="absolute inset-0 rounded-md bg-brand"
+                      transition={{ type: 'spring', duration: 0.45, bounce: 0.18 }}
+                    />
+                  )}
+                  <span className="relative">{v.label}</span>
+                </button>
+              )
+            })}
           </div>
 
           <Button variant="outline" size="sm" onClick={onToday}>

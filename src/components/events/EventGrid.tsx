@@ -1,4 +1,6 @@
+import { AnimatePresence, motion } from 'motion/react'
 import { EventCard } from './EventCard'
+import { EASE_OUT } from '@/components/motion/ease'
 import type { Event } from '@/types'
 
 interface EventGridProps {
@@ -17,11 +19,20 @@ export function EventGrid({ events }: EventGridProps) {
 
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {events.map((event, index) => (
-        <div key={event.id} className="animate-fade-up" style={{ animationDelay: `${index * 50}ms` }}>
-          <EventCard event={event} />
-        </div>
-      ))}
+      <AnimatePresence mode="popLayout">
+        {events.map((event, index) => (
+          <motion.div
+            key={event.id}
+            layout
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.98 }}
+            transition={{ duration: 0.35, ease: EASE_OUT, delay: Math.min(index, 5) * 0.04 }}
+          >
+            <EventCard event={event} />
+          </motion.div>
+        ))}
+      </AnimatePresence>
     </div>
   )
 }

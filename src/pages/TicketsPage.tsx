@@ -1,5 +1,6 @@
 import { Shell } from '@/components/layout/Shell'
 import { TicketCard } from '@/components/tickets/TicketCard'
+import { Stagger, StaggerItem } from '@/components/motion/Stagger'
 import { useMyRegistrations } from '@/hooks/useRegistrations'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from '@/components/ui/button'
@@ -10,7 +11,7 @@ export function TicketsPage() {
   const { data: registrations, isLoading } = useMyRegistrations()
 
   return (
-    <Shell>
+    <Shell transition>
       <div className="container mx-auto px-4 py-12">
         <div className="mb-8">
           <h1 className="text-3xl font-bold md:text-4xl">My Tickets</h1>
@@ -24,11 +25,13 @@ export function TicketsPage() {
             ))}
           </div>
         ) : registrations && registrations.length > 0 ? (
-          <div className="space-y-4">
+          <Stagger className="space-y-4">
             {registrations.map((registration) => (
-              <TicketCard key={registration.id} registration={registration} />
+              <StaggerItem key={registration.id}>
+                <TicketCard registration={registration} />
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
         ) : (
           <div className="flex flex-col items-center justify-center rounded-xl border border-dashed py-20 text-center">
             <Ticket className="mb-4 h-12 w-12 text-quiet-ink" />

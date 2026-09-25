@@ -15,16 +15,22 @@ const priorityIcons = {
 interface AnnouncementCardProps {
   announcement: Announcement
   compact?: boolean
+  className?: string
 }
 
-export function AnnouncementCard({ announcement, compact }: AnnouncementCardProps) {
+export function AnnouncementCard({ announcement, compact, className }: AnnouncementCardProps) {
   const Icon = priorityIcons[announcement.priority]
 
   return (
-    <Card className="overflow-hidden transition-shadow hover:shadow-md">
+    <Card className={cn('h-full overflow-hidden', className)}>
       <CardContent className={compact ? 'p-4' : 'p-5'}>
         <div className="mb-2 flex items-center gap-2">
-          <Badge className={PRIORITY_COLORS[announcement.priority]}>
+          <Badge
+            className={cn(
+              PRIORITY_COLORS[announcement.priority],
+              announcement.priority === PRIORITY.URGENT && 'animate-pulse'
+            )}
+          >
             <Icon className="mr-1 h-3 w-3" />
             {announcement.priority}
           </Badge>
