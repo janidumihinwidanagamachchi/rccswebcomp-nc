@@ -133,6 +133,17 @@ export function EventDetailPage() {
           {/* Main content */}
           <div className="lg:col-span-2">
             <div className="animate-fade-up">
+              {event.image_url && (
+                <div className="mb-6 overflow-hidden rounded-xl">
+                  <img
+                    src={event.image_url}
+                    alt={event.title}
+                    loading="lazy"
+                    decoding="async"
+                    className="aspect-[16/9] w-full object-cover"
+                  />
+                </div>
+              )}
               <div className="mb-4 flex flex-wrap items-center gap-2">
                 <Badge variant="secondary">{event.category?.name}</Badge>
                 {event.featured && <Badge>Featured</Badge>}

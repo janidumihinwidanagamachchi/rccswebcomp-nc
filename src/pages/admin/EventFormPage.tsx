@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
+import { ImageUpload } from '@/components/ui/image-upload'
 import { useCategories, useEventById, useCreateEvent, useUpdateEvent } from '@/hooks/useEvents'
 import { useAuthStore } from '@/stores/authStore'
 import { eventSchema, type EventFormData } from '@/lib/validators'
@@ -207,8 +208,11 @@ export function EventFormPage() {
                   {errors.capacity && <p className="text-xs text-danger">{errors.capacity.message}</p>}
                 </div>
                 <div className="space-y-1">
-                  <Label htmlFor="imageUrl">Image URL (optional)</Label>
-                  <Input id="imageUrl" {...register('imageUrl')} />
+                  <ImageUpload
+                    value={watch('imageUrl') ?? ''}
+                    onChange={(next) => setValue('imageUrl', next, { shouldDirty: true, shouldValidate: true })}
+                    eventId={id}
+                  />
                 </div>
                 <div className="space-y-1">
                   <Label htmlFor="status">Status</Label>
