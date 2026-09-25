@@ -1,0 +1,37 @@
+-- Stop exposing registrations to anonymous visitors.
+--
+-- Confirmed against the live project: GET /rest/v1/registrations with the
+-- anon key returns HTTP 200, so anyone can read attendee_name,
+-- attendee_email and the raw qr_code_data of every ticket. The table is
+-- currently empty, so nothing has leaked yet.
+--
+-- The app never reads registrations anonymously. Every read in
+-- src/hooks/useRegistrations.ts and src/pages/EventDetailPage.tsx runs as
+-- the signed-in user, so revoking anon select only is safe and does not
+-- change any existing app behaviour.
+--
+-- Apply in the Supabase SQL editor.
+
+revoke select on table public.registrations from anon;
+
+-- ---------------------------------------------------------------------------
+-- Optional, stricter. Do NOT apply without reading this first.
+--
+-- Signing a student up uses a direct insert and the admin check-in uses a
+-- direct update (both in src/hooks/useRegistrations.ts), so authenticated
+-- currently needs insert and update on this table. Revoking those, or
+-- replacing the existing policies, breaks registration and check-in until
+-- those writes are moved into SECURITY DEFINER RPCs.
+--
+-- Only run this once the writes go through RPCs that verify ownership and
+-- admin role server-side, and after checking the policies already on the
+-- table (they are not in version control, so they cannot be reviewed here):
+--   select policyname, cmd, qual, with_check
+--   from pg_policies
+--   where schemaname = 'public' and tablename = 'registrations';
+--
+-- revoke all on table public.registrations from anon, authenticated;
+--
+-- create policy "read own registrations" on public.registrations
+--   for select to authenticated
+--   using (user_id = auth.uid());
