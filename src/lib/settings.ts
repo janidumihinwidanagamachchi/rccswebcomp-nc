@@ -467,7 +467,7 @@ export const THEME_PRESETS: ThemePreset[] = [
   },
   {
     id: 'default-2',
-    name: 'Default 2',
+    name: 'Monochrome',
     settings: {
       theme: { mode: 'dark' as ThemeMode, radius: '0.75rem' },
       colors: { light: DEFAULT_2_LIGHT, dark: DEFAULT_2_DARK },

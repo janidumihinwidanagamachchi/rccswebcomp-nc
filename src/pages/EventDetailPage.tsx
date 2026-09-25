@@ -21,6 +21,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Countdown } from '@/components/events/Countdown'
+import { EventCover } from '@/components/events/EventCover'
 import { Reveal } from '@/components/motion/Reveal'
 import { EASE_OUT } from '@/components/motion/ease'
 import { HighlightComposer } from '@/components/announcements/HighlightComposer'
@@ -134,14 +135,8 @@ export function EventDetailPage() {
           <div className="lg:col-span-2">
             <div className="animate-fade-up">
               {event.image_url && (
-                <div className="mb-6 overflow-hidden rounded-xl">
-                  <img
-                    src={event.image_url}
-                    alt={event.title}
-                    loading="lazy"
-                    decoding="async"
-                    className="aspect-[16/9] w-full object-cover"
-                  />
+                <div className="mb-6 aspect-[16/9] overflow-hidden rounded-xl">
+                  <EventCover src={event.image_url} alt={event.title} />
                 </div>
               )}
               <div className="mb-4 flex flex-wrap items-center gap-2">

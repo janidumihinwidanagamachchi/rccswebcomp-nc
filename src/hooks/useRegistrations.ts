@@ -5,6 +5,20 @@ import type { Registration, Event } from '@/types'
 
 const REGISTRATIONS_KEY = 'registrations'
 
+// Ambiguous glyphs (I/O/0/1) are excluded so numbers stay readable aloud at
+// the gate. Matches the EVT-XXXXXX-XXXX hint on the scanner's input.
+const TICKET_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
+
+function randomTicketChars(length: number): string {
+  const values = new Uint32Array(length)
+  crypto.getRandomValues(values)
+  return Array.from(values, (value) => TICKET_ALPHABET[value % TICKET_ALPHABET.length]).join('')
+}
+
+function generateTicketNumber(): string {
+  return `EVT-${randomTicketChars(6)}-${randomTicketChars(4)}`
+}
+
 export function useMyRegistrations() {
   return useQuery({
     queryKey: [REGISTRATIONS_KEY, 'mine'],
@@ -51,29 +65,39 @@ export function useRegisterForEvent() {
       userId: string
       formData: { attendeeName: string; attendeeEmail: string; attendeeGrade?: number | null; notes?: string }
     }) => {
-      const qrCodeData = JSON.stringify({
-        ticket: '',
-        event: event.id,
-        user: userId,
-      })
+      const payload = {
+        event_id: event.id,
+        user_id: userId,
+        attendee_name: formData.attendeeName,
+        attendee_email: formData.attendeeEmail,
+        attendee_grade: formData.attendeeGrade ?? null,
+        notes: formData.notes ?? null,
+      }
 
-      const { data, error } = await supabase
-        .from('registrations')
-        .insert({
-          event_id: event.id,
-          user_id: userId,
-          ticket_number: '',
-          qr_code_data: qrCodeData,
-          attendee_name: formData.attendeeName,
-          attendee_email: formData.attendeeEmail,
-          attendee_grade: formData.attendeeGrade ?? null,
-          notes: formData.notes ?? null,
+      let lastError: unknown = null
+
+      for (let attempt = 0; attempt < 4; attempt++) {
+        const ticketNumber = generateTicketNumber()
+        const qrCodeData = JSON.stringify({
+          ticket: ticketNumber,
+          event: event.id,
+          user: userId,
         })
-        .select()
-        .single()
 
-      if (error) throw error
-      return data as Registration
+        const { data, error } = await supabase
+          .from('registrations')
+          .insert({ ...payload, ticket_number: ticketNumber, qr_code_data: qrCodeData })
+          .select()
+          .single()
+
+        if (!error) return data as Registration
+
+        lastError = error
+        // 23505 is a unique violation: only a ticket_number collision is worth retrying.
+        if (error.code !== '23505') break
+      }
+
+      throw lastError
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: [REGISTRATIONS_KEY] })

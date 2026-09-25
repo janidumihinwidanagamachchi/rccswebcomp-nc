@@ -164,7 +164,16 @@ export function CalendarToolbar({
         <Badge
           variant={category === 'all' ? 'default' : 'secondary'}
           className="cursor-pointer"
+          role="button"
+          tabIndex={0}
+          aria-pressed={category === 'all'}
           onClick={() => onCategoryChange('all')}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault()
+              onCategoryChange('all')
+            }
+          }}
         >
           All
         </Badge>
@@ -173,8 +182,17 @@ export function CalendarToolbar({
             key={cat.slug}
             variant={category === cat.slug ? 'default' : 'secondary'}
             className="cursor-pointer"
+            role="button"
+            tabIndex={0}
+            aria-pressed={category === cat.slug}
             style={category === cat.slug ? { backgroundColor: cat.color } : undefined}
             onClick={() => onCategoryChange(cat.slug)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                onCategoryChange(cat.slug)
+              }
+            }}
           >
             {cat.name}
           </Badge>

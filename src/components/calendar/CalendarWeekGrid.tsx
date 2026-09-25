@@ -66,7 +66,16 @@ export function CalendarWeekGrid({
           return (
             <div
               key={`cell-${lane}-${day.toISOString()}`}
+              role="button"
+              tabIndex={0}
+              aria-label={`Select ${format(day, 'd MMMM yyyy')}`}
               onClick={() => onSelectDate(day)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  onSelectDate(day)
+                }
+              }}
               className={cn(
                 'border-r border-b last:border-r-0 transition-colors',
                 !currentMonth && 'bg-quiet/30',

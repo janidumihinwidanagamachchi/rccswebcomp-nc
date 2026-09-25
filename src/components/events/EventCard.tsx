@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Countdown } from './Countdown'
+import { EventCover } from './EventCover'
 import { cn, formatDate } from '@/lib/utils'
 import type { Event } from '@/types'
 
@@ -29,12 +30,10 @@ export function EventCard({ event }: EventCardProps) {
       <div className="relative h-40 overflow-hidden bg-quiet">
         {event.image_url ? (
           <>
-            <img
+            <EventCover
               src={event.image_url}
               alt=""
-              loading="lazy"
-              decoding="async"
-              className="h-full w-full object-cover transition-transform duration-500 ease-out hoverable:group-hover:scale-105"
+              className="transition-transform duration-500 ease-out hoverable:group-hover:scale-105"
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-canvas/70 via-canvas/10 to-transparent" />
           </>
