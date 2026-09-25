@@ -40,8 +40,6 @@ export function HomePage() {
   return (
     <Shell transition>
       <div className="relative">
-        <div className="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-b from-brand/10 via-canvas to-highlight/5" />
-
         {user ? (
           <section className="container mx-auto px-4 pt-8">
             <Reveal className="flex items-center justify-between gap-4 rounded-lg border bg-panel/60 px-4 py-3 backdrop-blur-md">
@@ -59,9 +57,6 @@ export function HomePage() {
           </section>
         ) : (
           <section className="relative flex min-h-[calc(100vh-64px)] flex-col items-center justify-center overflow-hidden border-b py-12 md:py-16">
-            <div className="animate-drift-a absolute -left-20 -top-20 h-72 w-72 rounded-full bg-brand/20 blur-[100px]" />
-            <div className="animate-drift-b absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-highlight/15 blur-[120px]" />
-
             {hero?.backgroundImageUrl && (
               <div
                 className="absolute inset-0 -z-10 bg-cover bg-center opacity-20"
@@ -229,7 +224,7 @@ export function HomePage() {
 function HeroParticles() {
   const particles = useMemo(
     () =>
-      Array.from({ length: 16 }).map((_, i) => {
+      Array.from({ length: 10 }).map((_, i) => {
         const size = 4 + Math.random() * 8
         const left = Math.random() * 100
         const top = Math.random() * 100
@@ -252,12 +247,13 @@ function HeroParticles() {
       {particles.map((p) => (
         <div
           key={p.key}
-          className="animate-float pointer-events-none absolute rounded-full bg-brand/30"
+          className="animate-float pointer-events-none absolute rounded-full"
           style={{
             left: `${p.left}%`,
             top: `${p.top}%`,
             width: p.size,
             height: p.size,
+            backgroundColor: 'color-mix(in srgb, var(--sport-lime) 40%, transparent)',
             animationDuration: `${p.duration}s`,
             animationDelay: `${p.delay}s`,
           }}

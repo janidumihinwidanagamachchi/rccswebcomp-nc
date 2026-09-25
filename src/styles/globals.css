@@ -29,6 +29,9 @@
   --color-line: var(--line);
   --color-field: var(--field);
   --color-focus: var(--focus);
+  --color-sport-lime: var(--sport-lime);
+  --color-sport-blue: var(--sport-blue);
+  --color-sport-ember: var(--sport-ember);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -70,6 +73,15 @@
   --focus: #0b4ea2;
   --radius: 0.75rem;
 
+  --sport-lime: #c9f227;
+  --sport-blue: #2f6bff;
+  --sport-ember: #ff5a1f;
+  --sport-wash-a: 5%;
+  --sport-wash-b: 4%;
+  --sport-glow-tint: 26%;
+  --sport-glow-opacity: 30%;
+  --sport-lines: 18%;
+
   color-scheme: light;
 }
 
@@ -93,6 +105,12 @@
   --line: #1e293b;
   --field: #1e293b;
   --focus: #3b82f6;
+
+  --sport-wash-a: 7%;
+  --sport-wash-b: 6%;
+  --sport-glow-tint: 30%;
+  --sport-glow-opacity: 45%;
+  --sport-lines: 25%;
 
   color-scheme: dark;
 }
@@ -283,6 +301,38 @@ body {
 .animate-heartbeat {
   animation: heartbeat 1.4s ease-in-out infinite;
   transform-origin: center;
+}
+
+/* Sports backdrop. Transform-only so both stay on the compositor. */
+@keyframes glow-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(4%, -6%, 0) scale(1.08);
+  }
+}
+
+.animate-glow-drift {
+  animation: glow-drift 26s ease-in-out infinite;
+}
+
+.animate-glow-drift-slow {
+  animation: glow-drift 38s ease-in-out infinite reverse;
+}
+
+@keyframes speed-sweep {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-speed-sweep {
+  animation: speed-sweep 44s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
