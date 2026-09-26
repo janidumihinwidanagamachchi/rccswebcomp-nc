@@ -119,5 +119,6 @@ export async function deleteEventCover(publicUrl: string): Promise<void> {
   const path = pathFromPublicUrl(publicUrl)
   if (!path) return
 
-  await supabase.storage.from(BUCKET).remove([path])
+  const { error } = await supabase.storage.from(BUCKET).remove([path])
+  if (error) throw new Error(describeStorageError(error))
 }

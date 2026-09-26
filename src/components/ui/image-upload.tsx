@@ -38,7 +38,15 @@ export function ImageUpload({
     try {
       const url = await uploadEventCover(file, eventId)
       onChange(url)
-      if (previous) void deleteEventCover(previous)
+      // Replacing a photo: a failed cleanup of the old one is worth saying out
+      // loud, otherwise the file is orphaned in the bucket with no sign of it.
+      if (previous) {
+        try {
+          await deleteEventCover(previous)
+        } catch {
+          setError('New photo uploaded, but the previous one could not be deleted.')
+        }
+      }
     } catch (uploadError) {
       setError(uploadError instanceof Error ? uploadError.message : 'Upload failed. Try again.')
     } finally {
@@ -47,9 +55,23 @@ export function ImageUpload({
     }
   }
 
-  const handleRemove = () => {
-    if (value) void deleteEventCover(value)
-    onChange('')
+  const handleRemove = async () => {
+    if (!value) {
+      onChange('')
+      return
+    }
+
+    setError(null)
+    try {
+      await deleteEventCover(value)
+      onChange('')
+    } catch (removeError) {
+      setError(
+        removeError instanceof Error
+          ? `Could not delete the photo: ${removeError.message}`
+          : 'Could not delete the photo.'
+      )
+    }
   }
 
   return (
@@ -80,7 +102,7 @@ export function ImageUpload({
               {busy ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Upload className="mr-2 h-4 w-4" />}
               Replace
             </Button>
-            <Button type="button" variant="ghost" size="sm" disabled={busy} onClick={handleRemove}>
+            <Button type="button" variant="ghost" size="sm" disabled={busy} onClick={() => void handleRemove()}>
               <Trash2 className="mr-2 h-4 w-4" />
               Remove
             </Button>
