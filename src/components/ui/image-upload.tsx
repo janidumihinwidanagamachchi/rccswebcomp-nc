@@ -119,6 +119,11 @@ export function ImageUpload({
       )}
 
       {error && <p className="text-xs text-danger">{error}</p>}
+      {error && (
+        <p className="text-xs text-quiet-ink">
+          You can paste an image link below instead.
+        </p>
+      )}
       {hint && !error && <p className="text-xs text-quiet-ink">{hint}</p>}
 
       <div className="space-y-1 pt-1">
