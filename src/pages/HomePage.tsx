@@ -75,7 +75,7 @@ export function HomePage() {
                     {hero?.badge || "BTUI'26 Competition Entry"}
                   </Badge>
                   <h1 className="mb-6 text-balance text-5xl font-extrabold leading-[1.1] tracking-tight md:text-7xl">
-                    <MaskedLines step={0.09}>
+                    <MaskedLines>
                       {hero?.headline ? (
                         hero.headline.split('\n').map((line, idx) => <span key={idx}>{line}</span>)
                       ) : (

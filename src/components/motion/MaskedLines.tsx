@@ -48,14 +48,19 @@ const line: Variants = {
   hidden: { y: '110%' },
   visible: {
     y: '0%',
-    transition: { duration: dur.slow, ease: ease.gentle },
+    transition: { duration: dur.deliberate, ease: ease.gentle },
   },
 }
 
 interface MaskedLinesProps {
   children: React.ReactNode
   className?: string
-  /** Seconds between consecutive lines starting. */
+  /**
+   * Seconds between consecutive lines starting. Needs to grow with the
+   * duration: at 0.09s against a 1.9s line the second line begins while the
+   * first is 5% done, so the two read as a single movement rather than a
+   * sequence. 0.16s keeps the cascade legible.
+   */
   step?: number
   /** Seconds before the first line starts. */
   delay?: number
@@ -71,7 +76,7 @@ interface MaskedLinesProps {
 export function MaskedLines({
   children,
   className,
-  step = 0.09,
+  step = 0.16,
   delay = 0,
   trigger = 'mount',
   descender = 0.16,

@@ -16,6 +16,14 @@
 /**
  * Duration scale, in seconds. Named by intent rather than by number so the
  * right one is obvious at the call site.
+ *
+ * The two ends are deliberately far apart. instant and quick answer a tap and
+ * are held at 0.12/0.18 no matter how slow the entrances get — a button that
+ * answers in 0.5s reads as broken rather than cinematic, so slowness is spent
+ * only where nothing is waiting on the visitor. base and above are entrances,
+ * and those are now markedly slower than they were: 0.45 -> 0.7, 0.9 -> 1.3,
+ * 1.4 -> 1.9. The effect is that arriving somewhere feels unhurried while
+ * touching anything stays immediate.
  */
 export const dur = {
   /** State acknowledgement on something already on screen: a toggle, a chip. */
@@ -23,13 +31,18 @@ export const dur = {
   /** Direct manipulation: buttons, hovers, anything answering a click. */
   quick: 0.18,
   /** Default for a single element entering: cards, panels, one list item. */
-  base: 0.45,
+  base: 0.7,
   /** Large elements, or a short stagger across a handful of items. */
-  slow: 0.9,
+  slow: 1.3,
   /** Hero-scale statements. One per screen, at most. */
-  deliberate: 1.4,
-  /** Reserved. Deliberately unused so the top of the scale stays aspirational. */
-  cinematic: 1.9,
+  deliberate: 1.9,
+  /**
+   * Reserved. Deliberately unused so the top of the scale stays aspirational.
+   * Raised from 1.9 to 2.6 when deliberate moved up to 1.9, because two names
+   * for one number is worse than an unused step — the scale has to keep
+   * increasing or "pick a slower one" stops being a choice.
+   */
+  cinematic: 2.6,
 } as const
 
 /**
