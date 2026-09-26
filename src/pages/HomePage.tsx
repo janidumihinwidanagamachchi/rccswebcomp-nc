@@ -12,6 +12,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Shell } from '@/components/layout/Shell'
+import { MaskedLines } from '@/components/motion/MaskedLines'
 import { Reveal } from '@/components/motion/Reveal'
 import { Stagger, StaggerItem } from '@/components/motion/Stagger'
 import { EventGrid } from '@/components/events/EventGrid'
@@ -74,19 +75,16 @@ export function HomePage() {
                     {hero?.badge || "BTUI'26 Competition Entry"}
                   </Badge>
                   <h1 className="mb-6 text-balance text-5xl font-extrabold leading-[1.1] tracking-tight md:text-7xl">
-                    {hero?.headline ? (
-                      hero.headline.split('\n').map((line, idx, arr) => (
-                        <span key={idx}>
-                          {line}
-                          {idx < arr.length - 1 && <br />}
-                        </span>
-                      ))
-                    ) : (
-                      <>
-                        What&apos;s on at school,
-                        <span className="block text-brand">without the guesswork.</span>
-                      </>
-                    )}
+                    <MaskedLines step={0.09}>
+                      {hero?.headline ? (
+                        hero.headline.split('\n').map((line, idx) => <span key={idx}>{line}</span>)
+                      ) : (
+                        <>
+                          <span>What&apos;s on at school,</span>
+                          <span className="text-brand">without the guesswork.</span>
+                        </>
+                      )}
+                    </MaskedLines>
                   </h1>
                   <p
                     className="animate-fade-up mx-auto mb-10 max-w-2xl text-lg text-quiet-ink md:text-xl"
