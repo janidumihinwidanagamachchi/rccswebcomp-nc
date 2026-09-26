@@ -3,6 +3,7 @@ import { startOfWeek, endOfWeek, eachDayOfInterval } from 'date-fns'
 import { CalendarWeekGrid } from './CalendarWeekGrid'
 import { eventSegments } from '@/lib/calendar'
 import type { Event } from '@/types'
+import { Reveal } from '@/components/motion/Reveal'
 
 interface CalendarWeekProps {
   events: Event[]
@@ -18,14 +19,19 @@ export function CalendarWeek({ events, currentDate, selectedDate, onSelectDate }
     [currentDate]
   )
 
+  // Container-level reveal, not a per-cell stagger: a week grid is seven
+  // columns of day cells plus event lanes, and at dur.uniform a cell-by-cell
+  // cascade would run for seconds and read as lag rather than polish.
   return (
-    <div className="card-texture rounded-xl border bg-panel/60 p-4 backdrop-blur-md">
-      <CalendarWeekGrid
-        days={days}
-        segments={segments}
-        selectedDate={selectedDate}
-        onSelectDate={onSelectDate}
-      />
-    </div>
+    <Reveal scale="md">
+      <div className="card-texture rounded-xl border bg-panel/60 p-4 backdrop-blur-md">
+        <CalendarWeekGrid
+          days={days}
+          segments={segments}
+          selectedDate={selectedDate}
+          onSelectDate={onSelectDate}
+        />
+      </div>
+    </Reveal>
   )
 }

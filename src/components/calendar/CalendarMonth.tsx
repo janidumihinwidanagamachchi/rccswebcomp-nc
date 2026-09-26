@@ -3,6 +3,7 @@ import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInte
 import { CalendarWeekGrid } from './CalendarWeekGrid'
 import { chunk, eventSegments } from '@/lib/calendar'
 import type { Event } from '@/types'
+import { Reveal } from '@/components/motion/Reveal'
 
 interface CalendarMonthProps {
   events: Event[]
@@ -30,36 +31,42 @@ export function CalendarMonth({
     return chunk(days, 7)
   }, [currentDate])
 
+  // Container-level reveal, not a per-cell stagger. A month is five or six week
+  // rows of seven day cells each — around 35 cells. At dur.uniform a cell-by-cell
+  // cascade would run for several seconds and read as lag, not polish. One
+  // container fade is the right amount of motion for a grid.
   return (
-    <div className="card-texture rounded-xl border bg-panel/60 p-4 backdrop-blur-md">
-      <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-xl font-bold">{format(currentDate, 'MMMM yyyy')}</h3>
+    <Reveal scale="md">
+      <div className="card-texture rounded-xl border bg-panel/60 p-4 backdrop-blur-md">
+        <div className="mb-4 flex items-center justify-between">
+          <h3 className="text-xl font-bold">{format(currentDate, 'MMMM yyyy')}</h3>
+        </div>
+        <div className="mb-2 grid grid-cols-7 gap-1 text-center text-xs font-medium text-quiet-ink">
+          {weekDays.map((day) => (
+            <div key={day} className="py-2">
+              {day}
+            </div>
+          ))}
+        </div>
+        <div className="space-y-0">
+          {weeks.map((week) => (
+            <CalendarWeekGrid
+              key={format(week[0], 'yyyy-MM-dd')}
+              days={week}
+              segments={segments}
+              selectedDate={selectedDate}
+              onSelectDate={(date) => {
+                onSelectDate(date)
+                if (!isSameMonth(date, currentDate)) {
+                  onMonthChange(date)
+                }
+              }}
+              referenceMonth={currentDate}
+            />
+          ))}
+        </div>
       </div>
-      <div className="mb-2 grid grid-cols-7 gap-1 text-center text-xs font-medium text-quiet-ink">
-        {weekDays.map((day) => (
-          <div key={day} className="py-2">
-            {day}
-          </div>
-        ))}
-      </div>
-      <div className="space-y-0">
-        {weeks.map((week) => (
-          <CalendarWeekGrid
-            key={format(week[0], 'yyyy-MM-dd')}
-            days={week}
-            segments={segments}
-            selectedDate={selectedDate}
-            onSelectDate={(date) => {
-              onSelectDate(date)
-              if (!isSameMonth(date, currentDate)) {
-                onMonthChange(date)
-              }
-            }}
-            referenceMonth={currentDate}
-          />
-        ))}
-      </div>
-    </div>
+    </Reveal>
   )
 }
 

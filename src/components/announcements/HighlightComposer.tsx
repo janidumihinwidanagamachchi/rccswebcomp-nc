@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Reveal } from '@/components/motion/Reveal'
 import { useAuthStore } from '@/stores/authStore'
 import { useCreateHighlight } from '@/hooks/useHighlights'
 import { HIGHLIGHT_TYPE } from '@/lib/constants'
@@ -31,37 +32,43 @@ export function HighlightComposer({ eventId }: HighlightComposerProps) {
     setContent('')
   }
 
-  return (
-    <div className="card-texture rounded-xl border bg-panel/60 p-4 backdrop-blur-md">
-      <h4 className="mb-3 text-sm font-semibold">Share a live update</h4>
-      <Tabs value={type} onValueChange={(v) => setType(v as HighlightType)}>
-        <TabsList className="mb-3">
-          <TabsTrigger value={HIGHLIGHT_TYPE.TEXT}>
-            <Send className="mr-1 h-3 w-3" />
-            Text
-          </TabsTrigger>
-          <TabsTrigger value={HIGHLIGHT_TYPE.PHOTO}>
-            <ImageIcon className="mr-1 h-3 w-3" />
-            Photo
-          </TabsTrigger>
-          <TabsTrigger value={HIGHLIGHT_TYPE.RESULT}>
-            <Trophy className="mr-1 h-3 w-3" />
-            Result
-          </TabsTrigger>
-        </TabsList>
-      </Tabs>
-      <Textarea
-        placeholder="What's happening right now?"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        className="mb-3 min-h-[80px]"
-      />
-      <div className="flex justify-end">
-        <Button size="sm" onClick={handleSubmit} disabled={createHighlight.isPending || !content.trim()}>
-          <Send className="mr-2 h-4 w-4" />
-          Post Update
-        </Button>
-      </div>
-    </div>
-  )
+    // Only animate once it is actually shown. The component returns null when
+    // signed out, so wrapping the whole return would give React nothing to
+    // mount, and a Reveal that fires while the user is looking at a live event
+    // page is the right moment to spend the motion.
+    return (
+      <Reveal scale="md">
+        <div className="card-texture rounded-xl border bg-panel/60 p-4 backdrop-blur-md">
+          <h4 className="mb-3 text-sm font-semibold">Share a live update</h4>
+          <Tabs value={type} onValueChange={(v) => setType(v as HighlightType)}>
+            <TabsList className="mb-3">
+              <TabsTrigger value={HIGHLIGHT_TYPE.TEXT}>
+                <Send className="mr-1 h-3 w-3" />
+                Text
+              </TabsTrigger>
+              <TabsTrigger value={HIGHLIGHT_TYPE.PHOTO}>
+                <ImageIcon className="mr-1 h-3 w-3" />
+                Photo
+              </TabsTrigger>
+              <TabsTrigger value={HIGHLIGHT_TYPE.RESULT}>
+                <Trophy className="mr-1 h-3 w-3" />
+                Result
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+          <Textarea
+            placeholder="What's happening right now?"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            className="mb-3 min-h-[80px]"
+          />
+          <div className="flex justify-end">
+            <Button size="sm" onClick={handleSubmit} disabled={createHighlight.isPending || !content.trim()}>
+              <Send className="mr-2 h-4 w-4" />
+              Post Update
+            </Button>
+          </div>
+        </div>
+      </Reveal>
+    )
 }

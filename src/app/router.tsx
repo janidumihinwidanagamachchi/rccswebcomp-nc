@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
 import { Shell } from '@/components/layout/Shell'
-import { ErrorBoundary } from '@/components/ErrorBoundary'
+import { AnimatedErrorBoundary } from '@/components/ErrorBoundary'
 import { HomePage } from '@/pages/HomePage'
 import { EventsPage } from '@/pages/EventsPage'
 import { EventDetailPage } from '@/pages/EventDetailPage'
@@ -72,7 +72,7 @@ function AdminFallback() {
 
 export function AppRouter() {
   return (
-    <ErrorBoundary>
+        <AnimatedErrorBoundary>
       <React.Suspense fallback={<AdminFallback />}>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -107,6 +107,6 @@ export function AppRouter() {
           <Route path="*" element={<div className="p-20 text-center">Page not found</div>} />
         </Routes>
       </React.Suspense>
-    </ErrorBoundary>
+        </AnimatedErrorBoundary>
   )
 }
