@@ -119,6 +119,13 @@ export async function deleteEventCover(publicUrl: string): Promise<void> {
   const path = pathFromPublicUrl(publicUrl)
   if (!path) return
 
-  const { error } = await supabase.storage.from(BUCKET).remove([path])
+  const { data, error } = await supabase.storage.from(BUCKET).remove([path])
   if (error) throw new Error(describeStorageError(error))
+
+  // remove() answers 200 with an empty array when RLS matches no row, which is
+  // what a missing or non-matching delete policy looks like. Without this the
+  // caller reports a successful delete that never happened.
+  if (!data || data.length === 0) {
+    throw new Error('the server did not remove the file. Check the "admins delete event covers" policy in supabase/apply_pending_migrations.sql.')
+  }
 }
