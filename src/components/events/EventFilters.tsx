@@ -19,9 +19,8 @@ export function EventFilters({
   onCategoryChange,
   categories,
 }: EventFiltersProps) {
-    // Wrapping the search and the category select separately rather than the
-    // row, so they arrive as two deliberate movements instead of one block
-    // fading in as a unit.
+    // Search and select revealed separately so they arrive as two movements
+    // rather than one block fading in.
     return (
       <div className="flex flex-col gap-4 sm:flex-row">
         <Reveal className="relative flex-1" scale="sm">

@@ -11,9 +11,7 @@ interface QRCodeDisplayProps {
 export function QRCodeDisplay({ value, size = 200 }: QRCodeDisplayProps) {
   return (
     <motion.div
-      // The card settles, then the code draws in. A scannable code appearing
-      // fully-formed is fine, but a ticket feels like a reveal, and this is the
-      // one screen a user is genuinely looking at rather than passing through.
+      // Card settles, then the code springs in.
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: dur.base, ease: ease.gentle }}

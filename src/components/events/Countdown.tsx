@@ -91,11 +91,8 @@ export function Countdown({
         <div className="flex items-center gap-2">
           {blocks.map((block, i) => (
             <div key={i} className="flex flex-col items-center">
-              {/* Keyed on the value so only the block that actually changed
-                  animates. Animating all four every second would be noise, and
-                  at dur.uniform it would be four simultaneous 700ms movements
-                  competing with each other. The seconds block ticks, the rest
-                  sit still. */}
+              {/* Keyed on the value so only the block that changed animates;
+                  all four every second would compete with each other. */}
               <div className="flex h-9 w-9 items-center justify-center rounded-md bg-quiet text-sm font-bold">
                 <AnimatePresence mode="popLayout" initial={false}>
                   <motion.span

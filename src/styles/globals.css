@@ -43,18 +43,9 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
-  /* Kept in step with ease.gentle in src/components/motion/tokens.ts. */
+  /* Mirrors ease.gentle in src/components/motion/tokens.ts. */
   --ease-gentle: cubic-bezier(0.33, 0, 0.15, 1);
-  /*
-    Mirrors dur.uniform in src/components/motion/tokens.ts. Every interaction
-    transition in the app — button press, badge press, switch toggle, card
-    hover, cover zoom, sheet enter, chevron rotate — resolves to this one value.
-
-    It replaces fourteen hand-written Tailwind duration utilities (100/150/200/
-    300/500ms) spread across ten files, where "make it slower" meant finding
-    each one by hand. The two must move together: this is the CSS half of
-    dur.uniform, not an independent decision.
-  */
+  /* Mirrors dur.uniform in src/components/motion/tokens.ts. */
   --motion-uniform: 700ms;
 }
 
@@ -244,26 +235,15 @@ body {
 }
 
 .animate-fade-up {
-  /* --ease-gentle mirrors ease.gentle in src/components/motion/tokens.ts, so the
-     CSS keyframe layer and the JS layer cannot drift apart. It replaces
-     `ease-out`, whose fast start made this read as a snap rather than an
-     arrival. Duration tracks dur.base (0.7s) for the same reason. */
+  /* Duration tracks dur.base, easing mirrors ease.gentle, both in tokens.ts. */
   animation: fade-up 0.7s var(--ease-gentle) both;
-  /* Declared after the shorthand on purpose: the `animation` shorthand resets
-     animation-delay to 0, so a separate rule setting the delay would lose to it
-     depending on stylesheet order. Overriding it here, in the same rule, is
-     order-independent. The step classes below only set the custom property, so
-     they never collide with the shorthand at all. */
+  /* After the shorthand on purpose: the shorthand resets animation-delay to 0,
+     so a separate rule setting the delay would depend on stylesheet order. */
   animation-delay: var(--fade-up-delay, 0ms);
 }
 
-/* Stagger steps for the hero. Previously these were inline
-   style={{ animationDelay: '150ms' }} on individual elements, which put the
-   pacing in JSX where it could not be tuned alongside the rest of the motion
-   system. Widened from 150/300ms to 220/440ms with the entrance scale, so the
-   steps stay in proportion now that each element itself takes 0.7s rather than
-   0.5s. These track the entrance scale, not dur.quick — quick is the feedback
-   range and is intentionally much faster. */
+/* Hero stagger steps. These set only the custom property, so they never collide
+   with the shorthand above. */
 .animate-fade-up-1 {
   --fade-up-delay: 220ms;
 }

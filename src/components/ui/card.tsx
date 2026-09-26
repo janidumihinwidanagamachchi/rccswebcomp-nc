@@ -6,23 +6,17 @@ import { dur, ease } from '@/components/motion/tokens'
 function Card({ className, onMouseMove, ...props }: React.ComponentProps<'div'>) {
   const frame = React.useRef(0)
 
-  // Two conditions, and the second one is not optional.
+  // Gated in JS rather than with a motion-reduce: class, because Motion writes
+  // the hover transform inline and inline outranks any class rule.
   //
-  // Motion's whileHover fires on pointerenter, which a tap also produces. On a
-  // touch screen that leaves the card stuck in its hovered state after the
-  // finger lifts, with no pointerleave coming to undo it. globals.css already
-  // defines a `hoverable:` variant that only matches (hover: hover) and
-  // (pointer: fine) for exactly this reason; this is the JS equivalent.
+  // The pointer check matters on its own: whileHover fires on pointerenter,
+  // which a tap also produces, so on touch the card would stay lifted with no
+  // pointerleave coming to undo it. Mirrors the `hoverable:` variant in
+  // globals.css.
   //
-  // Reduced motion has to be checked here rather than left to a
-  // `motion-reduce:transform-none` class, because Motion writes the hover
-  // transform as an inline style and an inline style outranks any class rule.
-  // Verified: with the preference set, the card lifted 4px regardless.
-  //
-  // Deliberately NOT a global `transform: none !important` in the reduced-motion
-  // media query: the switch thumb reaches its "on" position with a translateX,
-  // which is position rather than animation, and that would collapse it to the
-  // left.
+  // Deliberately not a global `transform: none !important` under reduced
+  // motion: the switch thumb reaches its on-position with a translateX, which
+  // is position rather than animation.
   const [canHover, setCanHover] = React.useState(false)
   React.useEffect(() => {
     const fine = window.matchMedia('(hover: hover) and (pointer: fine)')
@@ -60,11 +54,9 @@ function Card({ className, onMouseMove, ...props }: React.ComponentProps<'div'>)
   return (
     <motion.div
       onMouseMove={handleMouseMove}
-      // Hover motion, not entrance motion. That distinction matters: most cards
-      // in the app already sit inside a Reveal or Stagger, and adding an inner
-      // entrance would double up — the wrapper's whileInView and an inner one
-      // fire at different scroll thresholds and visibly tear. whileHover is
-      // orthogonal to all of that, so it is safe on a wrapped card.
+      // Hover, not entrance: most cards already sit inside a Reveal or Stagger,
+      // and an inner entrance would fire at a different scroll threshold than
+      // the wrapper and tear against it.
       whileHover={canHover ? { y: -4 } : undefined}
       transition={{ duration: dur.uniform, ease: ease.gentle }}
       className={cn(

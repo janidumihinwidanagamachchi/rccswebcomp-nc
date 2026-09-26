@@ -9,10 +9,9 @@ interface RevealProps {
   y?: number
   once?: boolean
   /**
-   * How much this element should feel like it is settling into place. Drives
-   * both the duration and the default travel distance, so a card and a hero
-   * panel do not end up with the same 0.5s/18px because they were both
-   * "reveals".
+   * How much this should feel like it is settling into place. Drives duration
+   * and travel together, so a card and a hero panel do not end up identical
+   * because both are "reveals".
    */
   scale?: 'sm' | 'md' | 'lg' | 'xl'
 }
@@ -20,13 +19,9 @@ interface RevealProps {
 /**
  * A single element rising into place on scroll.
  *
- * Note there is no `useReducedMotion()` branch here. It used to early-return a
- * plain <div> when the preference was set, on the assumption that Motion would
- * otherwise animate anyway. It does not: Providers already sets
- * `<MotionConfig reducedMotion="user">`, which covers every Motion component in
- * the tree. The branch was not only redundant, it was harmful — swapping
- * <motion.div> for <div> changes the element type, so toggling the OS setting
- * mid-session remounted the subtree and threw away its state.
+ * No useReducedMotion branch: MotionConfig reducedMotion="user" in Providers
+ * already covers it, and swapping <motion.div> for <div> on a preference change
+ * would remount the subtree.
  */
 export function Reveal({
   children,

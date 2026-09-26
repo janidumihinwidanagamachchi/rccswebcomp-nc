@@ -19,9 +19,8 @@ export function CalendarWeek({ events, currentDate, selectedDate, onSelectDate }
     [currentDate]
   )
 
-  // Container-level reveal, not a per-cell stagger: a week grid is seven
-  // columns of day cells plus event lanes, and at dur.uniform a cell-by-cell
-  // cascade would run for seconds and read as lag rather than polish.
+  // Container-level reveal, not a per-cell stagger: the grid is dense and a
+  // cell cascade would run for seconds at dur.uniform.
   return (
     <Reveal scale="md">
       <div className="card-texture rounded-xl border bg-panel/60 p-4 backdrop-blur-md">

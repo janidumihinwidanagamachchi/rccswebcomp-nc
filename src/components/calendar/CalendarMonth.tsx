@@ -31,10 +31,8 @@ export function CalendarMonth({
     return chunk(days, 7)
   }, [currentDate])
 
-  // Container-level reveal, not a per-cell stagger. A month is five or six week
-  // rows of seven day cells each — around 35 cells. At dur.uniform a cell-by-cell
-  // cascade would run for several seconds and read as lag, not polish. One
-  // container fade is the right amount of motion for a grid.
+  // Container-level reveal, not a per-cell stagger: a month is ~35 cells, and at
+  // dur.uniform a cell cascade would run for seconds.
   return (
     <Reveal scale="md">
       <div className="card-texture rounded-xl border bg-panel/60 p-4 backdrop-blur-md">

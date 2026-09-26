@@ -11,10 +11,9 @@ function Switch({
   onCheckedChange,
   ...props
 }: React.ComponentProps<typeof SwitchPrimitives.Root>) {
-  // Mirrors state so the thumb can animate. The one call site is controlled
-  // (checked + onCheckedChange), but the internal fallback keeps the component
-  // correct if it is ever used uncontrolled — without it, an uncontrolled
-  // switch would have no way to tell Motion where to send the thumb.
+  // Mirrors state so the thumb can animate; the one call site is controlled, but
+  // without the fallback an uncontrolled switch could not tell Motion where to
+  // send the thumb.
   const [internal, setInternal] = React.useState(defaultChecked ?? false)
   const isControlled = checkedProp !== undefined
   const checked = isControlled ? checkedProp : internal
@@ -32,14 +31,9 @@ function Switch({
       )}
       {...props}
     >
-      {/* asChild so the thumb IS the motion element rather than wrapping it.
-          Wrapping would have put a fixed-size element inside Radix's own
-          thumb box and left the travel animating the wrong node.
-
-          The travel is Motion's x rather than a CSS translate keyed off
-          data-[state], so it overshoots and settles — a toggle is a physical
-          throw, not a fade. Radix's data-state still drives the track colour,
-          so the two never disagree about which way the switch is. */}
+      {/* asChild so the thumb IS the motion element; wrapping would animate the
+          wrong node. Travel is Motion's x so it overshoots and settles, while
+          Radix's data-state still drives the track colour. */}
       <SwitchPrimitives.Thumb asChild>
         <motion.span
           className="pointer-events-none block h-4 w-4 rounded-full bg-canvas shadow-lg ring-0 will-change-transform"

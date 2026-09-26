@@ -32,10 +32,7 @@ export function HighlightComposer({ eventId }: HighlightComposerProps) {
     setContent('')
   }
 
-    // Only animate once it is actually shown. The component returns null when
-    // signed out, so wrapping the whole return would give React nothing to
-    // mount, and a Reveal that fires while the user is looking at a live event
-    // page is the right moment to spend the motion.
+    // Wrapped inside the null-return so the reveal only fires once signed in.
     return (
       <Reveal scale="md">
         <div className="card-texture rounded-xl border bg-panel/60 p-4 backdrop-blur-md">

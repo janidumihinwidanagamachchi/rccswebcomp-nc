@@ -10,9 +10,8 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
 function Badge({ className, variant = 'default', ...props }: BadgeProps) {
   return (
     <motion.div
-      // A spring rather than a tween: a press should feel like the badge being
-      // physically pushed and released. The previous active:scale-95 was a CSS
-      // transition, which cannot express the release.
+      // Spring rather than a tween: a press reads better as the badge being
+      // pushed and released, which a CSS transition cannot express.
       whileTap={{ scale: 0.95 }}
       transition={spring.snappy}
       className={cn(

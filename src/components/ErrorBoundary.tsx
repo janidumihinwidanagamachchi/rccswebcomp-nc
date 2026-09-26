@@ -42,17 +42,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
     }
   }
 
-/**
- * ErrorBoundary is a class component, so it cannot use a hook-based Reveal to
- * animate its fallback — and the fallback is exactly the state that most needs
- * to feel handled rather than abrupt. Wrapping the class in a function gives
- * somewhere for the motion to live without converting the boundary itself,
- * which would mean reimplementing componentDidCatch for no benefit.
- *
- * The reveal is on mount and deliberately short-lived: this is a dead end the
- * user has to leave, so it should resolve quickly and point at the reload
- * button rather than lingering.
- */
+/** The class cannot use a hook, so the motion lives in this wrapper. */
 export function AnimatedErrorBoundary({ children }: Props) {
   return (
     <Reveal scale="lg">

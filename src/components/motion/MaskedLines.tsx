@@ -4,39 +4,18 @@ import type { Variants } from 'motion/react'
 import { dur, ease } from './tokens'
 
 /**
- * Masked line reveal, for a headline that is already split into lines.
+ * Masked line reveal. Takes the line elements as children rather than a string:
+ * the hero headline is admin-editable and its second line is a brand-coloured
+ * span, so re-parsing the text would flatten that markup.
  *
- * WHY IT TAKES CHILDREN RATHER THAN A STRING. The obvious implementation takes
- * the headline text and splits it into words itself. That would be wrong here:
- * the hero headline is admin-editable, arrives from site settings, and its
- * second line is a <span> carrying the brand colour. Re-parsing the string would
- * throw that away and rebuild it as flat text. This wraps whatever line
- * elements it is given and never inspects their contents, so the brand span, any
- * future markup, and the settings-driven line count all survive untouched.
+ * No <noscript> fallback. Motion applies its initial state after paint, which on
+ * an SSR page flashes the heading visible-then-hidden. This is a client-rendered
+ * SPA, so the first paint already carries the initial state.
  *
- * WHY NOT THE <noscript> FALLBACK a server-rendered page needs. Motion applies
- * its initial state after the HTML has painted, which on an SSR page means the
- * heading is briefly visible, then hidden, then animated in — hence a CSS
- * pre-hide plus a <noscript> override. This is a client-rendered SPA: the first
- * paint already has the initial state applied, so there is no flash and no
- * JS-disabled case to rescue. Adding the workaround here would be cargo cult.
- *
- * DESCENDERS. globals.css forces h1-h6 to var(--font-serif), and the hero sets
- * leading-[1.1]. An overflow:hidden mask therefore cuts through any glyph that
- * paints below the line box, and this headline has plenty: "school" and
- * "guesswork" both have descenders.
- *
- * The allowance has to be in em, not a hardcoded pixel value, because
- * --font-serif is not knowable at build time. globals.css defaults it to
- * "Shippori Mincho B1", but index.html and inject-theme.mjs both overwrite it
- * from the active theme at runtime, and the theme in use here resolves it to
- * Inter. Inter's ascent+descent is roughly 1.21em against a 1.1em line box, so
- * its descenders sit about 4px outside the box at the hero's 72px — a number
- * that would be wrong again at any other size or theme. An em value travels.
- *
- * The extra bottom padding is what stops the shear; the matching negative
- * margin gives it back, so a masked heading occupies exactly the same space as
- * an unmasked one and the rhythm below it does not shift.
+ * `descender` is in em because --font-serif is set at runtime by index.html and
+ * inject-theme.mjs, so its metrics are not knowable at build time. The heading
+ * runs at leading-[1.1], which is tighter than most fonts' ascent+descent, so
+ * without this the mask shears descenders off.
  */
 
 const container = (step: number, delay: number): Variants => ({
@@ -55,21 +34,13 @@ const line: Variants = {
 interface MaskedLinesProps {
   children: React.ReactNode
   className?: string
-  /**
-   * Seconds between consecutive lines starting. Needs to grow with the
-   * duration: at 0.09s against a 1.9s line the second line begins while the
-   * first is 5% done, so the two read as a single movement rather than a
-   * sequence. 0.16s keeps the cascade legible.
-   */
+  /** Seconds between lines starting. Needs to grow with `dur.deliberate` or the lines read as one movement. */
   step?: number
   /** Seconds before the first line starts. */
   delay?: number
-  /**
-   * 'mount' for anything above the fold — a hero should animate on arrival, not
-   * wait to be scrolled to. 'inView' for a heading further down the page.
-   */
+  /** 'mount' for above-the-fold, 'inView' for further down the page. */
   trigger?: 'mount' | 'inView'
-  /** Bottom breathing room for descenders, in em. */
+  /** Descender clearance in em. */
   descender?: number
 }
 

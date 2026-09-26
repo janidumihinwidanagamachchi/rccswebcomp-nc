@@ -1,19 +1,9 @@
-// Decorative, atmospheric sports backdrop: a soft wash, two glows and long
-// diagonal speed lines. Paints with gradients only (no filter: blur) and is
-// mounted behind all content at -z-10, so it never breaks position: sticky.
+// Decorative sports backdrop: a soft wash, two glows and diagonal speed lines.
+// Gradients only, no filter: blur, mounted behind content at -z-10 so it never
+// breaks position: sticky.
 //
-// The motion has been removed. It used to drift the glows (26s and 38s) and
-// sweep the lines across at 44s, which is what made the page read as "live" at
-// a glance. Everything static is untouched — the same gradients, the same
-// colours, the same opacities, the same positions — so the composition is
-// exactly as designed, just held still.
-//
-// One thing is not simply "the animation removed". glow-drift peaked at
-// translate(4%, -6%) scale(1.08) at the midpoint of its cycle, so dropping the
-// animation outright would have shrunk the lime glow to its base size and
-// centred it — a visible change to the design rather than a removal of motion.
-// That midpoint is now baked in as a static transform, so the glow still sits
-// at the size and offset it was actually rendering at.
+// The glow transforms are the midpoints the removed glow-drift keyframes passed
+// through, kept static so the composition does not change.
 export function SportBackground() {
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
@@ -49,8 +39,6 @@ export function SportBackground() {
       <div
         className="absolute -left-[18vw] -top-[20vh] h-[62vh] w-[62vh] rounded-full"
         style={{
-          // The midpoint glow-drift used to pass through. Static now, but the
-          // same size and offset, so nothing about the layout shifts.
           transform: 'translate(4%, -6%) scale(1.08)',
           opacity: 'var(--sport-glow-opacity)',
           backgroundImage: `radial-gradient(circle,
@@ -61,8 +49,6 @@ export function SportBackground() {
       <div
         className="absolute -bottom-[24vh] -right-[14vw] h-[70vh] w-[70vh] rounded-full"
         style={{
-          // The second glow ran the same keyframes in reverse, so it started at
-          // the neutral end already. No static transform needed here.
           opacity: 'var(--sport-glow-opacity)',
           backgroundImage: `radial-gradient(circle,
             color-mix(in srgb, var(--sport-blue) var(--sport-glow-tint), transparent) 0%,

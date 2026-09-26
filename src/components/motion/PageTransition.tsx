@@ -17,10 +17,9 @@ export function PageTransition({ children, className }: PageTransitionProps) {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }, [location.key, navigationType])
 
-  // No useReducedMotion() branch: MotionConfig reducedMotion="user" in
-  // Providers already suppresses the transition. The old early-return swapped
-  // <motion.div> for <div>, remounting the whole page subtree if the visitor
-  // changed the OS setting while the site was open.
+  // No useReducedMotion branch: MotionConfig reducedMotion="user" in Providers
+  // already suppresses this, and the old early-return swapped <motion.div> for
+  // <div>, remounting the page subtree on a preference change.
   return (
     <motion.div
       className={className}

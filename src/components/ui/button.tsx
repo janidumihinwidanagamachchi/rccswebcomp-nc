@@ -34,16 +34,11 @@ function Button({ className, variant = 'default', size = 'default', asChild = fa
     className
   )
 
-  // asChild renders through Radix's Slot, which merges these props onto its
-  // single child — usually a react-router <Link>, i.e. a plain <a>. Motion
-  // props like whileTap are meaningless to a plain <a>: it ignores them
-  // silently, so a naive conversion would drop the press animation on exactly
-  // the buttons you notice most, including both hero CTAs.
-  //
-  // So the asChild path keeps the CSS press, which the child honours, and only
-  // the real <button> path uses Motion. Converting the link call sites to
-  // motion.a is the proper follow-up, but it touches every <Button asChild> in
-  // the app and is a larger change than this one.
+  // asChild renders through Radix's Slot, which merges props onto its child —
+  // usually a react-router <Link>, i.e. a plain <a>. Motion props like whileTap
+  // are meaningless to a plain <a> and are ignored silently, so the asChild path
+  // keeps the CSS press. Converting those call sites to motion.a is the
+  // follow-up.
   if (asChild) {
     return (
       <Slot

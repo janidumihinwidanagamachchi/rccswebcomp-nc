@@ -19,9 +19,8 @@ export function EventCover({ src, alt, className }: EventCoverProps) {
     setFailed(false)
   }, [src])
 
-    // Both branches fade and settle rather than popping, so a cover that swaps
-    // from placeholder to photo — or a lazy image arriving late — reads as the
-    // same surface resolving, not as a flicker.
+    // Both branches settle, so a lazy image arriving late reads as the same
+    // surface resolving rather than a flicker.
     const settle = {
       initial: { opacity: 0, scale: 1.03 },
       animate: { opacity: 1, scale: 1 },

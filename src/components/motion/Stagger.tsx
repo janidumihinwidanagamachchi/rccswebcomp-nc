@@ -25,16 +25,11 @@ interface StaggerProps {
 /**
  * Reveals direct children one after another as the group enters the viewport.
  *
- * The stagger interval is the part worth understanding. It is the gap between
- * items starting, not the length of each item's animation, so raising it
- * lengthens the whole sequence without making any single item feel slower. 0.06
- * is the default because at dur.base each item is still finishing as the next
- * begins, so the group overlaps itself and reads as one movement rather than a
- * queue.
+ * `stagger` is the gap between items starting, not their duration, so raising it
+ * lengthens the sequence without making any single item slower.
  *
- * As with Reveal, there is deliberately no useReducedMotion() branch —
- * MotionConfig reducedMotion="user" in Providers already covers it, and the
- * old early-return remounted the subtree whenever the preference changed.
+ * No useReducedMotion branch — MotionConfig reducedMotion="user" covers it, and
+ * the old early-return remounted the subtree on a preference change.
  */
 export function Stagger({ children, className, stagger = 0.06, delay = 0 }: StaggerProps) {
   return (
