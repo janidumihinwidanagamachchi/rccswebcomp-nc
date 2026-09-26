@@ -43,6 +43,20 @@ export const dur = {
    * increasing or "pick a slower one" stops being a choice.
    */
   cinematic: 2.6,
+  /**
+   * One duration for the whole interaction layer, replacing the old spread of
+   * 100/150/200/300/500ms.
+   *
+   * This deliberately opts out of the size-based scale above. That scale exists
+   * to make a button feel instant and a headline feel unhurried; this does the
+   * opposite and flattens them together, which costs the hierarchy but was the
+   * explicit ask. It is one number on purpose — the previous problem was that
+   * "make it slower" meant editing fourteen Tailwind duration utilities by hand,
+   * so it could never be applied consistently.
+   *
+   * Mirrored in CSS as --motion-uniform. The two must move together.
+   */
+  uniform: 0.7,
 } as const
 
 /**

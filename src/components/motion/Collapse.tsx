@@ -18,7 +18,7 @@ export function Collapse({ show, children, className }: CollapseProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-            transition={{ duration: dur.quick, ease: ease.gentle }}
+            transition={{ duration: dur.uniform, ease: ease.gentle }}
         >
           {children}
         </motion.div>

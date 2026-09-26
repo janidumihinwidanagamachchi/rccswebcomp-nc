@@ -28,7 +28,7 @@ function Card({ className, onMouseMove, ...props }: React.ComponentProps<'div'>)
     <div
       onMouseMove={handleMouseMove}
       className={cn(
-        'card-spotlight card-texture relative overflow-hidden rounded-xl border bg-panel/60 text-panel-ink shadow-sm backdrop-blur-md transition-[transform,box-shadow,background-color,border-color] duration-300 ease-out hoverable:hover:-translate-y-0.5 hoverable:hover:shadow-xl motion-reduce:transition-none',
+        'card-spotlight card-texture relative overflow-hidden rounded-xl border bg-panel/60 text-panel-ink shadow-sm backdrop-blur-md transition-[transform,box-shadow,background-color,border-color] duration-[var(--motion-uniform)] ease-out hoverable:hover:-translate-y-0.5 hoverable:hover:shadow-xl motion-reduce:transition-none',
         className
       )}
       {...props}

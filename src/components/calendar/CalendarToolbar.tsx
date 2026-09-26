@@ -64,7 +64,7 @@ export function CalendarToolbar({
           key={heading}
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: dur.quick, ease: ease.gentle }}
+          transition={{ duration: dur.uniform, ease: ease.gentle }}
           className="text-2xl font-bold md:text-3xl"
         >
           {heading}
@@ -115,7 +115,7 @@ export function CalendarToolbar({
                   key={v.value}
                   onClick={() => onViewChange(v.value)}
                   className={cn(
-                    'relative rounded-md px-3 py-1 text-sm font-medium transition-colors',
+                    'relative rounded-md px-3 py-1 text-sm font-medium transition-colors duration-[var(--motion-uniform)]',
                     active ? 'text-canvas' : 'text-quiet-ink hover:bg-highlight hover:text-ink'
                   )}
                 >

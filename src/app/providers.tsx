@@ -16,7 +16,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   }, [theme])
 
   return (
-      <MotionConfig reducedMotion="user" transition={{ duration: dur.quick, ease: ease.gentle }}>
+      <MotionConfig reducedMotion="user" transition={{ duration: dur.uniform, ease: ease.gentle }}>
       <ThemeApplier />
       {children}
     </MotionConfig>

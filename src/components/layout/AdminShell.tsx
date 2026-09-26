@@ -37,7 +37,7 @@ export function AdminShell({ children }: AdminShellProps) {
                 key={link.href}
                 to={link.href}
                 className={cn(
-                  'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
+                  'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-[var(--motion-uniform)]',
                   active
                     ? 'bg-brand text-brand-ink'
                     : 'text-quiet-ink hover:bg-highlight hover:text-[#c0c0c0]'

@@ -10,14 +10,14 @@ function SelectTrigger({ className, children, ...props }: React.ComponentProps<t
   return (
     <SelectPrimitive.Trigger
       className={cn(
-        'group flex h-9 w-full items-center justify-between rounded-lg border border-field bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-canvas transition-colors placeholder:text-quiet-ink focus:outline-none focus:ring-1 focus:ring-focus disabled:cursor-not-allowed disabled:opacity-50',
+        'group flex h-9 w-full items-center justify-between rounded-lg border border-field bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-canvas transition-colors duration-[var(--motion-uniform)] placeholder:text-quiet-ink focus:outline-none focus:ring-1 focus:ring-focus disabled:cursor-not-allowed disabled:opacity-50',
         className
       )}
       {...props}
     >
       {children}
       <SelectPrimitive.Icon asChild>
-        <ChevronDown className="h-4 w-4 opacity-50 transition-transform duration-200 ease-out group-data-[state=open]:rotate-180" />
+        <ChevronDown className="h-4 w-4 opacity-50 transition-transform duration-[var(--motion-uniform)] ease-out group-data-[state=open]:rotate-180" />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   )
@@ -59,7 +59,7 @@ function SelectItem({ className, children, ...props }: React.ComponentProps<type
   return (
     <SelectPrimitive.Item
       className={cn(
-        'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors duration-100 focus:bg-highlight focus:text-highlight-ink data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+        'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors duration-[var(--motion-uniform)] focus:bg-highlight focus:text-highlight-ink data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
         className
       )}
       {...props}

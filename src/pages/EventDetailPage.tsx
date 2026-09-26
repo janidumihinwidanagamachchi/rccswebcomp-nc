@@ -236,7 +236,7 @@ export function EventDetailPage() {
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: dur.quick, ease: ease.gentle }}
+                      transition={{ duration: dur.uniform, ease: ease.gentle }}
                       className="text-center"
                     >
                       <p className="mb-4 text-sm text-quiet-ink">
@@ -270,7 +270,7 @@ export function EventDetailPage() {
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: dur.quick, ease: ease.gentle }}
+                      transition={{ duration: dur.uniform, ease: ease.gentle }}
                       className="flex items-start gap-3 rounded-lg bg-quiet p-3 text-sm"
                     >
                       <AlertCircle className="mt-0.5 h-4 w-4 text-quiet-ink" />
@@ -284,7 +284,7 @@ export function EventDetailPage() {
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: dur.quick, ease: ease.gentle }}
+                      transition={{ duration: dur.uniform, ease: ease.gentle }}
                       onSubmit={handleSubmit(onSubmit)}
                       className="space-y-4"
                     >

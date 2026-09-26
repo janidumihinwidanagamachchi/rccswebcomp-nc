@@ -26,7 +26,7 @@ export function PageTransition({ children, className }: PageTransitionProps) {
       className={className}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: dur.quick, ease: ease.gentle }}
+      transition={{ duration: dur.uniform, ease: ease.gentle }}
     >
       {children}
     </motion.div>

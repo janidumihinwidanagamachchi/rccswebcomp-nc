@@ -17,7 +17,7 @@ export function Appear({ show, children, className }: AppearProps) {
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: dur.quick, ease: ease.gentle }}
+            transition={{ duration: dur.uniform, ease: ease.gentle }}
         >
           {children}
         </motion.div>

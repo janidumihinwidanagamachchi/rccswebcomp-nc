@@ -58,7 +58,7 @@ export function CalendarAgenda({ events }: CalendarAgendaProps) {
           >
             <span className="font-medium">Earlier events</span>
             <ChevronDown
-              className={cn('h-4 w-4 transition-transform duration-200', showEarlier && 'rotate-180')}
+              className={cn('h-4 w-4 transition-transform duration-[var(--motion-uniform)]', showEarlier && 'rotate-180')}
             />
           </Button>
           <Collapse show={showEarlier} className="space-y-6">

@@ -45,6 +45,17 @@
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
   /* Kept in step with ease.gentle in src/components/motion/tokens.ts. */
   --ease-gentle: cubic-bezier(0.33, 0, 0.15, 1);
+  /*
+    Mirrors dur.uniform in src/components/motion/tokens.ts. Every interaction
+    transition in the app — button press, badge press, switch toggle, card
+    hover, cover zoom, sheet enter, chevron rotate — resolves to this one value.
+
+    It replaces fourteen hand-written Tailwind duration utilities (100/150/200/
+    300/500ms) spread across ten files, where "make it slower" meant finding
+    each one by hand. The two must move together: this is the CSS half of
+    dur.uniform, not an independent decision.
+  */
+  --motion-uniform: 700ms;
 }
 
 :root {

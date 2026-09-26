@@ -102,7 +102,7 @@ export function ImageUpload({
             void handleFile(e.dataTransfer.files?.[0])
           }}
           className={cn(
-            'flex w-full flex-col items-center justify-center gap-1 rounded-lg border border-dashed px-4 py-8 text-center transition-colors duration-150 disabled:opacity-60',
+            'flex w-full flex-col items-center justify-center gap-1 rounded-lg border border-dashed px-4 py-8 text-center transition-colors duration-[var(--motion-uniform)] disabled:opacity-60',
             dragging ? 'border-brand bg-brand/5' : 'hover:border-brand/60 hover:bg-quiet/40'
           )}
         >

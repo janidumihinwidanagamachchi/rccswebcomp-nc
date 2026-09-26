@@ -13,7 +13,7 @@ function Button({ className, variant = 'default', size = 'default', asChild = fa
   return (
     <Comp
       className={cn(
-        'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-[transform,background-color,color,border-color,box-shadow,opacity] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] motion-reduce:transition-none disabled:pointer-events-none disabled:opacity-50',
+        'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-[transform,background-color,color,border-color,box-shadow,opacity] duration-[var(--motion-uniform)] ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] motion-reduce:transition-none disabled:pointer-events-none disabled:opacity-50',
         {
           'bg-brand text-brand-ink hover:bg-brand/90': variant === 'default',
           'bg-alt text-alt-ink hover:bg-alt/80': variant === 'secondary',

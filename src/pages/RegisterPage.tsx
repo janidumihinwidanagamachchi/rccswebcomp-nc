@@ -97,7 +97,7 @@ export function RegisterPage() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-quiet-ink transition-colors hover:text-ink"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-quiet-ink transition-colors duration-[var(--motion-uniform)] hover:text-ink"
                     aria-label={showPassword ? 'Hide password' : 'Show password'}
                   >
                     <AnimatePresence mode="wait" initial={false}>
@@ -106,7 +106,7 @@ export function RegisterPage() {
                         initial={{ opacity: 0, scale: 0.7 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.7 }}
-                        transition={{ duration: dur.quick, ease: ease.gentle }}
+                        transition={{ duration: dur.uniform, ease: ease.gentle }}
                         className="flex"
                       >
                         {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}

@@ -33,13 +33,13 @@ export function EventCard({ event }: EventCardProps) {
             <EventCover
               src={event.image_url}
               alt=""
-              className="transition-transform duration-500 ease-out hoverable:group-hover:scale-105"
+              className="transition-transform duration-[var(--motion-uniform)] ease-out hoverable:group-hover:scale-105"
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-canvas/70 via-canvas/10 to-transparent" />
           </>
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand/20 to-brand/5 transition-transform duration-500 ease-out hoverable:group-hover:scale-105">
-            <Calendar className="h-10 w-10 text-brand/40 transition-transform duration-500 ease-out hoverable:group-hover:scale-90" />
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand/20 to-brand/5 transition-transform duration-[var(--motion-uniform)] ease-out hoverable:group-hover:scale-105">
+            <Calendar className="h-10 w-10 text-brand/40 transition-transform duration-[var(--motion-uniform)] ease-out hoverable:group-hover:scale-90" />
           </div>
         )}
         {event.featured && (
@@ -83,7 +83,7 @@ export function EventCard({ event }: EventCardProps) {
         <Button asChild className="mt-4 w-full">
           <Link to={`/events/${event.slug}`}>
             View Event
-            <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
+            <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-[var(--motion-uniform)] ease-out group-hover:translate-x-0.5" />
           </Link>
         </Button>
       </CardContent>

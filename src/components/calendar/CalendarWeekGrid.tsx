@@ -38,7 +38,7 @@ export function CalendarWeekGrid({
             type="button"
             onClick={() => onSelectDate(day)}
             className={cn(
-              'relative z-10 flex items-start justify-end border-r border-b last:border-r-0 p-1.5 text-right transition-colors hover:bg-highlight focus-visible:z-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+              'relative z-10 flex items-start justify-end border-r border-b last:border-r-0 p-1.5 text-right transition-colors duration-[var(--motion-uniform)] hover:bg-highlight focus-visible:z-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
               !currentMonth && 'bg-quiet/30 text-quiet-ink',
               selected && 'bg-brand/10'
             )}
@@ -77,7 +77,7 @@ export function CalendarWeekGrid({
                 }
               }}
               className={cn(
-                'border-r border-b last:border-r-0 transition-colors',
+                'border-r border-b last:border-r-0 transition-colors duration-[var(--motion-uniform)]',
                 !currentMonth && 'bg-quiet/30',
                 selected && 'bg-brand/5'
               )}
@@ -92,7 +92,7 @@ export function CalendarWeekGrid({
           key={`${segment.event.id}-${format(days[0], 'yyyy-MM-dd')}`}
           to={`/events/${segment.event.slug}`}
           onClick={(e) => e.stopPropagation()}
-          className="z-20 mx-0.5 my-0.5 rounded px-2 py-0.5 text-xs font-medium truncate transition-transform hover:scale-[1.02] hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          className="z-20 mx-0.5 my-0.5 rounded px-2 py-0.5 text-xs font-medium truncate transition-transform duration-[var(--motion-uniform)] hover:scale-[1.02] hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
           style={{
             gridColumn: `${segment.startColumn + 1} / span ${segment.endColumn - segment.startColumn + 1}`,
             gridRow: segment.lane + 2,

@@ -64,7 +64,7 @@ export function Navbar({ className }: NavbarProps) {
                 key={link.href}
                 to={link.href}
                 className={cn(
-                  'relative rounded-md px-3 py-1.5 transition-colors',
+                  'relative rounded-md px-3 py-1.5 transition-colors duration-[var(--motion-uniform)]',
                   active ? 'text-ink' : 'text-quiet-ink hover:text-ink'
                 )}
               >
@@ -96,7 +96,7 @@ export function Navbar({ className }: NavbarProps) {
                 initial={{ opacity: 0, rotate: -45, scale: 0.8 }}
                 animate={{ opacity: 1, rotate: 0, scale: 1 }}
                 exit={{ opacity: 0, rotate: 45, scale: 0.8 }}
-                transition={{ duration: dur.quick, ease: ease.gentle }}
+                transition={{ duration: dur.uniform, ease: ease.gentle }}
                 className="flex"
               >
                 {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
