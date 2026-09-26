@@ -261,54 +261,6 @@ body {
   --fade-up-delay: 440ms;
 }
 
-@keyframes float-soft {
-  0%,
-  100% {
-    transform: translateY(-16px);
-    opacity: 0.2;
-  }
-  50% {
-    transform: translateY(16px);
-    opacity: 0.6;
-  }
-}
-
-.animate-float {
-  animation: float-soft 6s ease-in-out infinite;
-}
-
-@keyframes drift-a {
-  0%,
-  100% {
-    transform: translate(0, 0);
-    opacity: 0.5;
-  }
-  50% {
-    transform: translate(40px, 30px);
-    opacity: 0.8;
-  }
-}
-
-@keyframes drift-b {
-  0%,
-  100% {
-    transform: translate(0, 0);
-    opacity: 0.4;
-  }
-  50% {
-    transform: translate(-30px, -40px);
-    opacity: 0.7;
-  }
-}
-
-.animate-drift-a {
-  animation: drift-a 8s ease-in-out infinite;
-}
-
-.animate-drift-b {
-  animation: drift-b 10s ease-in-out infinite;
-}
-
 @keyframes heartbeat {
   0%,
   100% {
@@ -328,38 +280,6 @@ body {
 .animate-heartbeat {
   animation: heartbeat 1.4s ease-in-out infinite;
   transform-origin: center;
-}
-
-/* Sports backdrop. Transform-only so both stay on the compositor. */
-@keyframes glow-drift {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(4%, -6%, 0) scale(1.08);
-  }
-}
-
-.animate-glow-drift {
-  animation: glow-drift 26s ease-in-out infinite;
-}
-
-.animate-glow-drift-slow {
-  animation: glow-drift 38s ease-in-out infinite reverse;
-}
-
-@keyframes speed-sweep {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-.animate-speed-sweep {
-  animation: speed-sweep 44s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {

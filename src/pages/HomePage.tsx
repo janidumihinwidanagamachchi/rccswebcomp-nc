@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import {
   ArrowRight,
@@ -64,8 +63,6 @@ export function HomePage() {
                 style={{ backgroundImage: `url(${hero.backgroundImageUrl})` }}
               />
             )}
-
-            <HeroParticles />
 
             <div className="container relative z-10 mx-auto px-4">
               <div className="mx-auto max-w-4xl text-center">
@@ -214,47 +211,5 @@ export function HomePage() {
         </section>
       </div>
     </Shell>
-  )
-}
-
-function HeroParticles() {
-  const particles = useMemo(
-    () =>
-      Array.from({ length: 10 }).map((_, i) => {
-        const size = 4 + Math.random() * 8
-        const left = Math.random() * 100
-        const top = Math.random() * 100
-        const duration = 4 + Math.random() * 6
-        const delay = Math.random() * 4
-        return {
-          key: i,
-          size,
-          left,
-          top,
-          duration,
-          delay,
-        }
-      }),
-    []
-  )
-
-  return (
-    <>
-      {particles.map((p) => (
-        <div
-          key={p.key}
-          className="animate-float pointer-events-none absolute rounded-full"
-          style={{
-            left: `${p.left}%`,
-            top: `${p.top}%`,
-            width: p.size,
-            height: p.size,
-            backgroundColor: 'color-mix(in srgb, var(--sport-lime) 40%, transparent)',
-            animationDuration: `${p.duration}s`,
-            animationDelay: `${p.delay}s`,
-          }}
-        />
-      ))}
-    </>
   )
 }
