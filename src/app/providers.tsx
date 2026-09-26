@@ -3,6 +3,7 @@ import { MotionConfig } from 'motion/react'
 import { useUIStore } from '@/stores/uiStore'
 import { ThemeApplier } from '@/components/theme/ThemeApplier'
 import { resolveTheme } from '@/hooks/useSiteSettings'
+import { dur, ease } from '@/components/motion/tokens'
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const { theme } = useUIStore()
@@ -15,7 +16,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   }, [theme])
 
   return (
-    <MotionConfig reducedMotion="user" transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}>
+      <MotionConfig reducedMotion="user" transition={{ duration: dur.quick, ease: ease.gentle }}>
       <ThemeApplier />
       {children}
     </MotionConfig>

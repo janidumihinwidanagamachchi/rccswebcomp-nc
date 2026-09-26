@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { EASE_OUT } from './ease'
+import { dur, ease } from './tokens'
 
 interface CollapseProps {
   show: boolean
@@ -18,7 +18,7 @@ export function Collapse({ show, children, className }: CollapseProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.22, ease: EASE_OUT }}
+            transition={{ duration: dur.quick, ease: ease.gentle }}
         >
           {children}
         </motion.div>

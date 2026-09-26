@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react'
+import { dur, ease, spring } from '@/components/motion/tokens'
 import { Menu, Moon, Sun, Ticket, LayoutDashboard, LogOut, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
@@ -73,7 +74,7 @@ export function Navbar({ className }: NavbarProps) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     className="absolute inset-0 rounded-md bg-quiet"
-                    transition={{ type: 'spring', duration: 0.5, bounce: 0.2 }}
+                    transition={spring.soft}
                   />
                 )}
                 <span className="relative">{link.label}</span>
@@ -95,7 +96,7 @@ export function Navbar({ className }: NavbarProps) {
                 initial={{ opacity: 0, rotate: -45, scale: 0.8 }}
                 animate={{ opacity: 1, rotate: 0, scale: 1 }}
                 exit={{ opacity: 0, rotate: 45, scale: 0.8 }}
-                transition={{ duration: 0.18, ease: 'easeOut' }}
+                transition={{ duration: dur.quick, ease: ease.gentle }}
                 className="flex"
               >
                 {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}

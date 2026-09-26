@@ -23,7 +23,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Countdown } from '@/components/events/Countdown'
 import { EventCover } from '@/components/events/EventCover'
 import { Reveal } from '@/components/motion/Reveal'
-import { EASE_OUT } from '@/components/motion/ease'
+import { dur, ease } from '@/components/motion/tokens'
 import { HighlightComposer } from '@/components/announcements/HighlightComposer'
 import { HighlightCard } from '@/components/announcements/HighlightCard'
 import { AddToCalendar } from '@/components/calendar/AddToCalendar'
@@ -236,7 +236,7 @@ export function EventDetailPage() {
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.2, ease: EASE_OUT }}
+                      transition={{ duration: dur.quick, ease: ease.gentle }}
                       className="text-center"
                     >
                       <p className="mb-4 text-sm text-quiet-ink">
@@ -252,7 +252,7 @@ export function EventDetailPage() {
                       initial={{ opacity: 0, scale: 0.96 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.98 }}
-                      transition={{ duration: 0.25, ease: EASE_OUT }}
+                      transition={{ duration: dur.base, ease: ease.gentle }}
                       className="text-center"
                     >
                       <CheckCircle2 className="mx-auto mb-3 h-10 w-10 text-emerald-500" />
@@ -270,7 +270,7 @@ export function EventDetailPage() {
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.2, ease: EASE_OUT }}
+                      transition={{ duration: dur.quick, ease: ease.gentle }}
                       className="flex items-start gap-3 rounded-lg bg-quiet p-3 text-sm"
                     >
                       <AlertCircle className="mt-0.5 h-4 w-4 text-quiet-ink" />
@@ -284,7 +284,7 @@ export function EventDetailPage() {
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.2, ease: EASE_OUT }}
+                      transition={{ duration: dur.quick, ease: ease.gentle }}
                       onSubmit={handleSubmit(onSubmit)}
                       className="space-y-4"
                     >

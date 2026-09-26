@@ -9,7 +9,7 @@ import { CalendarWeek } from '@/components/calendar/CalendarWeek'
 import { CalendarAgenda } from '@/components/calendar/CalendarAgenda'
 import { CalendarList } from '@/components/calendar/CalendarList'
 import { Skeleton } from '@/components/ui/skeleton'
-import { EASE_OUT } from '@/components/motion/ease'
+import { dur, ease } from '@/components/motion/tokens'
 import { useEvents } from '@/hooks/useEvents'
 import { useCategories } from '@/hooks/useEvents'
 import { filterEventsByCategory, type CalendarView } from '@/lib/calendar'
@@ -155,7 +155,7 @@ export function CalendarPage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2, ease: EASE_OUT }}
+                    transition={{ duration: dur.quick, ease: ease.gentle }}
                   >
                     {view === 'month' && (
                       <CalendarMonth

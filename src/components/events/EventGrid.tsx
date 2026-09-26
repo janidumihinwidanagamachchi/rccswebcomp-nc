@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { EventCard } from './EventCard'
-import { EASE_OUT } from '@/components/motion/ease'
+import { dur, ease } from '@/components/motion/tokens'
 import type { Event } from '@/types'
 
 interface EventGridProps {
@@ -27,7 +27,7 @@ export function EventGrid({ events }: EventGridProps) {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.98 }}
-            transition={{ duration: 0.35, ease: EASE_OUT, delay: Math.min(index, 5) * 0.04 }}
+            transition={{ duration: dur.base, ease: ease.gentle, delay: Math.min(index, 5) * 0.04 }}
           >
             <EventCard event={event} />
           </motion.div>

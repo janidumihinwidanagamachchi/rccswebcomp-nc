@@ -3,7 +3,7 @@ import { motion } from 'motion/react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
-import { EASE_OUT } from '@/components/motion/ease'
+import { dur, ease } from '@/components/motion/tokens'
 import { toDate } from '@/lib/utils'
 import type { Highlight } from '@/types'
 
@@ -17,7 +17,7 @@ export function HighlightCard({ highlight, showEvent }: HighlightCardProps) {
     <motion.div
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35, ease: EASE_OUT }}
+      transition={{ duration: dur.base, ease: ease.gentle }}
     >
       <Card className="overflow-hidden">
         <CardContent className="p-4">

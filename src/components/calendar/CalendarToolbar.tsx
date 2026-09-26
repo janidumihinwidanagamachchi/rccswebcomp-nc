@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { EASE_OUT } from '@/components/motion/ease'
+import { dur, ease, spring } from '@/components/motion/tokens'
 import { cn } from '@/lib/utils'
 import type { CalendarView } from '@/lib/calendar'
 import type { Category } from '@/types'
@@ -64,7 +64,7 @@ export function CalendarToolbar({
           key={heading}
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.2, ease: EASE_OUT }}
+          transition={{ duration: dur.quick, ease: ease.gentle }}
           className="text-2xl font-bold md:text-3xl"
         >
           {heading}
@@ -123,7 +123,7 @@ export function CalendarToolbar({
                     <motion.span
                       layoutId="calendar-view-pill"
                       className="absolute inset-0 rounded-md bg-brand"
-                      transition={{ type: 'spring', duration: 0.45, bounce: 0.18 }}
+                      transition={spring.gentle}
                     />
                   )}
                   <span className="relative">{v.label}</span>

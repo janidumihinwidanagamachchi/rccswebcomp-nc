@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { EASE_OUT } from './ease'
+import { dur, ease } from './tokens'
 
 interface AppearProps {
   show: boolean
@@ -17,7 +17,7 @@ export function Appear({ show, children, className }: AppearProps) {
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -6 }}
-          transition={{ duration: 0.22, ease: EASE_OUT }}
+            transition={{ duration: dur.quick, ease: ease.gentle }}
         >
           {children}
         </motion.div>
