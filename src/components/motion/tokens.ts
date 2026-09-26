@@ -1,4 +1,4 @@
-/** Duration scale in seconds, named by intent. `instant`/`quick` answer a tap; `base` and up are entrances. */
+/** Duration scale in seconds. `instant`/`quick` are taps; `base` and up are entrances. */
 export const dur = {
   instant: 0.12,
   quick: 0.18,
@@ -8,16 +8,13 @@ export const dur = {
   /** Unused. Keeps the top of the scale available. */
   cinematic: 2.6,
   /**
-   * Single duration for the whole interaction layer, overriding the size-based
-   * scale above. Mirrored in CSS as --motion-uniform; change both together.
+   * Overrides the scale above for the whole interaction layer.
+   * Mirrored in CSS as --motion-uniform; change both together.
    */
   uniform: 0.7,
 } as const
 
-/**
- * Easings. `gentle` starts near zero so it reads as weight; the -Expo/-Quint
- * curves start fast and read as floaty. Prefer gentle for anything large.
- */
+/** `gentle` eases from near zero for weight; the -Expo/-Quint curves read as floaty. */
 export const ease = {
   gentle: [0.33, 0, 0.15, 1],
   /** Matches --ease-out-quint in the Tailwind theme. */
@@ -30,17 +27,14 @@ export const ease = {
 export type EaseName = keyof typeof ease
 export type CubicBezier = readonly [number, number, number, number]
 
-/**
- * duration is the visual duration, not the settling time. This version of
- * Motion has no separate visualDuration option.
- */
+/** Visual duration, not settling time: this Motion version has no visualDuration. */
 export const spring = {
   snappy: { type: 'spring', duration: 0.18, bounce: 0.22 },
   gentle: { type: 'spring', duration: 0.32, bounce: 0.18 },
   soft: { type: 'spring', duration: 0.5, bounce: 0.2 },
 } as const
 
-/** margin not amount: amount is a fraction of the element, so tall and short elements would trigger at different scroll positions. */
+/** Negative margin, not amount, so tall and short elements trigger at the same scroll position. */
 export const viewport = {
   once: true,
   margin: '0px 0px -64px 0px',

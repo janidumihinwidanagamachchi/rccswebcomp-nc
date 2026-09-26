@@ -4,18 +4,12 @@ import type { Variants } from 'motion/react'
 import { dur, ease } from './tokens'
 
 /**
- * Masked line reveal. Takes the line elements as children rather than a string:
- * the hero headline is admin-editable and its second line is a brand-coloured
- * span, so re-parsing the text would flatten that markup.
+ * Takes line elements as children, not a string: the second hero line is a
+ * brand-coloured span, so re-parsing the text would flatten that markup.
  *
- * No <noscript> fallback. Motion applies its initial state after paint, which on
- * an SSR page flashes the heading visible-then-hidden. This is a client-rendered
- * SPA, so the first paint already carries the initial state.
- *
- * `descender` is in em because --font-serif is set at runtime by index.html and
- * inject-theme.mjs, so its metrics are not knowable at build time. The heading
- * runs at leading-[1.1], which is tighter than most fonts' ascent+descent, so
- * without this the mask shears descenders off.
+ * `descender` is in em because --font-serif is set at runtime, so its metrics
+ * are not knowable at build time. Leading-[1.1] is tighter than most fonts'
+ * ascent+descent and would shear descenders off without it.
  */
 
 const container = (step: number, delay: number): Variants => ({

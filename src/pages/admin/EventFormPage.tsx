@@ -228,6 +228,11 @@ export function EventFormPage() {
                       ))}
                     </SelectContent>
                   </Select>
+                  {watch('status') === 'draft' && (
+                    <p className="text-xs text-quiet-ink">
+                      Draft events are hidden from the public site. Set the status to published when it is ready.
+                    </p>
+                  )}
                 </div>
                 <div className="flex items-center gap-3">
                   <Switch

@@ -28,9 +28,35 @@ React and TypeScript, Tailwind CSS for styling, Supabase for the database, auth,
 - `public/` — static assets
 - `.github/` — GitHub Pages deploy workflow
 
-## Live
+## Accessing the app
 
-- Website: https://janidumihinwidanagamachchi.github.io/rccswebcomp-nc/
-- Admin login: `admin@rccswebcomp.demo` / `DemoAdmin123!`
-- Student login: `passport2@rccswebcomp.demo` (Binuka Silva) / `Student123!`
-- Student login: `passport3@rccswebcomp.demo` (Chamari Fernando) / `Student123!`
+The app is hosted on GitHub Pages and is already live — no setup required.
+
+1. Open https://janidumihinwidanagamachchi.github.io/rccswebcomp-nc/
+2. Browse events on the homepage, or use **Events** for the full list with search and category filters.
+3. Open **Calendar** for month, week, and agenda views, with `.ics` and Google Calendar export.
+4. Sign in with one of the demo accounts below to register for an event and receive a QR ticket.
+
+Sign-in accounts:
+
+| Role | Email | Password |
+| --- | --- | --- |
+| Admin | `admin@rccswebcomp.demo` | `DemoAdmin123!` |
+| Student | `passport2@rccswebcomp.demo` (Binuka Silva) | `Student123!` |
+| Student | `passport3@rccswebcomp.demo` (Chamari Fernando) | `Student123!` |
+
+The admin account unlocks the dashboard at `/admin`: create and edit events, post
+announcements, see registrations, and check people in with the QR scanner.
+
+Source is in this repository. Every push to `main` is built and deployed
+automatically by GitHub Actions, so the live site always matches the latest commit.
+
+## Admin notes
+
+When adding or editing an event, make sure to select the status. Only
+`published` and `completed` events appear on the public site, so an event left as
+`draft` is invisible to students until the status is changed.
+
+Supabase image uploads require the storage migration to be applied once. Run
+`supabase/apply_pending_migrations.sql` in the Supabase SQL editor, which creates
+the `event-covers` bucket and its access policies.
