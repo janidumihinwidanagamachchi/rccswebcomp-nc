@@ -87,15 +87,13 @@ export function HomePage() {
                     </MaskedLines>
                   </h1>
                   <p
-                    className="animate-fade-up mx-auto mb-10 max-w-2xl text-lg text-quiet-ink md:text-xl"
-                    style={{ animationDelay: '150ms' }}
+                    className="animate-fade-up animate-fade-up-1 mx-auto mb-10 max-w-2xl text-lg text-quiet-ink md:text-xl"
                   >
                     {hero?.subtitle ||
                       'See what\u2019s coming up, register in a minute, and keep your QR ticket in your pocket.'}
                   </p>
                   <div
-                    className="animate-fade-up flex flex-col justify-center gap-3 sm:flex-row"
-                    style={{ animationDelay: '300ms' }}
+                    className="animate-fade-up animate-fade-up-2 flex flex-col justify-center gap-3 sm:flex-row"
                   >
                     <Button asChild size="lg" className="shadow-lg shadow-brand/20">
                       <Link to={hero?.primaryCta?.href || '/events'}>
