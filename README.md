@@ -30,9 +30,4 @@ React 19, TypeScript, Vite, Tailwind v4, Supabase (Postgres, auth, realtime, sto
 **There is no `dev` script.** `vite.config.ts` hardcodes the Pages base path, so the build output is deployable as-is. `npx vite` works if you want a server.
 
 **The database schema is not in this repo.** It lives in the live Supabase project. `supabase/migrations/` holds only the storage policies and one grant revocation, and `supabase db push` will not apply them — there is no `config.toml` and the filenames are not timestamped. Run them in the SQL editor.
-
-**Cover photo uploads** need `0001_event_cover_storage.sql` applied once. It creates the `event-covers` bucket and its four policies. Until then the upload button reports a missing bucket.
-
-**Theme changes need a manual step.** `scripts/inject-theme.mjs` reads `supabase/data/site_settings.json` at build time and inlines the palette into `index.html`, which is why there is no flash of unstyled theme. That file is a checked-in copy of the `site_settings` row, not a build-time database read, and no export script for it is in the repo. After changing colors or fonts in admin, copy the current value over that file and commit, or the old palette keeps serving on first paint. Fonts are listed once, in `src/lib/fonts.json`, which the app and the build script both read.
-
 **Event status decides whether anyone sees it.** Only `published` and `completed` appear on `/events` and `/calendar`, and the homepage shows only `published`. A `draft` stays invisible until the status changes.
