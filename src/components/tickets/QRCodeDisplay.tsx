@@ -1,0 +1,59 @@
+import { QRCodeSVG } from 'qrcode.react'
+import { motion } from 'motion/react'
+import { Card, CardContent } from '@/components/ui/card'
+import { dur, ease, spring } from '@/components/motion/tokens'
+import { useIsAdminRoute } from '@/components/motion/useIsAdminRoute'
+
+interface QRCodeDisplayProps {
+  value: string
+  size?: number
+}
+
+export function QRCodeDisplay({ value, size = 200 }: QRCodeDisplayProps) {
+  const isStatic = useIsAdminRoute()
+
+  const code = (
+    <QRCodeSVG
+      value={value}
+      size={size}
+      level="M"
+      includeMargin
+      bgColor="transparent"
+      fgColor="currentColor"
+      className="text-ink"
+    />
+  )
+
+  if (isStatic) {
+    return (
+      <div className="inline-flex">
+        <Card className="inline-flex overflow-hidden">
+          <CardContent className="p-4">
+            <div>{code}</div>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: dur.base, ease: ease.gentle }}
+      className="inline-flex"
+    >
+      <Card className="inline-flex overflow-hidden">
+        <CardContent className="p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={spring.gentle}
+          >
+            {code}
+          </motion.div>
+        </CardContent>
+      </Card>
+    </motion.div>
+  )
+}

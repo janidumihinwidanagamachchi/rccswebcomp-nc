@@ -1,0 +1,27 @@
+import * as React from 'react'
+import { AnimatePresence, motion } from 'motion/react'
+import { dur, ease } from './tokens'
+
+interface CollapseProps {
+  show: boolean
+  children: React.ReactNode
+  className?: string
+}
+
+export function Collapse({ show, children, className }: CollapseProps) {
+  return (
+    <AnimatePresence initial={false}>
+      {show && (
+        <motion.div
+          className={className}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: dur.uniform, ease: ease.gentle }}
+        >
+          {children}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}

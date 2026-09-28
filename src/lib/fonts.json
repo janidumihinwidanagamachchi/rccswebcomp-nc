@@ -1,0 +1,302 @@
+[
+  {
+    "value": "Inter",
+    "family": "\"Inter\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif",
+    "weights": [
+      "100..900"
+    ]
+  },
+  {
+    "value": "Nunito Sans",
+    "family": "\"Nunito Sans\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+    "weights": [
+      "200",
+      "300",
+      "400",
+      "600",
+      "700",
+      "800",
+      "900"
+    ]
+  },
+  {
+    "value": "Open Sans",
+    "family": "\"Open Sans\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+    "weights": [
+      "300",
+      "400",
+      "600",
+      "700",
+      "800"
+    ]
+  },
+  {
+    "value": "Shippori Mincho B1",
+    "family": "\"Shippori Mincho B1\", ui-serif, Georgia, \"Times New Roman\", serif",
+    "weights": [
+      "400",
+      "500",
+      "600",
+      "700",
+      "800"
+    ]
+  },
+  {
+    "value": "Domine",
+    "family": "\"Domine\", ui-serif, Georgia, \"Times New Roman\", serif",
+    "weights": [
+      "400",
+      "500",
+      "600",
+      "700"
+    ]
+  },
+  {
+    "value": "Playfair Display",
+    "family": "\"Playfair Display\", ui-serif, Georgia, \"Times New Roman\", serif",
+    "weights": [
+      "400",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ]
+  },
+  {
+    "value": "Bebas Neue",
+    "family": "\"Bebas Neue\", Impact, Haettenschweiler, \"Arial Narrow Bold\", sans-serif",
+    "weights": [
+      "400"
+    ]
+  },
+  {
+    "value": "Roboto",
+    "family": "\"Roboto\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "100..900"
+    ]
+  },
+  {
+    "value": "Poppins",
+    "family": "\"Poppins\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "100..900"
+    ]
+  },
+  {
+    "value": "Montserrat",
+    "family": "\"Montserrat\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "100..900"
+    ]
+  },
+  {
+    "value": "Lato",
+    "family": "\"Lato\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "100",
+      "300",
+      "400",
+      "700",
+      "900"
+    ]
+  },
+  {
+    "value": "Oswald",
+    "family": "\"Oswald\", Impact, Haettenschweiler, \"Arial Narrow Bold\", sans-serif",
+    "weights": [
+      "200..700"
+    ]
+  },
+  {
+    "value": "Raleway",
+    "family": "\"Raleway\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "100..900"
+    ]
+  },
+  {
+    "value": "Merriweather",
+    "family": "\"Merriweather\", ui-serif, Georgia, \"Times New Roman\", serif",
+    "weights": [
+      "300",
+      "400",
+      "700",
+      "900"
+    ]
+  },
+  {
+    "value": "Crimson Pro",
+    "family": "\"Crimson Pro\", ui-serif, Georgia, \"Times New Roman\", serif",
+    "weights": [
+      "200..900"
+    ]
+  },
+  {
+    "value": "Space Grotesk",
+    "family": "\"Space Grotesk\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "300..700"
+    ]
+  },
+  {
+    "value": "Plus Jakarta Sans",
+    "family": "\"Plus Jakarta Sans\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "200..800"
+    ]
+  },
+  {
+    "value": "DM Sans",
+    "family": "\"DM Sans\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "100..1000"
+    ]
+  },
+  {
+    "value": "Geist",
+    "family": "\"Geist\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "100..900"
+    ]
+  },
+  {
+    "value": "Geist Mono",
+    "family": "\"Geist Mono\", ui-monospace, SFMono-Regular, Menlo, Monaco, \"Cascadia Mono\", monospace",
+    "weights": [
+      "100..900"
+    ]
+  },
+  {
+    "value": "JetBrains Mono",
+    "family": "\"JetBrains Mono\", ui-monospace, SFMono-Regular, Menlo, Monaco, \"Cascadia Mono\", monospace",
+    "weights": [
+      "100..800"
+    ]
+  },
+  {
+    "value": "Fira Code",
+    "family": "\"Fira Code\", ui-monospace, SFMono-Regular, Menlo, Monaco, \"Cascadia Mono\", monospace",
+    "weights": [
+      "300..700"
+    ]
+  },
+  {
+    "value": "Source Sans 3",
+    "family": "\"Source Sans 3\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "200..900"
+    ]
+  },
+  {
+    "value": "Ubuntu",
+    "family": "\"Ubuntu\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "300",
+      "400",
+      "500",
+      "700"
+    ]
+  },
+  {
+    "value": "Work Sans",
+    "family": "\"Work Sans\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "100..900"
+    ]
+  },
+  {
+    "value": "Manrope",
+    "family": "\"Manrope\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "200..800"
+    ]
+  },
+  {
+    "value": "Outfit",
+    "family": "\"Outfit\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "100..900"
+    ]
+  },
+  {
+    "value": "Figtree",
+    "family": "\"Figtree\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "300..900"
+    ]
+  },
+  {
+    "value": "Onest",
+    "family": "\"Onest\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "100..900"
+    ]
+  },
+  {
+    "value": "Instrument Sans",
+    "family": "\"Instrument Sans\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "400..700"
+    ]
+  },
+  {
+    "value": "Bricolage Grotesque",
+    "family": "\"Bricolage Grotesque\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "200..800"
+    ]
+  },
+  {
+    "value": "Syne",
+    "family": "\"Syne\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "400..800"
+    ]
+  },
+  {
+    "value": "Space Mono",
+    "family": "\"Space Mono\", ui-monospace, SFMono-Regular, Menlo, Monaco, \"Cascadia Mono\", monospace",
+    "weights": [
+      "400",
+      "700"
+    ]
+  },
+  {
+    "value": "IBM Plex Sans",
+    "family": "\"IBM Plex Sans\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "100..700"
+    ]
+  },
+  {
+    "value": "IBM Plex Serif",
+    "family": "\"IBM Plex Serif\", ui-serif, Georgia, \"Times New Roman\", serif",
+    "weights": [
+      "100..700"
+    ]
+  },
+  {
+    "value": "Libre Baskerville",
+    "family": "\"Libre Baskerville\", ui-serif, Georgia, \"Times New Roman\", serif",
+    "weights": [
+      "400",
+      "700"
+    ]
+  },
+  {
+    "value": "Cormorant Garamond",
+    "family": "\"Cormorant Garamond\", ui-serif, Georgia, \"Times New Roman\", serif",
+    "weights": [
+      "300..700"
+    ]
+  },
+  {
+    "value": "Sora",
+    "family": "\"Sora\", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "weights": [
+      "100..800"
+    ]
+  }
+]
